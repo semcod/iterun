@@ -1,27 +1,13 @@
 # code2llm call graph | /home/tom/github/wronai/iterun
-# generated in 0.08s
-# nodes: 176 | edges: 179 | modules: 46
-# CC̄=4.4
+# generated in 0.10s
+# nodes: 235 | edges: 254 | modules: 51
+# CC̄=3.8
 
 HUBS[20]:
-  integrations.pactown_runtime.execute_pactown
-    CC=21  in:1  out:50  total:51
-  registry.discover.discover_workspace
-    CC=25  in:2  out:38  total:40
-  cli.shell.CLI.cmd_execute
-    CC=39  in:0  out:39  total:39
-  generator.pipeline.run_pipeline
-    CC=33  in:1  out:37  total:38
-  generator.contract_verify.verify_contract
-    CC=16  in:1  out:32  total:33
-  executor.validation.validate_endpoints
-    CC=13  in:2  out:27  total:29
   registry.discover_artifacts.discover_artifacts
     CC=12  in:1  out:28  total:29
-  examples._scripts.verify_expectations.verify
-    CC=23  in:1  out:27  total:28
-  generator.expectations.check_expectations
-    CC=23  in:1  out:26  total:27
+  executor.validation.validate_endpoints
+    CC=13  in:2  out:27  total:29
   executor.docker_ops.execute_docker
     CC=13  in:2  out:24  total:26
   planner.stack_artifacts.write_stack_artifacts
@@ -30,20 +16,34 @@ HUBS[20]:
     CC=13  in:1  out:24  total:25
   cli.shell.CLI.cmd_plan
     CC=11  in:0  out:24  total:24
-  executor.runner.Executor.execute
-    CC=18  in:0  out:22  total:22
-  planner.stack_planner.plan_stack
-    CC=18  in:1  out:21  total:22
-  generator.intent_generator.IntentGenerator.generate
-    CC=11  in:0  out:21  total:21
   cli.shell.CLI.cmd_ai_suggest
     CC=11  in:0  out:21  total:21
-  cli.shell.CLI.cmd_ai_chat
-    CC=12  in:0  out:18  total:18
+  generator.intent_generator.IntentGenerator.generate
+    CC=11  in:0  out:21  total:21
+  generator.contract_verify.verify_contract
+    CC=6  in:1  out:20  total:21
+  examples._scripts.verify_expectations._map_expectation_errors
+    CC=8  in:1  out:19  total:20
   executor.runner.Executor._validate_and_fix
     CC=9  in:0  out:18  total:18
   examples._scripts.intent_to_openapi.intent_to_openapi
     CC=8  in:1  out:17  total:18
+  executor.pactown.execute_pactown
+    CC=8  in:1  out:17  total:18
+  cli.shell.CLI.cmd_ai_chat
+    CC=12  in:0  out:18  total:18
+  cli.main.build_parser
+    CC=1  in:1  out:17  total:18
+  generator.session.write_session_artifacts
+    CC=5  in:1  out:16  total:17
+  planner.stack_planner.plan_stack
+    CC=9  in:1  out:15  total:16
+  integrations.bridges.pipeline.refresh_registry
+    CC=5  in:3  out:13  total:16
+  cli.dispatch._dispatch_generate_yaml_only
+    CC=6  in:1  out:15  total:16
+  contracts.api_actions.parse_api_actions
+    CC=9  in:5  out:11  total:16
 
 MODULES:
   ai_gateway.feedback_loop  [2 funcs]
@@ -54,41 +54,71 @@ MODULES:
     get_gateway  CC=3  out:1
     suggest_improvements  CC=1  out:2
   ai_gateway.model_catalog  [1 funcs]
-    __post_init__  CC=15  out:8
-  cli.dispatch  [9 funcs]
-    _dispatch_execute  CC=17  out:15
+    _load_from_app_config  CC=5  out:1
+  cli.dispatch  [15 funcs]
+    _dispatch_execute  CC=3  out:8
     _dispatch_generate  CC=8  out:6
-    _dispatch_generate_pipeline  CC=16  out:14
+    _dispatch_generate_pipeline  CC=2  out:5
     _dispatch_generate_yaml_only  CC=6  out:15
     _dispatch_parse  CC=10  out:14
     _dispatch_plan  CC=12  out:13
     _dispatch_registry  CC=10  out:12
     _dispatch_validate  CC=6  out:10
-    dispatch_command  CC=14  out:13
+    _maybe_plan_before_execute  CC=6  out:4
+    _print_execute_result  CC=8  out:4
   cli.main  [2 funcs]
     build_parser  CC=1  out:17
     main  CC=2  out:5
   cli.plan_artifacts  [1 funcs]
     write_plan_artifacts  CC=7  out:12
-  cli.shell  [10 funcs]
+  cli.shell  [12 funcs]
+    _skip_iterun_confirmation  CC=2  out:1
     cmd_ai_apply  CC=8  out:10
     cmd_ai_chat  CC=12  out:18
     cmd_ai_health  CC=4  out:12
     cmd_ai_suggest  CC=11  out:21
-    cmd_execute  CC=39  out:39
+    cmd_execute  CC=6  out:8
     cmd_load  CC=3  out:8
     cmd_models  CC=3  out:9
     cmd_new  CC=4  out:7
     cmd_parse  CC=2  out:4
-    cmd_plan  CC=11  out:24
-  config  [3 funcs]
+  cli.shell_interactive  [4 funcs]
+    _dispatch_ai  CC=10  out:6
+    _dispatch_basic  CC=12  out:11
+    build_prompt  CC=2  out:0
+    handle_interactive_line  CC=6  out:8
+  cli.shell_output  [7 funcs]
+    log_status_color  CC=8  out:3
+    print_container_logs  CC=7  out:8
+    print_execution_failure  CC=2  out:3
+    print_execution_logs  CC=2  out:3
+    print_execution_success  CC=8  out:9
+    print_validation_errors  CC=6  out:4
+    print_validation_success  CC=4  out:6
+  config  [7 funcs]
+    _apply_env_pairs  CC=3  out:0
+    _load_envstore  CC=1  out:4
+    _load_getv_profiles  CC=5  out:3
+    _parse_dotenv_lines  CC=5  out:9
     get_config  CC=2  out:1
-    load_dotenv  CC=15  out:15
+    load_dotenv  CC=4  out:6
     reload_config  CC=1  out:2
+  contracts.api_actions  [2 funcs]
+    _parse_action_strings  CC=4  out:7
+    parse_api_actions  CC=9  out:11
+  contracts.expectations  [8 funcs]
+    _check_declared_endpoints  CC=5  out:4
+    _check_endpoint_response  CC=7  out:5
+    _check_live_endpoint  CC=4  out:7
+    _check_metadata  CC=7  out:8
+    _http_probe  CC=3  out:8
+    _probe_path  CC=1  out:1
+    check_expectations  CC=4  out:6
+    load_and_check_expectations  CC=4  out:8
   dsl.schema  [3 funcs]
     get_json_schema  CC=1  out:1
     get_system_prompt  CC=1  out:2
-    validate_yaml_document  CC=10  out:8
+    validate_yaml_document  CC=8  out:5
   examples._scripts.annotate_intract  [6 funcs]
     _actions  CC=7  out:11
     _comment  CC=1  out:1
@@ -106,21 +136,33 @@ MODULES:
     main  CC=1  out:6
   examples._scripts.verify_expectations  [4 funcs]
     _load_yaml  CC=2  out:2
-    _parse_actions  CC=6  out:9
+    _map_expectation_errors  CC=8  out:19
     main  CC=3  out:9
-    verify  CC=23  out:27
+    verify  CC=1  out:4
   executor.docker_ops  [5 funcs]
     execute_compose_stack  CC=9  out:11
     execute_docker  CC=13  out:24
     find_available_port  CC=3  out:3
     patch_compose_host_ports  CC=7  out:7
     stop_containers_for_intent  CC=5  out:6
-  executor.runner  [7 funcs]
+  executor.pactown  [10 funcs]
+    _append_action_urls  CC=5  out:2
+    _collect_endpoints  CC=3  out:2
+    _collect_single_endpoints  CC=1  out:1
+    _collect_stack_endpoints  CC=8  out:2
+    _finalize_pactown  CC=10  out:15
+    _prepare_pactown_workspace  CC=2  out:7
+    _start_pactown_stack  CC=4  out:6
+    _validate_urls  CC=6  out:10
+    execute_pactown  CC=8  out:17
+    stop_pactown_for_intent  CC=5  out:6
+  executor.runner  [8 funcs]
     __init__  CC=3  out:5
     _execute_local  CC=4  out:7
     _restart_container  CC=2  out:3
+    _run_runtime  CC=5  out:6
     _validate_and_fix  CC=9  out:18
-    execute  CC=18  out:22
+    execute  CC=9  out:15
     get_container_logs  CC=1  out:1
     execute_intent  CC=1  out:2
   executor.validation  [4 funcs]
@@ -128,36 +170,39 @@ MODULES:
     attempt_auto_fix  CC=10  out:8
     filter_validation_endpoints  CC=9  out:6
     validate_endpoints  CC=13  out:27
-  generator.contract_verify  [6 funcs]
+  generator.contract_verify  [11 funcs]
     _endpoint_responding  CC=3  out:2
+    _http_probe  CC=9  out:11
     _probe_path  CC=1  out:1
+    _run_http_probes  CC=3  out:5
+    _run_testql_checks  CC=8  out:8
+    _write_verify_result  CC=1  out:4
     readiness_paths  CC=5  out:2
-    verify_contract  CC=16  out:32
+    run_testql  CC=4  out:5
+    verify_contract  CC=6  out:20
     wait_for_service  CC=5  out:4
-    write_contract_artifacts  CC=1  out:2
-  generator.expectations  [2 funcs]
-    check_expectations  CC=23  out:26
-    load_and_check_expectations  CC=4  out:8
   generator.intent_generator  [4 funcs]
     __init__  CC=2  out:2
     generate  CC=11  out:21
     _build_user_prompt  CC=4  out:1
     extract_yaml_from_llm  CC=6  out:11
-  generator.intract_manifest  [7 funcs]
-    _parse_action_strings  CC=4  out:7
+  generator.intract_manifest  [5 funcs]
     _safe_id  CC=1  out:3
     _slug  CC=2  out:4
     build_intract_manifest  CC=6  out:11
     intent_to_intract_dict  CC=2  out:4
-    parse_api_actions  CC=9  out:11
     write_intract_manifest  CC=1  out:5
-  generator.pipeline  [6 funcs]
+  generator.pipeline  [12 funcs]
     _build_repair_prompt  CC=4  out:3
     _container_logs  CC=4  out:1
     _expectations_summary  CC=8  out:13
-    _finalize  CC=3  out:4
+    _finalize  CC=2  out:3
+    _finish_without_verify  CC=5  out:2
+    _generate_and_plan  CC=9  out:7
+    _handle_execute_error  CC=3  out:4
+    _handle_verify_round  CC=6  out:9
+    _run_pipeline_round  CC=7  out:11
     _write_plan_artifacts  CC=8  out:11
-    run_pipeline  CC=33  out:37
   generator.session  [1 funcs]
     write_session_artifacts  CC=5  out:16
   generator.testql_scenario  [4 funcs]
@@ -165,64 +210,73 @@ MODULES:
     _startup_wait_ms  CC=7  out:3
     build_testql_scenario  CC=7  out:10
     write_testql_scenario  CC=2  out:7
-  integrations.adapters.docker  [2 funcs]
-    enrich  CC=16  out:16
+  integrations.adapters.docker  [5 funcs]
+    _merge_container_state  CC=4  out:4
+    enrich  CC=4  out:2
+    _apply_container_to_service  CC=5  out:8
+    _match_service_containers  CC=6  out:5
     _running_iterun_containers  CC=11  out:8
   integrations.adapters.filesystem  [1 funcs]
     collect  CC=1  out:1
   integrations.bridges.pipeline  [2 funcs]
     refresh_registry  CC=5  out:13
-    refresh_registry_from_pipeline  CC=2  out:2
-  integrations.markpact_pack  [2 funcs]
+    refresh_registry_from_pipeline  CC=2  out:3
+  integrations.markpact_pack  [4 funcs]
+    _pack_service_readmes  CC=4  out:5
     _run_command_for_ir  CC=8  out:0
-    pack_workspace  CC=18  out:12
+    _service_run_command  CC=4  out:0
+    pack_workspace  CC=12  out:10
   integrations.pactown_config  [3 funcs]
     _health_path  CC=8  out:0
     build_pactown_config  CC=12  out:6
     write_pactown_config  CC=1  out:4
-  integrations.pactown_runtime  [3 funcs]
-    _validate_urls  CC=6  out:10
-    execute_pactown  CC=21  out:50
-    stop_pactown_for_intent  CC=5  out:6
   integrations.runtime_stop  [1 funcs]
     stop_runtime_for_intent  CC=3  out:4
-  interfaces.service  [9 funcs]
+  interfaces.service  [10 funcs]
     execute_ir  CC=3  out:4
     parse  CC=1  out:1
     plan_ir  CC=1  out:1
     plan_yaml  CC=3  out:6
     registry_list  CC=1  out:1
     registry_refresh  CC=1  out:1
+    run_pipeline  CC=5  out:2
     schema  CC=1  out:1
     validate_yaml  CC=4  out:3
     _write_plan_output  CC=7  out:14
   parser.dsl_parser  [2 funcs]
     parse_dsl  CC=1  out:2
     parse_dsl_file  CC=1  out:2
-  planner.simulator  [4 funcs]
+  planner.plan  [1 funcs]
+    plan_intent  CC=3  out:3
+  planner.simulator  [3 funcs]
     _generate_fastapi_code  CC=5  out:7
     _generate_flask_code  CC=5  out:5
     _endpoint_to_func_name  CC=5  out:10
-    plan_intent  CC=3  out:3
   planner.stack_artifacts  [1 funcs]
     write_stack_artifacts  CC=9  out:22
-  planner.stack_planner  [4 funcs]
+  planner.stack_planner  [6 funcs]
     _build_compose  CC=9  out:4
     _gateway_proxy_code  CC=10  out:12
+    _plan_generated_service  CC=10  out:7
     _resolve_upstream  CC=12  out:2
-    plan_stack  CC=18  out:21
+    _service_ir  CC=5  out:6
+    plan_stack  CC=9  out:15
   registry.catalog  [2 funcs]
     discover  CC=1  out:1
     discover_glob  CC=7  out:11
-  registry.discover  [1 funcs]
-    discover_workspace  CC=25  out:38
+  registry.discover  [2 funcs]
+    _build_services  CC=3  out:2
+    discover_workspace  CC=6  out:13
   registry.discover_artifacts  [1 funcs]
     discover_artifacts  CC=12  out:28
-  registry.discover_io  [4 funcs]
+  registry.discover_context  [3 funcs]
+    _intent_identity  CC=6  out:7
+    _stack_metadata  CC=5  out:5
+    load_workspace_context  CC=6  out:14
+  registry.discover_io  [3 funcs]
     intent_from_workspace  CC=8  out:7
     load_session  CC=3  out:3
     load_stack_urls  CC=3  out:3
-    phase_from_session  CC=7  out:5
   registry.discover_services  [2 funcs]
     build_single_service  CC=8  out:14
     build_stack_services  CC=13  out:24
@@ -261,15 +315,18 @@ MODULES:
     refresh_registry_api  CC=1  out:3
 
 EDGES:
+  config._load_envstore → config._apply_env_pairs
+  config.load_dotenv → config._load_getv_profiles
+  config.load_dotenv → config._apply_env_pairs
+  config.load_dotenv → config._load_envstore
+  config.load_dotenv → config._parse_dotenv_lines
   config.reload_config → config.load_dotenv
-  generator.expectations.check_expectations → generator.intract_manifest.parse_api_actions
-  generator.expectations.load_and_check_expectations → generator.expectations.check_expectations
   generator.intent_generator.IntentGenerator.__init__ → dsl.schema.get_system_prompt
   generator.intent_generator.IntentGenerator.__init__ → ai_gateway.gateway.get_gateway
   generator.intent_generator.IntentGenerator.generate → generator.intent_generator._build_user_prompt
   generator.intent_generator.IntentGenerator.generate → generator.intent_generator.extract_yaml_from_llm
   generator.intent_generator.IntentGenerator.generate → dsl.schema.validate_yaml_document
-  generator.testql_scenario.build_testql_scenario → generator.intract_manifest.parse_api_actions
+  generator.testql_scenario.build_testql_scenario → contracts.api_actions.parse_api_actions
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._startup_wait_ms
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._probe_path
   generator.testql_scenario.write_testql_scenario → generator.testql_scenario.build_testql_scenario
@@ -281,33 +338,30 @@ EDGES:
   generator.pipeline._container_logs → executor.runner.Executor.get_container_logs
   generator.pipeline._finalize → generator.pipeline._container_logs
   generator.pipeline._finalize → generator.session.write_session_artifacts
-  generator.pipeline._finalize → integrations.bridges.pipeline.refresh_registry_from_pipeline
+  generator.pipeline._generate_and_plan → planner.plan.plan_intent
+  generator.pipeline._generate_and_plan → generator.pipeline._build_repair_prompt
+  generator.pipeline._generate_and_plan → generator.pipeline._write_plan_artifacts
+  generator.pipeline._finish_without_verify → generator.pipeline._finalize
+  generator.pipeline._handle_verify_round → generator.contract_verify.verify_contract
+  generator.pipeline._handle_verify_round → generator.pipeline._write_verify_round_log
+  generator.pipeline._handle_verify_round → generator.pipeline._finalize
+  generator.pipeline._handle_execute_error → generator.pipeline._write_verify_round_log
+  generator.pipeline._handle_execute_error → generator.pipeline._finalize
+  generator.pipeline._run_pipeline_round → generator.pipeline._generate_and_plan
+  generator.pipeline._run_pipeline_round → executor.runner.execute_intent
+  generator.pipeline._run_pipeline_round → generator.pipeline._handle_verify_round
+  generator.pipeline._run_pipeline_round → generator.pipeline._finalize
+  generator.pipeline._run_pipeline_round → integrations.runtime_stop.stop_runtime_for_intent
+  generator.pipeline._run_pipeline_round → generator.pipeline._handle_execute_error
+  generator.pipeline._run_pipeline_round → generator.pipeline._finish_without_verify
   generator.pipeline.run_pipeline → generator.pipeline._finalize
-  generator.pipeline.run_pipeline → planner.simulator.plan_intent
-  generator.intract_manifest.parse_api_actions → generator.intract_manifest._parse_action_strings
+  generator.pipeline.run_pipeline → generator.pipeline._run_pipeline_round
   generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
+  generator.intract_manifest.build_intract_manifest → contracts.api_actions.parse_api_actions
   generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
   generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
   generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   generator.contract_verify.readiness_paths → generator.contract_verify._probe_path
-  generator.contract_verify.readiness_paths → generator.intract_manifest.parse_api_actions
+  generator.contract_verify.readiness_paths → contracts.api_actions.parse_api_actions
   generator.contract_verify.wait_for_service → generator.contract_verify.readiness_paths
   generator.contract_verify.wait_for_service → generator.contract_verify._endpoint_responding
-  generator.contract_verify.write_contract_artifacts → generator.intract_manifest.write_intract_manifest
-  generator.contract_verify.write_contract_artifacts → generator.testql_scenario.write_testql_scenario
-  generator.contract_verify.verify_contract → generator.contract_verify.write_contract_artifacts
-  generator.contract_verify.verify_contract → generator.intract_manifest.parse_api_actions
-  generator.contract_verify.verify_contract → generator.expectations.load_and_check_expectations
-  examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._load_yaml
-  examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._parse_actions
-  examples._scripts.verify_expectations.main → examples._scripts.verify_expectations.verify
-  examples._scripts.annotate_intract._comment → examples._scripts.annotate_intract._slug
-  examples._scripts.annotate_intract.annotate_python → examples._scripts.annotate_intract._actions
-  examples._scripts.annotate_intract.annotate_express → examples._scripts.annotate_intract._actions
-  examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_python
-  examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_express
-  examples._scripts.intent_to_testql.main → generator.testql_scenario.write_testql_scenario
-  examples._scripts.intent_to_intract.main → generator.intract_manifest.write_intract_manifest
-  examples._scripts.intent_to_openapi.intent_to_openapi → examples._scripts.intent_to_openapi._slug
-  examples._scripts.intent_to_openapi.main → examples._scripts.intent_to_openapi.intent_to_openapi

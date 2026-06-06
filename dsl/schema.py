@@ -190,7 +190,7 @@ def document_to_yaml(doc: IntentDSLDocument) -> str:
 
 
 def validate_yaml_document(yaml_content: str) -> tuple[IntentDSLDocument | None, list[str]]:
-    """Validate YAML against Pydantic schema and DSL parser."""
+    """Validate YAML against Pydantic schema (DSL parse is done separately)."""
     errors: list[str] = []
 
     try:
@@ -209,15 +209,6 @@ def validate_yaml_document(yaml_content: str) -> tuple[IntentDSLDocument | None,
 
     if doc.STACK is None and (doc.IMPLEMENTATION is None or not doc.IMPLEMENTATION.actions):
         errors.append("Provide IMPLEMENTATION.actions or STACK.services (min 2 services)")
-
-    try:
-        from parser.dsl_parser import ParseError, ValidationError, parse_dsl
-
-        parse_dsl(yaml_content)
-    except ParseError as e:
-        errors.append(f"DSL parse: {e}")
-    except ValidationError as e:
-        errors.extend(e.errors)
 
     if errors:
         return doc, errors

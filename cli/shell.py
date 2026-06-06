@@ -10,7 +10,8 @@ from cli.shell_interactive import build_prompt, handle_interactive_line
 from cli.shell_output import print_execution_failure, print_execution_logs, print_execution_success
 from ir.models import IntentIR
 from parser.dsl_parser import DSLParser, parse_dsl, parse_dsl_file, ParseError, ValidationError
-from planner.simulator import Planner, plan_intent
+from planner.plan import plan_intent
+from planner.simulator import Planner
 from executor.runner import execute_intent
 
 try:

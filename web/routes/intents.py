@@ -13,7 +13,7 @@ from executor.models import ExecutionResult
 from executor.runner import execute_intent
 from executor.validation import validate_endpoints
 from parser.dsl_parser import parse_dsl, ParseError, ValidationError
-from planner.simulator import plan_intent
+from planner.plan import plan_intent
 from web.schemas import (
     DSLInput,
     ExecutionRequest,

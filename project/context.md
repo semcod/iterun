@@ -1,15 +1,16 @@
 # System Architecture Analysis
+<!-- generated in 0.00s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/wronai/iterun
 - **Primary Language**: python
-- **Languages**: python: 79, md: 29, shell: 27, txt: 20, yaml: 18
+- **Languages**: python: 82, shell: 27, txt: 20, yaml: 18, toml: 1
 - **Analysis Mode**: static
 - **Total Functions**: 421
 - **Total Classes**: 77
-- **Modules**: 175
-- **Entry Points**: 253
+- **Modules**: 149
+- **Entry Points**: 254
 
 ## Architecture by Module
 
@@ -32,15 +33,15 @@
 - **Classes**: 3
 - **File**: `dsl_parser.py`
 
-### planner.simulator
-- **Functions**: 17
-- **Classes**: 2
-- **File**: `simulator.py`
-
 ### ai_gateway.feedback_loop
 - **Functions**: 17
 - **Classes**: 3
 - **File**: `feedback_loop.py`
+
+### planner.simulator
+- **Functions**: 16
+- **Classes**: 2
+- **File**: `simulator.py`
 
 ### sdk.client
 - **Functions**: 16
@@ -88,9 +89,9 @@
 - **Functions**: 11
 - **File**: `_common.sh`
 
-### integrations.pactown_runtime
+### executor.pactown
 - **Functions**: 11
-- **File**: `pactown_runtime.py`
+- **File**: `pactown.py`
 
 ### ai_gateway.model_catalog
 - **Functions**: 10
@@ -101,7 +102,7 @@
 - **Functions**: 9
 - **File**: `ai.py`
 
-### generator.expectations
+### contracts.expectations
 - **Functions**: 8
 - **File**: `expectations.py`
 
@@ -116,7 +117,7 @@ Main execution flows into the system:
 - **Calls**: cls, data.get, data.get, data.get, data.get, Intent.from_dict, Environment.from_dict, Implementation.from_dict
 
 ### cli.shell.CLI.cmd_plan
-- **Calls**: self.print_header, planner.simulator.plan_intent, print, print, enumerate, print, print, result.estimated_resources.items
+- **Calls**: self.print_header, planner.plan.plan_intent, print, print, enumerate, print, print, result.estimated_resources.items
 
 ### generator.intent_generator.IntentGenerator.generate
 - **Calls**: GenerateResult, range, GenerateAttempt, generator.intent_generator._build_user_prompt, self.gateway.complete, response.get, response.get, generator.intent_generator.extract_yaml_from_llm
@@ -157,7 +158,7 @@ Main execution flows into the system:
 
 ### executor.runner.Executor.execute
 > Execute an approved intent with optional validation and auto-fix.
-- **Calls**: ExecutionResult, datetime.now, result.add_log, result.add_log, None.total_seconds, self._check_iterun_boundary, None.total_seconds, integrations.pactown_runtime.execute_pactown
+- **Calls**: ExecutionResult, datetime.now, result.add_log, result.add_log, None.total_seconds, self._check_iterun_boundary, None.total_seconds, executor.pactown.execute_pactown
 
 ### ir.models.StackService.from_dict
 - **Calls**: cls, data.get, data.get, data.get, data.get, int, data.get, list
@@ -396,12 +397,6 @@ Key functions that process and transform data:
 ### config._parse_dotenv_lines
 - **Output to**: open, line.strip, line.split, pairs.append, line.startswith
 
-### generator.intract_manifest._parse_action_strings
-- **Output to**: re.match, isinstance, action.strip, parsed.append, None.upper
-
-### generator.intract_manifest.parse_api_actions
-- **Output to**: generator.intract_manifest._parse_action_strings, None.items, intent_data.get, parsed.extend, None.get
-
 ### web.routes.intents.validate_yaml
 - **Output to**: router.post, None.validate_yaml, web.routes.intents._get_service
 
@@ -478,12 +473,13 @@ Key functions that process and transform data:
 ### parser.dsl_parser.DSLParser._validate_framework_compat
 - **Output to**: self.errors.append, self.errors.append
 
-## Behavioral Patterns
+### parser.dsl_parser.DSLParser._validate
+> Validate the parsed IR.
+- **Output to**: self._validate_stack_services, self._validate_actions_required, self._validate_dangerous_actions, self._validate_framework_compat
 
-### recursion_run_pipeline
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: interfaces.service.IterunService.run_pipeline
+### parser.dsl_parser.parse_dsl
+> Convenience function to parse DSL content.
+- **Output to**: DSLParser, parser.parse
 
 ## Public API Surface
 
@@ -506,7 +502,7 @@ Functions exposed as public API (no underscore prefix):
 - `cli.shell.CLI.cmd_ai_chat` - 18 calls
 - `examples._scripts.intent_to_openapi.intent_to_openapi` - 17 calls
 - `cli.main.build_parser` - 17 calls
-- `integrations.pactown_runtime.execute_pactown` - 17 calls
+- `executor.pactown.execute_pactown` - 17 calls
 - `generator.session.write_session_artifacts` - 16 calls
 - `integrations.adapters.backstage.BackstageExporter.export` - 16 calls
 - `planner.stack_planner.plan_stack` - 15 calls
@@ -523,11 +519,11 @@ Functions exposed as public API (no underscore prefix):
 - `cli.shell.CLI.cmd_ai_health` - 12 calls
 - `parser.dsl_parser.DSLParser.parse` - 12 calls
 - `generator.intent_generator.extract_yaml_from_llm` - 11 calls
-- `generator.intract_manifest.parse_api_actions` - 11 calls
 - `generator.intract_manifest.build_intract_manifest` - 11 calls
 - `examples._scripts.annotate_intract.annotate_python` - 11 calls
 - `registry.catalog.discover_glob` - 11 calls
 - `executor.docker_ops.execute_compose_stack` - 11 calls
+- `contracts.api_actions.parse_api_actions` - 11 calls
 - `generator.testql_scenario.build_testql_scenario` - 10 calls
 
 ## System Interactions

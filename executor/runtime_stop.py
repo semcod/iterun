@@ -16,7 +16,7 @@ def stop_runtime_for_intent(
 ) -> int:
     rt = (runtime or get_config().runtime).lower()
     if rt == "pactown":
-        from integrations.pactown_runtime import stop_pactown_for_intent
+        from executor.pactown import stop_pactown_for_intent
 
         return stop_pactown_for_intent(intent_name, workspace)
     return stop_containers_for_intent(intent_name)

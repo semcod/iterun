@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from generator.intract_manifest import parse_api_actions
+from contracts.api_actions import parse_api_actions
 
 
 def _probe_path(path: str) -> str:
@@ -56,7 +56,6 @@ def _check_declared_endpoints(intent_data: dict[str, Any], expectations: dict[st
 
 def _check_endpoint_response(endpoint: dict[str, Any], data: dict[str, Any], path: str) -> list[str]:
     errors: list[str] = []
-    method = endpoint["method"].upper()
     for field in endpoint.get("json_fields", []) or []:
         if field not in data:
             errors.append(f"expectations JSON field missing: {field} on {path}")

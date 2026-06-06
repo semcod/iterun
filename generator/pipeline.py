@@ -11,7 +11,7 @@ from typing import Any
 from config import PACKAGE_FILENAME
 from executor.docker_ops import get_container_logs
 from executor.runner import execute_intent
-from integrations.runtime_stop import stop_runtime_for_intent
+from executor.runtime_stop import stop_runtime_for_intent
 from generator.contract_verify import verify_contract
 from generator.intract_manifest import write_intract_manifest
 from generator.intent_generator import IntentGenerator
@@ -19,7 +19,7 @@ from generator.results import PipelineResult
 from generator.session import write_session_artifacts
 from generator.testql_scenario import write_testql_scenario
 from ir.models import IntentIR
-from planner.simulator import plan_intent
+from planner.plan import plan_intent
 
 
 def _write_plan_artifacts(

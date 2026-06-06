@@ -576,45 +576,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-5efcabc3
-    name: Fix duplicate-imports issues
-    description: Resolve 2 duplicate-imports issues in generator/expectations.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - generator/expectations.py
-    rule_id: duplicate-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-1ca7844d
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in generator/expectations.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - generator/expectations.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-144fd557
-    name: Fix magic-numbers issues
-    description: Resolve 2 magic-numbers issues in generator/expectations.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - generator/expectations.py
-    rule_id: magic-numbers
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-57734f46
     name: Fix unused-imports issues
     description: Resolve 6 unused-imports issues in dsl/schema.py
@@ -1044,45 +1005,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-e4bb5697
-    name: Fix unused-imports issues
-    description: Resolve 2 unused-imports issues in integrations/runtime_stop.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - integrations/runtime_stop.py
-    rule_id: unused-imports
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-12fa8f86
-    name: Fix unused-imports issues
-    description: Resolve 10 unused-imports issues in integrations/pactown_runtime.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - integrations/pactown_runtime.py
-    rule_id: unused-imports
-    count: 10
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-a6622dbd
-    name: Fix magic-numbers issues
-    description: Resolve 3 magic-numbers issues in integrations/pactown_runtime.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - integrations/pactown_runtime.py
-    rule_id: magic-numbers
-    count: 3
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-1a493952
     name: Fix unused-imports issues
     description: Resolve 10 unused-imports issues in interfaces/service.py
@@ -1313,6 +1235,84 @@ sprints:
     files:
     - executor/docker_ops.py
     rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a2d11e40
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in cli/shell_interactive.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/shell_interactive.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bab201a8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in cli/shell_interactive.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/shell_interactive.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0aef330e
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in cli/shell_interactive.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/shell_interactive.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a7ae9a42
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in cli/shell_output.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/shell_output.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cc2f7cb3
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in cli/shell_output.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/shell_output.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e803bc29
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in contracts/api_actions.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - contracts/api_actions.py
+    rule_id: unused-imports
     count: 2
     model_hints:
       planning: balanced

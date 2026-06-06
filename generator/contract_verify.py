@@ -15,8 +15,9 @@ from typing import Any
 
 import yaml
 
-from generator.expectations import load_and_check_expectations
-from generator.intract_manifest import parse_api_actions, write_intract_manifest
+from contracts.api_actions import parse_api_actions
+from contracts.expectations import load_and_check_expectations
+from generator.intract_manifest import write_intract_manifest
 from generator.testql_scenario import write_testql_scenario
 
 

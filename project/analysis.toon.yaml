@@ -1,13 +1,12 @@
-# code2llm | 175f 17049L | python:79,md:29,shell:27,txt:20,yaml:18,toml:1 | 2026-06-06
-# generated in 0.03s
-# CC̅=3.8 | critical:0/421 | dups:0 | cycles:1
+# code2llm | 149f 12799L | python:82,shell:27,txt:20,yaml:18,toml:1 | 2026-06-06
+# generated in 0.02s
+# CC̅=3.8 | critical:0/421 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. break 1 circular dependencies
+REFACTOR[0]: none needed
 
-PIPELINES[198]:
+PIPELINES[199]:
   [1] Src [get_env]: get_env
       PURITY: 100% pure
   [2] Src [get_env_bool]: get_env_bool
@@ -111,7 +110,7 @@ PIPELINES[198]:
 
 LAYERS:
   cli/                            CC̄=5.6    ←in:0  →out:25  !! split
-  │ shell                      479L  1C   24m  CC=12     ←0
+  │ shell                      480L  1C   24m  CC=12     ←0
   │ dispatch                   294L  0C   15m  CC=14     ←1
   │ main                        98L  0C    2m  CC=2      ←0
   │ shell_output                97L  0C    7m  CC=8      ←1
@@ -121,33 +120,25 @@ LAYERS:
   │ colors                      16L  1C    1m  CC=1      ←0
   │ __main__                     4L  0C    0m  CC=0.0    ←0
   │
-  executor/                       CC̄=5.2    ←in:10  →out:4
+  executor/                       CC̄=5.2    ←in:10  →out:5
   │ runner                     315L  1C   12m  CC=9      ←5
   │ docker_ops                 283L  0C    6m  CC=13     ←2
+  │ pactown                    226L  0C   11m  CC=10     ←2
   │ validation                 184L  0C    4m  CC=13     ←3
   │ models                      75L  3C    6m  CC=3      ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
   planner/                        CC̄=5.0    ←in:8  →out:1
-  │ simulator                  384L  2C   17m  CC=9      ←4
+  │ simulator                  377L  2C   16m  CC=9      ←0
   │ stack_planner              234L  0C    7m  CC=12     ←1
   │ stack_artifacts             66L  0C    1m  CC=9      ←3
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │ plan                        15L  0C    1m  CC=3      ←4
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
   │
-  integrations/                   CC̄=4.9    ←in:3  →out:3
-  │ pactown_runtime            228L  0C   11m  CC=10     ←2
-  │ markpact_pack              115L  0C    4m  CC=12     ←2
-  │ docker                      90L  1C    6m  CC=11     ←0
-  │ backstage                   74L  1C    1m  CC=5      ←0
-  │ pactown_config              70L  0C    3m  CC=12     ←1
-  │ pipeline                    47L  0C    2m  CC=5      ←2
-  │ base                        29L  2C    3m  CC=1      ←0
-  │ opentelemetry               28L  1C    1m  CC=5      ←0
-  │ runtime_stop                22L  0C    1m  CC=3      ←1
-  │ __init__                    18L  0C    0m  CC=0.0    ←0
-  │ filesystem                  17L  1C    1m  CC=1      ←0
-  │ __init__                    14L  0C    0m  CC=0.0    ←0
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  contracts/                      CC̄=4.8    ←in:6  →out:0
+  │ expectations               108L  0C    8m  CC=7      ←2
+  │ api_actions                 35L  0C    2m  CC=9      ←4
+  │ __init__                    10L  0C    0m  CC=0.0    ←0
   │
   registry/                       CC̄=4.7    ←in:5  →out:0
   │ models                     103L  8C    1m  CC=1      ←0
@@ -160,19 +151,32 @@ LAYERS:
   │ labels                      53L  0C    2m  CC=4      ←3
   │ __init__                    13L  0C    0m  CC=0.0    ←0
   │
-  generator/                      CC̄=4.6    ←in:6  →out:10  !! split
+  integrations/                   CC̄=4.7    ←in:4  →out:3
+  │ markpact_pack              115L  0C    4m  CC=12     ←2
+  │ docker                      90L  1C    6m  CC=11     ←0
+  │ backstage                   74L  1C    1m  CC=5      ←0
+  │ pactown_config              70L  0C    3m  CC=12     ←1
+  │ pipeline                    47L  0C    2m  CC=5      ←2
+  │ base                        29L  2C    3m  CC=1      ←0
+  │ opentelemetry               28L  1C    1m  CC=5      ←0
+  │ filesystem                  17L  1C    1m  CC=1      ←0
+  │ __init__                    15L  0C    0m  CC=0.0    ←0
+  │ __init__                    14L  0C    0m  CC=0.0    ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │ runtime_stop                 0L  0C    1m  CC=3      ←1
+  │
+  generator/                      CC̄=4.5    ←in:5  →out:15  !! split
   │ pipeline                   358L  0C   12m  CC=11     ←1
   │ intent_generator           238L  3C    7m  CC=11     ←0
-  │ contract_verify            235L  1C   13m  CC=10     ←1
-  │ intract_manifest           119L  0C    7m  CC=9      ←6
-  │ expectations               109L  0C    8m  CC=7      ←2
+  │ contract_verify            236L  1C   13m  CC=10     ←1
+  │ intract_manifest            92L  0C    5m  CC=6      ←4
   │ testql_scenario             79L  0C    4m  CC=7      ←4
   │ session                     51L  0C    1m  CC=5      ←1
   │ results                     37L  1C    1m  CC=2      ←0
   │ __init__                    24L  0C    0m  CC=0.0    ←0
   │
-  parser/                         CC̄=4.3    ←in:11  →out:0
-  │ dsl_parser                 337L  3C   18m  CC=14     ←6
+  parser/                         CC̄=4.3    ←in:10  →out:0
+  │ dsl_parser                 337L  3C   18m  CC=14     ←5
   │ __init__                     3L  0C    0m  CC=0.0    ←0
   │
   ai_gateway/                     CC̄=4.0    ←in:14  →out:1
@@ -181,8 +185,8 @@ LAYERS:
   │ model_catalog              290L  3C   10m  CC=7      ←0
   │ __init__                    30L  0C    0m  CC=0.0    ←0
   │
-  dsl/                            CC̄=3.2    ←in:8  →out:1
-  │ schema                     251L  7C    6m  CC=10     ←4
+  dsl/                            CC̄=2.8    ←in:8  →out:0
+  │ schema                     242L  7C    6m  CC=8      ←4
   │ __init__                    17L  0C    0m  CC=0.0    ←0
   │
   web/                            CC̄=2.4    ←in:0  →out:0
@@ -195,17 +199,14 @@ LAYERS:
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
   interfaces/                     CC̄=2.4    ←in:0  →out:11  !! split
-  │ service                    260L  1C   14m  CC=7      ←0
+  │ service                    261L  1C   14m  CC=7      ←0
   │ models                      52L  7C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=2.3    ←in:0  →out:0
   │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
-  │ !! README.md                  518L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ CHANGELOG.md               498L  0C    0m  CC=0.0    ←0
   │ Makefile                   222L  0C    0m  CC=0.0    ←0
-  │ TODO.md                    214L  0C    0m  CC=0.0    ←0
   │ config                     182L  1C   12m  CC=5      ←8
   │ run.sh                     160L  0C    0m  CC=0.0    ←0
   │ pyproject.toml             109L  0C    0m  CC=0.0    ←0
@@ -224,31 +225,10 @@ LAYERS:
   │ __init__                     9L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=1.2    ←in:0  →out:0
-  │ README.md                  223L  0C    0m  CC=0.0    ←0
-  │ OPERATIONS.md              219L  0C    0m  CC=0.0    ←0
   │ _verify.sh                 165L  0C   13m  CC=0.0    ←0
   │ _common.sh                 153L  0C   11m  CC=0.0    ←0
-  │ README.md                  131L  0C    0m  CC=0.0    ←0
-  │ README.md                  127L  0C    0m  CC=0.0    ←0
-  │ README.md                  106L  0C    0m  CC=0.0    ←0
-  │ README.md                  106L  0C    0m  CC=0.0    ←0
-  │ README.md                  105L  0C    0m  CC=0.0    ←0
   │ annotate_intract            97L  0C    6m  CC=7      ←0
-  │ README.md                   95L  0C    0m  CC=0.0    ←0
-  │ README.md                   94L  0C    0m  CC=0.0    ←0
-  │ README.md                   92L  0C    0m  CC=0.0    ←0
-  │ README.md                   89L  0C    0m  CC=0.0    ←0
-  │ README.md                   88L  0C    0m  CC=0.0    ←0
-  │ README.md                   88L  0C    0m  CC=0.0    ←0
-  │ README.md                   88L  0C    0m  CC=0.0    ←0
-  │ README.md                   88L  0C    0m  CC=0.0    ←0
-  │ README.md                   82L  0C    0m  CC=0.0    ←0
-  │ README.md                   81L  0C    0m  CC=0.0    ←0
   │ intent_to_openapi           76L  0C    3m  CC=8      ←0
-  │ README.md                   76L  0C    0m  CC=0.0    ←0
-  │ README.md                   76L  0C    0m  CC=0.0    ←0
-  │ README.md                   74L  0C    0m  CC=0.0    ←0
-  │ README.md                   74L  0C    0m  CC=0.0    ←0
   │ verify_expectations         66L  0C    4m  CC=8      ←0
   │ _bootstrap_deps.sh          63L  0C    4m  CC=0.0    ←0
   │ run-resilience.sh           41L  0C    0m  CC=0.0    ←0
@@ -305,13 +285,6 @@ LAYERS:
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │
-  docs/                           CC̄=0.0    ←in:0  →out:0
-  │ INTENT_DSL_SPEC.md         264L  0C    0m  CC=0.0    ←0
-  │ API.md                     190L  0C    0m  CC=0.0    ←0
-  │ README.md                  154L  0C    0m  CC=0.0    ←0
-  │ REGISTRY.md                129L  0C    0m  CC=0.0    ←0
-  │ RUNTIME.md                  74L  0C    0m  CC=0.0    ←0
-  │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-from-pytests.testql.toon.yaml    42L  0C    0m  CC=0.0    ←0
   │ generated-api-smoke.testql.toon.yaml    40L  0C    0m  CC=0.0    ←0
@@ -324,38 +297,40 @@ LAYERS:
   │ __init__                     0L  0C    0m  CC=0.0    ←0
   │
   ── zero ──
+     integrations/runtime_stop.py              0L
      mcp/__init__.py                           0L
 
 COUPLING:
-                                         cli             generator            ai_gateway            web.routes              executor            interfaces                parser                config                   dsl               planner          integrations              registry  integrations.bridges                   sdk     examples._scripts
-                   cli                    ──                     3                     6                                           2                                           3                     4                     2                     2                                           1                     2                                              !! fan-out
-             generator                    ←3                    ──                     1                                           2                                           1                                           2                     2                     2                                                                                      ←3  hub
-            ai_gateway                    ←6                    ←1                    ──                    ←7                                                                                       1                                                                                                                                                            hub
-            web.routes                                                                 7                    ──                     3                                           2                     2                                           1                                                                                                                !! fan-out
-              executor                    ←2                    ←2                                          ←3                    ──                    ←1                                           2                                                                 1                     1                                                                    hub
-            interfaces                                                                                                             1                    ──                     2                                           2                     3                                           1                     2                                              !! fan-out
-                parser                    ←3                    ←1                                          ←2                                          ←2                    ──                                          ←1                                                                                                            ←2                        hub
-                config                    ←4                                          ←1                    ←2                    ←2                                                                ──                                                                ←1                                                                                          hub
-                   dsl                    ←2                    ←2                                                                                      ←2                     1                                          ──                                                                                                            ←2                        hub
-               planner                    ←2                    ←2                                          ←1                                          ←3                                                                                      ──                                           1                                                                    hub
-          integrations                                          ←2                                                                 2                                                                 1                                                                ──                                                                                        
-              registry                    ←1                                                                                      ←1                    ←1                                                                                      ←1                                          ──                                                                    hub
-  integrations.bridges                    ←2                                                                                                            ←2                                                                                                                                                        ──                                            
-                   sdk                                                                                                                                                         2                                           2                                                                                                            ──                      
-     examples._scripts                                           3                                                                                                                                                                                                                                                                                            ──
-  CYCLES: 1
-  HUB: planner/ (fan-in=8)
-  HUB: config/ (fan-in=10)
-  HUB: parser/ (fan-in=11)
-  HUB: dsl/ (fan-in=8)
-  HUB: registry/ (fan-in=5)
-  HUB: generator/ (fan-in=6)
-  HUB: ai_gateway/ (fan-in=14)
+                                         cli             generator            ai_gateway              executor            web.routes            interfaces                config                parser               planner                   dsl          integrations             contracts              registry  integrations.bridges                   sdk
+                   cli                    ──                     3                     6                     2                                                                 4                     3                     2                     2                                                                 1                     2                        !! fan-out
+             generator                    ←3                    ──                     1                     2                                                                                       1                     2                     2                     2                     5                                                                    hub
+            ai_gateway                    ←6                    ←1                    ──                                          ←7                                           1                                                                                                                                                                                  hub
+              executor                    ←2                    ←2                                          ──                    ←3                    ←1                     2                                                                                       2                                           1                                              hub
+            web.routes                                                                 7                     3                    ──                                           2                     2                     1                                                                                                                                      !! fan-out
+            interfaces                                                                                       1                                          ──                                           2                     3                     2                                                                 1                     2                        !! fan-out
+                config                    ←4                                          ←1                    ←2                    ←2                                          ──                                                                                      ←1                                                                                          hub
+                parser                    ←3                    ←1                                                                ←2                    ←2                                          ──                                                                                                                                                        ←2  hub
+               planner                    ←2                    ←2                                                                ←1                    ←3                                                                ──                                                                                       1                                              hub
+                   dsl                    ←2                    ←2                                                                                      ←2                                                                                      ──                                                                                                            ←2  hub
+          integrations                                          ←2                                           2                                                                 1                                                                                      ──                                                                                        
+             contracts                                          ←5                                                                                                                                                                                                                          ──                                                                    hub
+              registry                    ←1                                                                ←1                                          ←1                                                                ←1                                                                                      ──                                              hub
+  integrations.bridges                    ←2                                                                                                            ←2                                                                                                                                                                              ──                      
+                   sdk                                                                                                                                                                               2                                           2                                                                                                            ──
+  CYCLES: none
   HUB: executor/ (fan-in=10)
+  HUB: dsl/ (fan-in=8)
+  HUB: generator/ (fan-in=5)
+  HUB: config/ (fan-in=10)
+  HUB: contracts/ (fan-in=6)
+  HUB: planner/ (fan-in=8)
+  HUB: registry/ (fan-in=5)
+  HUB: parser/ (fan-in=10)
+  HUB: ai_gateway/ (fan-in=14)
+  SMELL: generator/ fan-out=15 → split needed
+  SMELL: web.routes/ fan-out=15 → split needed
   SMELL: cli/ fan-out=25 → split needed
   SMELL: interfaces/ fan-out=11 → split needed
-  SMELL: generator/ fan-out=10 → split needed
-  SMELL: web.routes/ fan-out=15 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

@@ -375,10 +375,3 @@ console.log("Goal: {ir.intent.goal}");
         }
 
 
-def plan_intent(ir: IntentIR) -> DryRunResult:
-    """Convenience function to plan and simulate an intent."""
-    if ir.stack and ir.stack.services:
-        from planner.stack_planner import plan_stack
-        return plan_stack(ir)
-    planner = Planner()
-    return planner.dry_run(ir)

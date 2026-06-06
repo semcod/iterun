@@ -1,52 +1,52 @@
-# iterun | 354 func | 57f | 12440L | python | 2026-06-06
+# iterun | 421 func | 64f | 12799L | python | 2026-06-06
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.4  critical=43 (limit:10)  dup=3  cycles=1
+  CC̄=3.8  critical=30 (limit:10)  dup=3  cycles=0
 
 ALERTS[20]:
-  !!! cc_exceeded      CLI.cmd_execute = 39 (limit:15)
-  !!! cc_exceeded      run_pipeline = 33 (limit:15)
-  !!! high_fan_out     execute_pactown = 31 (limit:10)
-  !!! cc_exceeded      CLI.interactive_mode = 30 (limit:15)
-  !!! high_fan_out     discover_workspace = 27 (limit:10)
-  !!! high_fan_out     verify_contract = 26 (limit:10)
-  !!! cc_exceeded      discover_workspace = 25 (limit:15)
-  !!! high_fan_out     run_pipeline = 25 (limit:10)
-  !!! high_fan_out     CLI.interactive_mode = 23 (limit:10)
-  !!  cc_exceeded      check_expectations = 23 (limit:15)
+  !!  high_fan_out     verify_contract = 16 (limit:10)
+  !!  high_fan_out     discover_artifacts = 16 (limit:10)
+  !!  high_fan_out     IntentGenerator.generate = 15 (limit:10)
+  !   high_fan_out     write_stack_artifacts = 14 (limit:10)
+  !   high_fan_out     _dispatch_generate_yaml_only = 14 (limit:10)
+  !   high_fan_out     CLI.cmd_iterate = 14 (limit:10)
+  !   high_fan_out     DSLParser._parse_stack = 14 (limit:10)
+  !   high_fan_out     intent_to_openapi = 13 (limit:10)
+  !   high_fan_out     build_stack_services = 13 (limit:10)
+  !   high_fan_out     load_workspace_context = 13 (limit:10)
 
-MODULES[141] (top by size):
+MODULES[149] (top by size):
   M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
-  M[cli/shell.py] 586L C:2 F:23 CC↑39 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[ai_gateway/feedback_loop.py] 385L C:3 F:14 CC↑17 D:2 (python)
-  M[planner/simulator.py] 384L C:2 F:17 CC↑9 D:4 (python)
+  M[cli/shell.py] 480L C:1 F:24 CC↑12 D:0 (python)
+  M[ai_gateway/feedback_loop.py] 386L C:3 F:17 CC↑10 D:2 (python)
+  M[planner/simulator.py] 377L C:2 F:16 CC↑9 D:0 (python)
+  M[generator/pipeline.py] 358L C:0 F:12 CC↑11 D:1 (python)
   M[ai_gateway/gateway.py] 352L C:1 F:13 CC↑10 D:4 (python)
-  M[parser/dsl_parser.py] 330L C:3 F:14 CC↑21 D:6 (python)
-  M[executor/runner.py] 306L C:1 F:9 CC↑18 D:4 (python)
+  M[parser/dsl_parser.py] 337L C:3 F:18 CC↑14 D:5 (python)
+  M[executor/runner.py] 315L C:1 F:12 CC↑9 D:5 (python)
   M[ir/models.py] 298L C:10 F:18 CC↑5 D:0 (python)
-  M[ai_gateway/model_catalog.py] 283L C:3 F:7 CC↑15 D:0 (python)
+  M[cli/dispatch.py] 294L C:0 F:15 CC↑14 D:1 (python)
+  M[ai_gateway/model_catalog.py] 290L C:3 F:10 CC↑7 D:0 (python)
   M[executor/docker_ops.py] 283L C:0 F:6 CC↑13 D:2 (python)
   M[web/routes/intents.py] 280L C:0 F:19 CC↑6 D:0 (python)
-  M[generator/pipeline.py] 278L C:1 F:7 CC↑33 D:1 (python)
-  M[cli/dispatch.py] 266L C:0 F:9 CC↑17 D:1 (python)
-  M[interfaces/service.py] 252L C:1 F:14 CC↑7 D:0 (python)
-  LANGS: python:74/shell:27/txt:20/yaml:18/other:1/toml:1
+  M[interfaces/service.py] 261L C:1 F:14 CC↑7 D:0 (python)
+  LANGS: python:82/shell:27/txt:20/yaml:18/other:1/toml:1
 
 HOTSPOTS[10]:
-  ★ execute_pactown fan=31  // Run via pactown Orchestrator (STACK) or ServiceRunner (single service).
-  ★ discover_workspace fan=27  // Build registry manifest by scanning workspace artifacts.
-  ★ verify_contract fan=26  // Orchestrates 26 calls
-  ★ run_pipeline fan=25  // Orchestrates 25 calls
-  ★ CLI.interactive_mode fan=23  // Orchestrates 23 calls
+  ★ verify_contract fan=16  // Orchestrates 16 calls
+  ★ discover_artifacts fan=16  // Scan workspace for known and generated artifacts.
+  ★ IntentGenerator.generate fan=15  // Orchestrates 15 calls
+  ★ write_stack_artifacts fan=14  // Orchestrates 14 calls
+  ★ _dispatch_generate_yaml_only fan=14  // 14-way dispatch
 
-REFACTOR[15]:
-  [1] H/L Split run_pipeline (CC=33)
-  [2] H/L Split CLI.cmd_execute (CC=39)
-  [3] H/L Split CLI.interactive_mode (CC=30)
-  [4] H/L Split discover_workspace (CC=25)
-  [5] H/H Split god module cli/shell.py (586L, 2 classes)
+REFACTOR[5]:
+  [1] H/H Split god module goal.yaml (512L, 0 classes)
+  [2] H/H Split god module planfile.yaml (1319L, 0 classes)
+  [3] M/M Reduce verify_contract fan-out (currently 16)
+  [4] M/M Reduce discover_artifacts fan-out (currently 16)
+  [5] M/M Reduce IntentGenerator.generate fan-out (currently 15)
 
 EVOLUTION:
-  2026-06-06 CC̄=4.4 crit=43 12440L // Automated analysis
+  2026-06-06 CC̄=3.8 crit=30 12799L // Automated analysis

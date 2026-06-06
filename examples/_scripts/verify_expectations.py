@@ -40,7 +40,7 @@ def verify(
     intent_path: Path,
     base_url: str | None,
 ) -> list[str]:
-    from generator.expectations import check_expectations
+    from contracts.expectations import check_expectations
 
     expectations = _load_yaml(expectations_path)
     intent_data = _load_yaml(intent_path)

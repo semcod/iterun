@@ -9,10 +9,11 @@ from typing import Any
 from dsl.schema import get_json_schema, validate_yaml_document
 from executor.runner import execute_intent
 from generator.intent_generator import GenerateResult, IntentGenerator
-from generator.pipeline import PipelineResult, run_pipeline
+from generator.pipeline import PipelineResult, run_pipeline as run_generator_pipeline
 from ir.models import IntentIR
 from parser.dsl_parser import parse_dsl, ParseError, ValidationError
-from planner.simulator import plan_intent, DryRunResult
+from planner.plan import plan_intent
+from planner.simulator import DryRunResult
 
 
 def _write_plan_output(ir: IntentIR, result: DryRunResult, output_dir: str | Path) -> dict[str, str]:
@@ -97,7 +98,7 @@ class IterunService:
                 {
                     "id": "pactown",
                     "description": "Universal runtime (ITERUN_RUNTIME=pactown)",
-                    "entry": "integrations.pactown_runtime.execute_pactown",
+                    "entry": "executor.pactown.execute_pactown",
                 },
             ],
             "rest_endpoints": [
@@ -176,7 +177,7 @@ class IterunService:
         max_verify_iterations: int = 3,
         model: str | None = None,
     ) -> PipelineResult:
-        result = run_pipeline(
+        result = run_generator_pipeline(
             prompt,
             output_dir=output_dir,
             execute=execute,

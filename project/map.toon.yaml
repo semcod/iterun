@@ -1,24 +1,30 @@
-# iterun | 121f 12325L | python:90,shell:30,less:1 | 2026-06-06
-# stats: 206 func | 99 cls | 121 mod | CC̄=5.2 | critical:27 | cycles:0
-# alerts[5]: CC run_pipeline=33; CC discover_workspace=25; CC verify=23; CC check_expectations=23; CC execute_pactown=21
-# hotspots[5]: execute_pactown fan=31; verify_contract fan=24; run_pipeline fan=21; discover_workspace fan=20; _dispatch_generate_yaml_only fan=13
+# iterun | 129f 12714L | python:98,shell:30,less:1 | 2026-06-06
+# stats: 257 func | 100 cls | 129 mod | CC̄=4.5 | critical:20 | cycles:0
+# alerts[5]: CC dispatch_command=14; CC execute_docker=13; CC validate_endpoints=13; CC build_stack_services=13; CC _dispatch_plan=12
+# hotspots[5]: verify_contract fan=15; _dispatch_generate_yaml_only fan=13; discover_artifacts fan=13; dispatch_command fan=12; _finalize_pactown fan=12
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[121]:
+M[129]:
   ai_gateway/__init__.py,31
-  ai_gateway/feedback_loop.py,386
+  ai_gateway/feedback_loop.py,387
   ai_gateway/gateway.py,353
-  ai_gateway/model_catalog.py,284
+  ai_gateway/model_catalog.py,291
   app.doql.less,308
   cli/__init__.py,21
   cli/__main__.py,5
-  cli/dispatch.py,267
+  cli/colors.py,17
+  cli/dispatch.py,295
   cli/main.py,99
   cli/plan_artifacts.py,43
-  cli/shell.py,587
-  config.py,172
+  cli/shell.py,481
+  cli/shell_interactive.py,93
+  cli/shell_output.py,98
+  config.py,183
+  contracts/__init__.py,11
+  contracts/api_actions.py,36
+  contracts/expectations.py,109
   dsl/__init__.py,18
-  dsl/schema.py,251
+  dsl/schema.py,243
   examples/01-user-api/run.sh,15
   examples/02-ping-smoke/run.sh,9
   examples/03-flask-api/run.sh,9
@@ -45,7 +51,7 @@ M[121]:
   examples/_scripts/intent_to_intract.py,30
   examples/_scripts/intent_to_openapi.py,77
   examples/_scripts/intent_to_testql.py,27
-  examples/_scripts/verify_expectations.py,128
+  examples/_scripts/verify_expectations.py,67
   examples/_verify.sh,166
   examples/run-all.sh,25
   examples/run-e2e.sh,25
@@ -54,47 +60,49 @@ M[121]:
   executor/__init__.py,2
   executor/docker_ops.py,284
   executor/models.py,76
-  executor/runner.py,307
+  executor/pactown.py,227
+  executor/runner.py,316
+  executor/runtime_stop.py,23
   executor/validation.py,185
-  generator/__init__.py,24
-  generator/contract_verify.py,229
-  generator/expectations.py,97
+  generator/__init__.py,25
+  generator/contract_verify.py,237
   generator/intent_generator.py,239
-  generator/intract_manifest.py,120
-  generator/pipeline.py,279
-  generator/session.py,53
+  generator/intract_manifest.py,93
+  generator/pipeline.py,359
+  generator/results.py,38
+  generator/session.py,52
   generator/testql_scenario.py,80
-  integrations/__init__.py,19
+  integrations/__init__.py,16
   integrations/adapters/__init__.py,15
   integrations/adapters/backstage.py,75
   integrations/adapters/base.py,30
-  integrations/adapters/docker.py,80
-  integrations/adapters/filesystem.py,17
+  integrations/adapters/docker.py,91
+  integrations/adapters/filesystem.py,18
   integrations/adapters/opentelemetry.py,29
   integrations/bridges/__init__.py,4
-  integrations/bridges/pipeline.py,50
-  integrations/markpact_pack.py,105
+  integrations/bridges/pipeline.py,48
+  integrations/markpact_pack.py,116
   integrations/pactown_config.py,71
-  integrations/pactown_runtime.py,197
-  integrations/runtime_stop.py,23
   interfaces/__init__.py,6
   interfaces/models.py,53
-  interfaces/service.py,253
+  interfaces/service.py,262
   ir/__init__.py,10
   ir/models.py,299
   iterun_mcp/__init__.py,2
   iterun_mcp/server.py,146
   parser/__init__.py,4
-  parser/dsl_parser.py,331
-  planner/__init__.py,4
-  planner/simulator.py,385
+  parser/dsl_parser.py,338
+  planner/__init__.py,5
+  planner/plan.py,16
+  planner/simulator.py,378
   planner/stack_artifacts.py,67
-  planner/stack_planner.py,227
+  planner/stack_planner.py,235
   project.sh,59
   registry/__init__.py,14
   registry/catalog.py,72
-  registry/discover.py,80
+  registry/discover.py,62
   registry/discover_artifacts.py,98
+  registry/discover_context.py,78
   registry/discover_io.py,66
   registry/discover_services.py,97
   registry/labels.py,54
@@ -132,7 +140,7 @@ D:
     e: create_feedback_loop,analyze_intent,FeedbackSuggestion,FeedbackResult,FeedbackLoop
     FeedbackSuggestion: to_dict(0)  # A single improvement suggestion.
     FeedbackResult: to_dict(0)  # Result of feedback loop iteration.
-    FeedbackLoop: __init__(2),analyze(2),apply_suggestions(3),iterate(4),suggest_next_steps(1),_build_analysis_prompt(2),_parse_suggestions(1),_extract_action(1),_parse_action(1),_process_user_feedback(2)  # LLM-powered feedback loop for iterative intent refinement.
+    FeedbackLoop: __init__(2),analyze(2),apply_suggestions(3),iterate(4),_endpoint_paths(1),_suggest_health_endpoints(1),_suggest_workflow_steps(1),suggest_next_steps(1),_build_analysis_prompt(2),_parse_suggestions(1),_extract_action(1),_parse_action(1),_process_user_feedback(2)  # LLM-powered feedback loop for iterative intent refinement.
     create_feedback_loop(model)
     analyze_intent(ir;focus)
   ai_gateway/gateway.py:
@@ -145,19 +153,28 @@ D:
     e: ModelProvider,ModelConfig,GatewayConfig
     ModelProvider:  # Supported model providers.
     ModelConfig: to_dict(0)  # Configuration for a specific model.
-    GatewayConfig: __post_init__(0),resolve_model(1),litellm_model_id(1),get_available_models(1),get_model(1),to_dict(0)  # AI Gateway configuration.
+    GatewayConfig: _load_from_app_config(0),_load_from_env(0),_resolve_default_provider(0),__post_init__(0),resolve_model(1),litellm_model_id(1),get_available_models(1),get_model(1),to_dict(0)  # AI Gateway configuration.
   cli/__init__.py:
     e: __getattr__
     __getattr__(name)
   cli/__main__.py:
+  cli/colors.py:
+    e: Colors
+    Colors: disable(1)
   cli/dispatch.py:
-    e: dispatch_command,_dispatch_plan,_dispatch_execute,_dispatch_parse,_dispatch_validate,_dispatch_generate,_dispatch_generate_pipeline,_dispatch_generate_yaml_only,_dispatch_registry
+    e: dispatch_command,_dispatch_plan,_workspace_has_artifacts,_maybe_plan_before_execute,_print_execute_result,_dispatch_execute,_dispatch_parse,_dispatch_validate,_dispatch_generate,_print_generate_success,_print_generate_failure,_refresh_pipeline_registry,_dispatch_generate_pipeline,_dispatch_generate_yaml_only,_dispatch_registry
     dispatch_command(args;cli)
     _dispatch_plan(args;cli)
+    _workspace_has_artifacts(ws)
+    _maybe_plan_before_execute(args;cli;ir)
+    _print_execute_result(args;cli;ir;result)
     _dispatch_execute(args;cli)
     _dispatch_parse(args;cli)
     _dispatch_validate(args;cli)
     _dispatch_generate(args;cli)
+    _print_generate_success(args;cli;result;output_dir)
+    _print_generate_failure(args;cli;result)
+    _refresh_pipeline_registry(result)
     _dispatch_generate_pipeline(args;cli;prompt;output_dir;run_pipeline)
     _dispatch_generate_yaml_only(args;cli;prompt;output_dir)
     _dispatch_registry(args;cli)
@@ -169,12 +186,30 @@ D:
     e: write_plan_artifacts
     write_plan_artifacts(ir;result;output_dir)
   cli/shell.py:
-    e: Colors,CLI
-    Colors: disable(1)  # ANSI color codes for terminal output.
-    CLI: __init__(2),print_header(1),print_success(1),print_error(1),print_warning(1),print_info(1),cmd_new(2),cmd_load(1),cmd_parse(1),cmd_plan(1),cmd_iterate(2),cmd_iterun(2),cmd_execute(4),cmd_show(2),cmd_save(2),interactive_mode(0),cmd_ai_suggest(2),cmd_ai_apply(1),cmd_ai_chat(2),cmd_models(1),cmd_ai_health(0),_show_help(0)  # Interactive CLI for iterun system.
+    e: CLI
+    CLI: __init__(2),print_header(1),print_success(1),print_error(1),print_warning(1),print_info(1),cmd_new(2),cmd_load(1),cmd_parse(1),cmd_plan(1),cmd_iterate(2),cmd_iterun(2),_skip_iterun_confirmation(0),_ensure_execute_approved(1),cmd_execute(4),cmd_show(2),cmd_save(2),interactive_mode(0),cmd_ai_suggest(2),cmd_ai_apply(1),cmd_ai_chat(2),cmd_models(1),cmd_ai_health(0),_show_help(0)  # Interactive CLI for iterun system.
+  cli/shell_interactive.py:
+    e: _dispatch_basic,_dispatch_ai,handle_interactive_line,build_prompt
+    _dispatch_basic(cli;cmd;args)
+    _dispatch_ai(cli;cmd;args;ai_available)
+    handle_interactive_line(cli;line)
+    build_prompt(cli)
+  cli/shell_output.py:
+    e: log_status_color,print_execution_logs,print_validation_success,print_execution_success,print_validation_errors,print_container_logs,print_execution_failure
+    log_status_color(log)
+    print_execution_logs(result)
+    print_validation_success(result)
+    print_execution_success(cli;result)
+    print_validation_errors(result)
+    print_container_logs(workspace;container_id)
+    print_execution_failure(cli;result;workspace)
   config.py:
-    e: load_dotenv,get_env,get_env_bool,get_env_int,get_env_float,get_config,reload_config,configure,AppConfig
+    e: _load_getv_profiles,_apply_env_pairs,_load_envstore,_parse_dotenv_lines,load_dotenv,get_env,get_env_bool,get_env_int,get_env_float,get_config,reload_config,configure,AppConfig
     AppConfig:  # Main application configuration.
+    _load_getv_profiles()
+    _apply_env_pairs(pairs)
+    _load_envstore(env_path)
+    _parse_dotenv_lines(env_path)
     load_dotenv(env_path)
     get_env(key;default)
     get_env_bool(key;default)
@@ -183,6 +218,21 @@ D:
     get_config()
     reload_config()
     configure()
+  contracts/__init__.py:
+  contracts/api_actions.py:
+    e: _parse_action_strings,parse_api_actions
+    _parse_action_strings(actions)
+    parse_api_actions(intent_data)
+  contracts/expectations.py:
+    e: _probe_path,_http_probe,_check_metadata,_check_declared_endpoints,_check_endpoint_response,_check_live_endpoint,check_expectations,load_and_check_expectations
+    _probe_path(path)
+    _http_probe(base_url;method;path)
+    _check_metadata(intent_data;expectations)
+    _check_declared_endpoints(intent_data;expectations)
+    _check_endpoint_response(endpoint;data;path)
+    _check_live_endpoint(base_url;endpoint)
+    check_expectations(intent_data;expectations;base_url)
+    load_and_check_expectations(workspace;intent_path;base_url)
   dsl/__init__.py:
   dsl/schema.py:
     e: get_json_schema,document_to_yaml,validate_yaml_document,get_system_prompt,IntentSection,EnvironmentSection,ImplementationSection,StackServiceSection,StackSection,ExecutionSection,IntentDSLDocument
@@ -217,10 +267,9 @@ D:
     e: main
     main()
   examples/_scripts/verify_expectations.py:
-    e: _load_yaml,_parse_actions,_http_probe,verify,main
+    e: _load_yaml,_map_expectation_errors,verify,main
     _load_yaml(path)
-    _parse_actions(intent_data)
-    _http_probe(base_url;method;path;timeout)
+    _map_expectation_errors(raw_errors)
     verify(expectations_path;intent_path;base_url)
     main()
   executor/__init__.py:
@@ -237,10 +286,26 @@ D:
     ExecutionError:  # Raised when execution fails.
     ValidationResult: __init__(0),add_check(4),to_dict(0)  # Result of post-execution validation.
     ExecutionResult: __init__(0),add_log(1),to_dict(0)  # Result of intent execution.
+  executor/pactown.py:
+    e: _append_action_urls,_collect_stack_endpoints,_collect_single_endpoints,_collect_endpoints,_validate_urls,stop_pactown_for_intent,_prepare_pactown_workspace,_start_pactown_stack,_start_pactown_single,_finalize_pactown,execute_pactown
+    _append_action_urls(endpoints;base;actions)
+    _collect_stack_endpoints(ir;extra)
+    _collect_single_endpoints(ir;base_url)
+    _collect_endpoints(ir;base_url;extra)
+    _validate_urls(endpoints;result;timeout)
+    stop_pactown_for_intent(intent_name;workspace)
+    _prepare_pactown_workspace(ir;ws;result)
+    _start_pactown_stack(ws;ir;result)
+    _start_pactown_single(ws;ir;result)
+    _finalize_pactown(ir;ws;result;service_urls)
+    execute_pactown(ir;workspace)
   executor/runner.py:
     e: execute_intent,Executor
-    Executor: __init__(1),execute(4),_validate_and_fix(3),_restart_container(2),_write_artifacts(2),_execute_local(2),get_container_logs(2),cleanup(0)  # Executes approved intents with validation and auto-fix.
+    Executor: __init__(1),_check_iterun_boundary(3),_run_runtime(2),_finalize_success(1),execute(4),_validate_and_fix(3),_restart_container(2),_write_artifacts(2),_execute_local(2),get_container_logs(2),cleanup(0)  # Executes approved intents with validation and auto-fix.
     execute_intent(ir;workspace;skip_iterun_check;validate;auto_fix)
+  executor/runtime_stop.py:
+    e: stop_runtime_for_intent
+    stop_runtime_for_intent(intent_name;workspace)
   executor/validation.py:
     e: filter_validation_endpoints,validate_endpoints,add_main_block,attempt_auto_fix
     filter_validation_endpoints(endpoints)
@@ -249,7 +314,7 @@ D:
     attempt_auto_fix(ir;result;validation)
   generator/__init__.py:
   generator/contract_verify.py:
-    e: _probe_path,discover_service_url,readiness_paths,_endpoint_responding,wait_for_service,_http_probe,run_testql,write_contract_artifacts,verify_contract,VerifyResult
+    e: _probe_path,discover_service_url,readiness_paths,_endpoint_responding,wait_for_service,_http_probe,run_testql,write_contract_artifacts,_run_testql_checks,_run_http_probes,_write_verify_result,verify_contract,VerifyResult
     VerifyResult: to_dict(0)
     _probe_path(path)
     discover_service_url(intent_name;fallback_endpoints)
@@ -259,13 +324,10 @@ D:
     _http_probe(base_url;method;path)
     run_testql(scenario_path;base_url;timeout_ms)
     write_contract_artifacts(workspace;intent_path)
+    _run_testql_checks(result;scenario;base_url)
+    _run_http_probes(result;data;base_url)
+    _write_verify_result(ws;result)
     verify_contract(workspace;intent_path)
-  generator/expectations.py:
-    e: _probe_path,_http_probe,check_expectations,load_and_check_expectations
-    _probe_path(path)
-    _http_probe(base_url;method;path)
-    check_expectations(intent_data;expectations;base_url)
-    load_and_check_expectations(workspace;intent_path;base_url)
   generator/intent_generator.py:
     e: extract_yaml_from_llm,_fallback_yaml,_build_user_prompt,GenerateAttempt,GenerateResult,IntentGenerator
     GenerateAttempt: to_dict(0)
@@ -275,23 +337,29 @@ D:
     _fallback_yaml(prompt)
     _build_user_prompt(user_prompt)
   generator/intract_manifest.py:
-    e: _slug,_safe_id,_parse_action_strings,parse_api_actions,build_intract_manifest,intent_to_intract_dict,write_intract_manifest
+    e: _slug,_safe_id,build_intract_manifest,intent_to_intract_dict,write_intract_manifest
     _slug(path)
     _safe_id(name)
-    _parse_action_strings(actions)
-    parse_api_actions(intent_data)
     build_intract_manifest(intent_data)
     intent_to_intract_dict(intent_path)
     write_intract_manifest(intent_path;output_path)
   generator/pipeline.py:
-    e: _write_plan_artifacts,_expectations_summary,_build_repair_prompt,_container_logs,_finalize,run_pipeline,PipelineResult
-    PipelineResult: to_dict(0)
+    e: _write_plan_artifacts,_expectations_summary,_build_repair_prompt,_container_logs,_finalize,_write_verify_round_log,_generate_and_plan,_finish_without_verify,_handle_verify_round,_handle_execute_error,_run_pipeline_round,run_pipeline
     _write_plan_artifacts(workspace;ir;plan_result)
     _expectations_summary(workspace)
     _build_repair_prompt(prompt;errors;workspace)
     _container_logs(workspace;container_id)
     _finalize(out;workspace)
+    _write_verify_round_log(workspace;rounds)
+    _generate_and_plan(out)
+    _finish_without_verify(out;exec_result;workspace;container_id)
+    _handle_verify_round(out)
+    _handle_execute_error(out)
+    _run_pipeline_round(out)
     run_pipeline(prompt)
+  generator/results.py:
+    e: PipelineResult
+    PipelineResult: to_dict(0)
   generator/session.py:
     e: write_session_artifacts
     write_session_artifacts(workspace;result)
@@ -311,8 +379,10 @@ D:
     RegistryAdapter: collect(1),enrich(2)  # Collect or export registry data from an external system.
     RegistryExporter: export(2)  # Export registry to industry-standard formats.
   integrations/adapters/docker.py:
-    e: _running_iterun_containers,DockerAdapter
-    DockerAdapter: collect(1),enrich(2)  # Merge docker ps / compose state into registry manifest.
+    e: _match_service_containers,_apply_container_to_service,_running_iterun_containers,DockerAdapter
+    DockerAdapter: collect(1),enrich(2),_merge_container_state(2)  # Merge docker ps / compose state into registry manifest.
+    _match_service_containers(name;intent;running)
+    _apply_container_to_service(svc;container)
     _running_iterun_containers()
   integrations/adapters/filesystem.py:
     e: FilesystemAdapter
@@ -326,23 +396,16 @@ D:
     refresh_registry(workspace)
     refresh_registry_from_pipeline(workspace;result)
   integrations/markpact_pack.py:
-    e: _run_command_for_ir,pack_workspace
+    e: _run_command_for_ir,_service_run_command,_pack_service_readmes,pack_workspace
     _run_command_for_ir(ir)
+    _service_run_command(svc)
+    _pack_service_readmes(ws;ir;title;pack_directory)
     pack_workspace(workspace;ir)
   integrations/pactown_config.py:
     e: _health_path,build_pactown_config,write_pactown_config
     _health_path(svc)
     build_pactown_config(ir;workspace)
     write_pactown_config(ir;workspace)
-  integrations/pactown_runtime.py:
-    e: _collect_endpoints,_validate_urls,stop_pactown_for_intent,execute_pactown
-    _collect_endpoints(ir;base_url;extra)
-    _validate_urls(endpoints;result;timeout)
-    stop_pactown_for_intent(intent_name;workspace)
-    execute_pactown(ir;workspace)
-  integrations/runtime_stop.py:
-    e: stop_runtime_for_intent
-    stop_runtime_for_intent(intent_name;workspace)
   interfaces/__init__.py:
   interfaces/models.py:
     e: ValidateYAMLRequest,GenerateRequest,PipelineRequest,PlanYAMLRequest,ParseRequest,ExecuteRequest,InterfacesInfo
@@ -377,25 +440,29 @@ D:
     e: parse_dsl,parse_dsl_file,ParseError,ValidationError,DSLParser
     ParseError: __init__(2)  # Raised when DSL parsing fails.
     ValidationError: __init__(1)  # Raised when DSL validation fails.
-    DSLParser: __init__(0),parse_file(1),parse(1),_parse_intent(1),_parse_environment(1),_parse_implementation(1),_parse_action(1),_parse_stack(1),_parse_execution(1),_validate(1)  # Parser for ITERUN DSL format.
+    DSLParser: __init__(0),parse_file(1),parse(1),_parse_intent(1),_parse_environment(1),_parse_implementation(1),_parse_action(1),_parse_stack(1),_parse_execution(1),_validate_stack_services(1),_validate_actions_required(1),_validate_dangerous_actions(1),_validate_framework_compat(1),_validate(1)  # Parser for ITERUN DSL format.
     parse_dsl(content)
     parse_dsl_file(filepath)
   planner/__init__.py:
+  planner/plan.py:
+    e: plan_intent
+    plan_intent(ir)
   planner/simulator.py:
-    e: _endpoint_to_func_name,plan_intent,DryRunResult,Planner
+    e: _endpoint_to_func_name,DryRunResult,Planner
     DryRunResult: __init__(0),add_log(1),to_dict(0)  # Result of a dry-run simulation.
     Planner: __init__(0),dry_run(1),_generate_python_code(1),_generate_fastapi_code(1),_generate_flask_code(1),_generate_basic_python_code(1),_generate_node_code(1),_generate_express_code(1),_generate_basic_node_code(1),_generate_dockerfile(1),_simulate_action(2),_estimate_resources(1)  # Plans and simulates intent execution.
     _endpoint_to_func_name(endpoint;method;used)
-    plan_intent(ir)
   planner/stack_artifacts.py:
     e: write_stack_artifacts
     write_stack_artifacts(workspace;ir;plan_result)
   planner/stack_planner.py:
-    e: _service_ir,_gateway_proxy_code,_resolve_upstream,_build_compose,plan_stack
+    e: _service_ir,_gateway_proxy_code,_resolve_upstream,_build_compose,_plan_prebuilt_service,_plan_generated_service,plan_stack
     _service_ir(parent;svc)
     _gateway_proxy_code(svc;upstreams)
     _resolve_upstream(path;gateway;services)
     _build_compose(parent;artifacts)
+    _plan_prebuilt_service(result;svc)
+    _plan_generated_service(result;ir;svc;svc_map;planner)
     plan_stack(ir)
   registry/__init__.py:
   registry/catalog.py:
@@ -403,12 +470,20 @@ D:
     RegistryCatalog: __init__(1),registry_path(0),discover(0),load(0),refresh(0),write(1),summary(0)  # Workspace-scoped service and artifact registry.
     discover_glob(pattern)
   registry/discover.py:
-    e: discover_workspace
+    e: _build_services,discover_workspace
+    _build_services(ctx)
     discover_workspace(workspace)
   registry/discover_artifacts.py:
     e: sha256_file,discover_artifacts
     sha256_file(path)
     discover_artifacts(workspace)
+  registry/discover_context.py:
+    e: _intent_identity,_stack_metadata,_workspace_prompt,load_workspace_context,WorkspaceContext
+    WorkspaceContext:
+    _intent_identity(ws;intent_doc;session)
+    _stack_metadata(intent_doc;ws)
+    _workspace_prompt(ws;session)
+    load_workspace_context(workspace)
   registry/discover_io.py:
     e: load_session,load_stack_urls,intent_from_workspace,phase_from_session
     load_session(workspace)

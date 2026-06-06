@@ -3,6 +3,20 @@
 ## [0.1.10] - 2026-06-06
 
 ### Fixed
+- Fix unused-imports issues (ticket-a7ae9a42)
+- Fix magic-numbers issues (ticket-cc2f7cb3)
+- Fix unused-imports issues (ticket-e803bc29)
+
+## [0.1.10] - 2026-06-06
+
+### Fixed
+- Fix string-concat issues (ticket-a2d11e40)
+- Fix unused-imports issues (ticket-bab201a8)
+- Fix magic-numbers issues (ticket-0aef330e)
+
+## [0.1.10] - 2026-06-06
+
+### Fixed
 - Fix unused-imports issues (ticket-6d2431df)
 - Fix magic-numbers issues (ticket-7bc68b39)
 - Fix unused-imports issues (ticket-153639af)
@@ -107,6 +121,35 @@
 - `iterun-mcp` ImportError (konflikt `mcp.server` z pakietem PyPI)
 - Registry crash gdy `session.verification` jest `null`
 - Pipeline `success` odzwierciedla fail walidacji endpointów (bez `--verify`)
+
+## [0.1.12] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/e2e/test_expectations.py
+- Update tests/e2e/test_shell.py
+- Update tests/e2e/test_stack_planner.py
+
+### Other
+- Update .code2llm_cache/Makefile_1780755568355196027_7781.pkl
+- Update .code2llm_cache/__init___1780762327442126044_307.pkl
+- Update .code2llm_cache/_common_1780755175625802172_3024.pkl
+- Update .code2llm_cache/_verify_1780755175839804589_4982.pkl
+- Update .code2llm_cache/_verify_1780755565608165512_5142.pkl
+- Update .code2llm_cache/contract_verify_1780755565163160569_7557.pkl
+- Update .code2llm_cache/expectations_1780755177469822993_3539.pkl
+- Update .code2llm_cache/goal_1780754872450340895_12383.pkl
+- Update .code2llm_cache/pipeline_1780755183617892395_8828.pkl
+- Update .code2llm_cache/planfile_1780754884007803798_28207.pkl
+- ... and 47 more files
 
 ## [0.1.11] - 2026-06-06
 

@@ -1,108 +1,52 @@
 project: /home/tom/github/wronai/iterun
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 176
-  total_edges: 179
-  modules_count: 46
+  total_nodes: 235
+  total_edges: 254
+  modules_count: 51
 nodes:
-  integrations.pactown_runtime.stop_pactown_for_intent:
-    name: stop_pactown_for_intent
-    module: integrations.pactown_runtime
-    line: 70
-    cyclomatic_complexity: 5
+  generator.intent_generator.extract_yaml_from_llm:
+    name: extract_yaml_from_llm
+    module: generator.intent_generator
+    line: 80
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  cli.shell_output.print_validation_success:
+    name: print_validation_success
+    module: cli.shell_output
+    line: 29
+    cyclomatic_complexity: 4
     calls_out: 6
     calls_in: 1
-  planner.stack_artifacts.write_stack_artifacts:
-    name: write_stack_artifacts
-    module: planner.stack_artifacts
-    line: 13
-    cyclomatic_complexity: 9
-    calls_out: 22
-    calls_in: 3
-  interfaces.service.IterunService.registry_refresh:
-    name: registry_refresh
-    module: interfaces.service
-    line: 232
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  generator.pipeline.run_pipeline:
-    name: run_pipeline
-    module: generator.pipeline
-    line: 149
-    cyclomatic_complexity: 33
-    calls_out: 37
+  executor.docker_ops.patch_compose_host_ports:
+    name: patch_compose_host_ports
+    module: executor.docker_ops
+    line: 102
+    cyclomatic_complexity: 7
+    calls_out: 7
     calls_in: 1
-  dsl.schema.get_system_prompt:
-    name: get_system_prompt
-    module: dsl.schema
-    line: 226
+  cli.shell_interactive.build_prompt:
+    name: build_prompt
+    module: cli.shell_interactive
+    line: 88
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  config.reload_config:
+    name: reload_config
+    module: config
+    line: 169
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  web.routes.intents.approve_iterun:
-    name: approve_iterun
-    module: web.routes.intents
-    line: 195
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  executor.validation.validate_endpoints:
-    name: validate_endpoints
-    module: executor.validation
-    line: 43
-    cyclomatic_complexity: 13
-    calls_out: 27
-    calls_in: 2
-  web.routes.intents.list_intents:
-    name: list_intents
-    module: web.routes.intents
-    line: 116
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  integrations.pactown_runtime._validate_urls:
-    name: _validate_urls
-    module: integrations.pactown_runtime
-    line: 51
+  cli.dispatch._dispatch_validate:
+    name: _dispatch_validate
+    module: cli.dispatch
+    line: 138
     cyclomatic_complexity: 6
     calls_out: 10
     calls_in: 1
-  registry.labels.build_otel_resource:
-    name: build_otel_resource
-    module: registry.labels
-    line: 36
-    cyclomatic_complexity: 3
-    calls_out: 0
-    calls_in: 2
-  generator.intract_manifest._parse_action_strings:
-    name: _parse_action_strings
-    module: generator.intract_manifest
-    line: 21
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 2
-  sdk.client.IterunClient.validate:
-    name: validate
-    module: sdk.client
-    line: 59
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 0
-  generator.testql_scenario._startup_wait_ms:
-    name: _startup_wait_ms
-    module: generator.testql_scenario
-    line: 18
-    cyclomatic_complexity: 7
-    calls_out: 3
-    calls_in: 1
-  ai_gateway.model_catalog.GatewayConfig.__post_init__:
-    name: __post_init__
-    module: ai_gateway.model_catalog
-    line: 201
-    cyclomatic_complexity: 15
-    calls_out: 8
-    calls_in: 0
   executor.docker_ops.execute_compose_stack:
     name: execute_compose_stack
     module: executor.docker_ops
@@ -110,26 +54,145 @@ nodes:
     cyclomatic_complexity: 9
     calls_out: 11
     calls_in: 1
-  dsl.schema.get_json_schema:
-    name: get_json_schema
-    module: dsl.schema
-    line: 184
+  cli.dispatch._print_generate_success:
+    name: _print_generate_success
+    module: cli.dispatch
+    line: 177
+    cyclomatic_complexity: 8
+    calls_out: 9
+    calls_in: 1
+  ai_gateway.feedback_loop.create_feedback_loop:
+    name: create_feedback_loop
+    module: ai_gateway.feedback_loop
+    line: 378
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 4
-  registry.catalog.discover_glob:
-    name: discover_glob
-    module: registry.catalog
-    line: 59
-    cyclomatic_complexity: 7
-    calls_out: 11
+  executor.runner.Executor._run_runtime:
+    name: _run_runtime
+    module: executor.runner
+    line: 63
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 0
+  planner.stack_planner.plan_stack:
+    name: plan_stack
+    module: planner.stack_planner
+    line: 202
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 1
+  web.routes.ai.generate_code:
+    name: generate_code
+    module: web.routes.ai
+    line: 141
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  contracts.expectations._http_probe:
+    name: _http_probe
+    module: contracts.expectations
+    line: 21
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  planner.simulator._endpoint_to_func_name:
+    name: _endpoint_to_func_name
+    module: planner.simulator
+    line: 17
+    cyclomatic_complexity: 5
+    calls_out: 10
     calls_in: 2
-  ai_gateway.gateway.complete:
-    name: complete
-    module: ai_gateway.gateway
-    line: 345
-    cyclomatic_complexity: 1
+  examples._scripts.verify_expectations.main:
+    name: main
+    module: examples._scripts.verify_expectations
+    line: 50
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  web.routes.intents.container_logs:
+    name: container_logs
+    module: web.routes.intents
+    line: 268
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  config.load_dotenv:
+    name: load_dotenv
+    module: config
+    line: 58
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  ai_gateway.model_catalog.GatewayConfig._load_from_app_config:
+    name: _load_from_app_config
+    module: ai_gateway.model_catalog
+    line: 201
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 0
+  generator.contract_verify._endpoint_responding:
+    name: _endpoint_responding
+    module: generator.contract_verify
+    line: 90
+    cyclomatic_complexity: 3
     calls_out: 2
+    calls_in: 1
+  interfaces.service.IterunService.run_pipeline:
+    name: run_pipeline
+    module: interfaces.service
+    line: 169
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  planner.stack_artifacts.write_stack_artifacts:
+    name: write_stack_artifacts
+    module: planner.stack_artifacts
+    line: 13
+    cyclomatic_complexity: 9
+    calls_out: 22
+    calls_in: 3
+  examples._scripts.annotate_intract._slug:
+    name: _slug
+    module: examples._scripts.annotate_intract
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  cli.dispatch._refresh_pipeline_registry:
+    name: _refresh_pipeline_registry
+    module: cli.dispatch
+    line: 206
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  generator.intract_manifest.intent_to_intract_dict:
+    name: intent_to_intract_dict
+    module: generator.intract_manifest
+    line: 73
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  contracts.expectations._check_declared_endpoints:
+    name: _check_declared_endpoints
+    module: contracts.expectations
+    line: 47
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 1
+  interfaces.service.IterunService.registry_refresh:
+    name: registry_refresh
+    module: interfaces.service
+    line: 241
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  web.routes.ai.ai_suggest:
+    name: ai_suggest
+    module: web.routes.ai
+    line: 100
+    cyclomatic_complexity: 6
+    calls_out: 9
     calls_in: 0
   web.routes.ai.ai_apply_suggestions:
     name: ai_apply_suggestions
@@ -138,83 +201,125 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 8
     calls_in: 0
-  sdk.client.IterunClient.schema:
-    name: schema
-    module: sdk.client
-    line: 51
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  generator.contract_verify._endpoint_responding:
-    name: _endpoint_responding
+  generator.contract_verify.write_contract_artifacts:
+    name: write_contract_artifacts
     module: generator.contract_verify
-    line: 89
-    cyclomatic_complexity: 3
+    line: 158
+    cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  web.routes.ai._intents_store:
-    name: _intents_store
-    module: web.routes.ai
-    line: 20
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 2
-  cli.dispatch._dispatch_registry:
-    name: _dispatch_registry
-    module: cli.dispatch
-    line: 234
-    cyclomatic_complexity: 10
-    calls_out: 12
+  registry.discover_context._intent_identity:
+    name: _intent_identity
+    module: registry.discover_context
+    line: 30
+    cyclomatic_complexity: 6
+    calls_out: 7
     calls_in: 1
-  cli.main.main:
-    name: main
-    module: cli.main
-    line: 81
+  cli.shell_output.print_execution_failure:
+    name: print_execution_failure
+    module: cli.shell_output
+    line: 93
     cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  integrations.adapters.docker.DockerAdapter._merge_container_state:
+    name: _merge_container_state
+    module: integrations.adapters.docker
+    line: 29
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 0
+  web.routes.registry._get_service:
+    name: _get_service
+    module: web.routes.registry
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 4
+  web.routes.intents.list_intents:
+    name: list_intents
+    module: web.routes.intents
+    line: 116
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  cli.dispatch._print_generate_failure:
+    name: _print_generate_failure
+    module: cli.dispatch
+    line: 195
+    cyclomatic_complexity: 7
+    calls_out: 3
+    calls_in: 1
+  generator.session.write_session_artifacts:
+    name: write_session_artifacts
+    module: generator.session
+    line: 13
+    cyclomatic_complexity: 5
+    calls_out: 16
+    calls_in: 1
+  config._parse_dotenv_lines:
+    name: _parse_dotenv_lines
+    module: config
+    line: 46
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 1
+  web.routes.intents.plan:
+    name: plan
+    module: web.routes.intents
+    line: 150
+    cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 0
-  registry.discover_artifacts.discover_artifacts:
-    name: discover_artifacts
-    module: registry.discover_artifacts
-    line: 35
-    cyclomatic_complexity: 12
-    calls_out: 28
-    calls_in: 1
-  ai_gateway.gateway.suggest_improvements:
-    name: suggest_improvements
-    module: ai_gateway.gateway
-    line: 350
-    cyclomatic_complexity: 1
-    calls_out: 2
+  interfaces.service.IterunService.validate_yaml:
+    name: validate_yaml
+    module: interfaces.service
+    line: 144
+    cyclomatic_complexity: 4
+    calls_out: 3
     calls_in: 0
-  integrations.pactown_config.build_pactown_config:
-    name: build_pactown_config
-    module: integrations.pactown_config
-    line: 24
-    cyclomatic_complexity: 12
-    calls_out: 6
-    calls_in: 1
-  planner.stack_planner._build_compose:
-    name: _build_compose
-    module: planner.stack_planner
-    line: 120
-    cyclomatic_complexity: 9
+  generator.contract_verify.wait_for_service:
+    name: wait_for_service
+    module: generator.contract_verify
+    line: 102
+    cyclomatic_complexity: 5
     calls_out: 4
     calls_in: 1
-  cli.shell.CLI.cmd_models:
-    name: cmd_models
-    module: cli.shell
-    line: 526
-    cyclomatic_complexity: 3
-    calls_out: 9
+  web.routes.intents.get_intent:
+    name: get_intent
+    module: web.routes.intents
+    line: 133
+    cyclomatic_complexity: 2
+    calls_out: 4
     calls_in: 0
-  cli.plan_artifacts.write_plan_artifacts:
-    name: write_plan_artifacts
-    module: cli.plan_artifacts
+  cli.shell_output.log_status_color:
+    name: log_status_color
+    module: cli.shell_output
     line: 12
-    cyclomatic_complexity: 7
-    calls_out: 12
-    calls_in: 2
+    cyclomatic_complexity: 8
+    calls_out: 3
+    calls_in: 1
+  integrations.adapters.filesystem.FilesystemAdapter.collect:
+    name: collect
+    module: integrations.adapters.filesystem
+    line: 14
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  integrations.adapters.docker._running_iterun_containers:
+    name: _running_iterun_containers
+    module: integrations.adapters.docker
+    line: 64
+    cyclomatic_complexity: 11
+    calls_out: 8
+    calls_in: 1
+  integrations.adapters.docker.DockerAdapter.enrich:
+    name: enrich
+    module: integrations.adapters.docker
+    line: 20
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 0
   web.routes.ai.ai_status:
     name: ai_status
     module: web.routes.ai
@@ -222,47 +327,75 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 5
     calls_in: 0
-  generator.pipeline._finalize:
-    name: _finalize
+  cli.shell.CLI.cmd_plan:
+    name: cmd_plan
+    module: cli.shell
+    line: 119
+    cyclomatic_complexity: 11
+    calls_out: 24
+    calls_in: 0
+  generator.pipeline._handle_execute_error:
+    name: _handle_execute_error
     module: generator.pipeline
-    line: 130
+    line: 217
     cyclomatic_complexity: 3
     calls_out: 4
-    calls_in: 8
-  cli.shell.CLI.cmd_ai_chat:
-    name: cmd_ai_chat
-    module: cli.shell
-    line: 485
-    cyclomatic_complexity: 12
-    calls_out: 18
-    calls_in: 0
-  executor.runner.Executor._validate_and_fix:
-    name: _validate_and_fix
-    module: executor.runner
-    line: 131
-    cyclomatic_complexity: 9
-    calls_out: 18
-    calls_in: 0
-  web.routes.intents.get_generated_code:
-    name: get_generated_code
-    module: web.routes.intents
-    line: 275
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  executor.runner.Executor._execute_local:
-    name: _execute_local
-    module: executor.runner
-    line: 255
+    calls_in: 1
+  web.routes.ai.ai_chat:
+    name: ai_chat
+    module: web.routes.ai
+    line: 82
     cyclomatic_complexity: 4
     calls_out: 7
     calls_in: 0
-  cli.dispatch._dispatch_parse:
-    name: _dispatch_parse
-    module: cli.dispatch
-    line: 106
-    cyclomatic_complexity: 10
+  examples._scripts.annotate_intract._actions:
+    name: _actions
+    module: examples._scripts.annotate_intract
+    line: 18
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 2
+  interfaces.service._write_plan_output:
+    name: _write_plan_output
+    module: interfaces.service
+    line: 19
+    cyclomatic_complexity: 7
     calls_out: 14
+    calls_in: 1
+  web.routes.intents._intents_store:
+    name: _intents_store
+    module: web.routes.intents
+    line: 44
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 13
+  cli.shell.CLI.cmd_parse:
+    name: cmd_parse
+    module: cli.shell
+    line: 109
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  web.routes.ai._intents_store:
+    name: _intents_store
+    module: web.routes.ai
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  ai_gateway.gateway.get_gateway:
+    name: get_gateway
+    module: ai_gateway.gateway
+    line: 337
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 13
+  registry.discover._build_services:
+    name: _build_services
+    module: registry.discover
+    line: 13
+    cyclomatic_complexity: 3
+    calls_out: 2
     calls_in: 1
   web.routes.intents.run_pipeline_api:
     name: run_pipeline_api
@@ -271,12 +404,180 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 1
+  cli.shell.CLI.cmd_load:
+    name: cmd_load
+    module: cli.shell
+    line: 95
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  executor.validation.filter_validation_endpoints:
+    name: filter_validation_endpoints
+    module: executor.validation
+    line: 21
+    cyclomatic_complexity: 9
+    calls_out: 6
+    calls_in: 2
+  generator.intract_manifest._slug:
+    name: _slug
+    module: generator.intract_manifest
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  sdk.client.IterunClient.parse:
+    name: parse
+    module: sdk.client
+    line: 166
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  web.routes.intents.plan_yaml_api:
+    name: plan_yaml_api
+    module: web.routes.intents
+    line: 94
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 0
+  generator.contract_verify._run_http_probes:
+    name: _run_http_probes
+    module: generator.contract_verify
+    line: 189
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  generator.pipeline._finalize:
+    name: _finalize
+    module: generator.pipeline
+    line: 102
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 8
+  generator.contract_verify._probe_path:
+    name: _probe_path
+    module: generator.contract_verify
+    line: 46
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  integrations.bridges.pipeline.refresh_registry:
+    name: refresh_registry
+    module: integrations.bridges.pipeline
+    line: 14
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 3
+  generator.pipeline._write_verify_round_log:
+    name: _write_verify_round_log
+    module: generator.pipeline
+    line: 115
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  executor.runner.Executor.execute:
+    name: execute
+    module: executor.runner
+    line: 95
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 0
+  planner.stack_planner._resolve_upstream:
+    name: _resolve_upstream
+    module: planner.stack_planner
+    line: 99
+    cyclomatic_complexity: 12
+    calls_out: 2
+    calls_in: 1
+  cli.shell.CLI._skip_iterun_confirmation:
+    name: _skip_iterun_confirmation
+    module: cli.shell
+    line: 221
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 0
   ai_gateway.feedback_loop.FeedbackLoop.__init__:
     name: __init__
     module: ai_gateway.feedback_loop
     line: 86
     cyclomatic_complexity: 3
     calls_out: 1
+    calls_in: 0
+  registry.discover_services.build_single_service:
+    name: build_single_service
+    module: registry.discover_services
+    line: 65
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 1
+  executor.pactown._start_pactown_stack:
+    name: _start_pactown_stack
+    module: executor.pactown
+    line: 110
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  generator.pipeline._container_logs:
+    name: _container_logs
+    module: generator.pipeline
+    line: 93
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  cli.dispatch.dispatch_command:
+    name: dispatch_command
+    module: cli.dispatch
+    line: 13
+    cyclomatic_complexity: 14
+    calls_out: 13
+    calls_in: 1
+  cli.shell_output.print_container_logs:
+    name: print_container_logs
+    module: cli.shell_output
+    line: 77
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 1
+  generator.pipeline._run_pipeline_round:
+    name: _run_pipeline_round
+    module: generator.pipeline
+    line: 243
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 1
+  web.routes.registry.refresh_registry_api:
+    name: refresh_registry_api
+    module: web.routes.registry
+    line: 39
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  web.routes.intents.get_generated_code:
+    name: get_generated_code
+    module: web.routes.intents
+    line: 275
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  generator.pipeline.run_pipeline:
+    name: run_pipeline
+    module: generator.pipeline
+    line: 314
+    cyclomatic_complexity: 11
+    calls_out: 8
+    calls_in: 1
+  generator.intract_manifest._safe_id:
+    name: _safe_id
+    module: generator.intract_manifest
+    line: 19
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  web.routes.intents.approve_iterun:
+    name: approve_iterun
+    module: web.routes.intents
+    line: 195
+    cyclomatic_complexity: 2
+    calls_out: 4
     calls_in: 0
   registry.labels.build_service_labels:
     name: build_service_labels
@@ -285,59 +586,143 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 0
     calls_in: 4
-  registry.discover_services.build_stack_services:
-    name: build_stack_services
-    module: registry.discover_services
-    line: 12
-    cyclomatic_complexity: 13
-    calls_out: 24
-    calls_in: 1
-  executor.validation.add_main_block:
-    name: add_main_block
-    module: executor.validation
-    line: 115
-    cyclomatic_complexity: 7
-    calls_out: 0
-    calls_in: 1
-  integrations.bridges.pipeline.refresh_registry:
-    name: refresh_registry
-    module: integrations.bridges.pipeline
-    line: 17
+  integrations.adapters.docker._apply_container_to_service:
+    name: _apply_container_to_service
+    module: integrations.adapters.docker
+    line: 55
     cyclomatic_complexity: 5
-    calls_out: 13
-    calls_in: 3
-  planner.simulator.Planner._generate_flask_code:
-    name: _generate_flask_code
-    module: planner.simulator
-    line: 177
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 0
-  config.reload_config:
-    name: reload_config
-    module: config
-    line: 158
+    calls_out: 8
+    calls_in: 1
+  generator.pipeline._build_repair_prompt:
+    name: _build_repair_prompt
+    module: generator.pipeline
+    line: 78
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  dsl.schema.get_system_prompt:
+    name: get_system_prompt
+    module: dsl.schema
+    line: 218
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  integrations.markpact_pack.pack_workspace:
-    name: pack_workspace
-    module: integrations.markpact_pack
-    line: 40
-    cyclomatic_complexity: 18
-    calls_out: 12
+  planner.plan.plan_intent:
+    name: plan_intent
+    module: planner.plan
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 5
+  examples._scripts.verify_expectations._load_yaml:
+    name: _load_yaml
+    module: examples._scripts.verify_expectations
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 2
     calls_in: 2
-  web.routes.intents._intents_store:
-    name: _intents_store
-    module: web.routes.intents
-    line: 44
+  contracts.expectations._check_metadata:
+    name: _check_metadata
+    module: contracts.expectations
+    line: 33
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 1
+  cli.shell.CLI.interactive_mode:
+    name: interactive_mode
+    module: cli.shell
+    line: 296
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 0
+  examples._scripts.annotate_intract.annotate_express:
+    name: annotate_express
+    module: examples._scripts.annotate_intract
+    line: 61
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 1
+  web.routes.registry.list_interfaces:
+    name: list_interfaces
+    module: web.routes.registry
+    line: 29
     cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 13
-  integrations.adapters.filesystem.FilesystemAdapter.collect:
-    name: collect
-    module: integrations.adapters.filesystem
-    line: 15
+    calls_out: 3
+    calls_in: 0
+  cli.shell_output.print_execution_success:
+    name: print_execution_success
+    module: cli.shell_output
+    line: 43
+    cyclomatic_complexity: 8
+    calls_out: 9
+    calls_in: 1
+  generator.contract_verify._run_testql_checks:
+    name: _run_testql_checks
+    module: generator.contract_verify
+    line: 174
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 1
+  generator.intract_manifest.build_intract_manifest:
+    name: build_intract_manifest
+    module: generator.intract_manifest
+    line: 23
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  integrations.pactown_config.build_pactown_config:
+    name: build_pactown_config
+    module: integrations.pactown_config
+    line: 24
+    cyclomatic_complexity: 12
+    calls_out: 6
+    calls_in: 1
+  planner.stack_planner._service_ir:
+    name: _service_ir
+    module: planner.stack_planner
+    line: 22
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  contracts.expectations._check_live_endpoint:
+    name: _check_live_endpoint
+    module: contracts.expectations
+    line: 68
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  generator.pipeline._expectations_summary:
+    name: _expectations_summary
+    module: generator.pipeline
+    line: 59
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 1
+  registry.discover_io.intent_from_workspace:
+    name: intent_from_workspace
+    module: registry.discover_io
+    line: 35
+    cyclomatic_complexity: 8
+    calls_out: 7
+    calls_in: 1
+  executor.docker_ops.find_available_port:
+    name: find_available_port
+    module: executor.docker_ops
+    line: 22
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 4
+  examples._scripts.intent_to_openapi.main:
+    name: main
+    module: examples._scripts.intent_to_openapi
+    line: 63
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 0
+  interfaces.service.IterunService.registry_list:
+    name: registry_list
+    module: interfaces.service
+    line: 258
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 0
@@ -348,145 +733,75 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 1
-  web.routes.registry.refresh_registry_api:
-    name: refresh_registry_api
-    module: web.routes.registry
-    line: 39
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  config.get_config:
-    name: get_config
-    module: config
-    line: 150
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 9
-  interfaces.service.IterunService.registry_list:
-    name: registry_list
-    module: interfaces.service
-    line: 249
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  examples._scripts.verify_expectations._load_yaml:
-    name: _load_yaml
-    module: examples._scripts.verify_expectations
-    line: 18
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  generator.contract_verify.wait_for_service:
-    name: wait_for_service
-    module: generator.contract_verify
-    line: 101
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 1
-  web.routes.intents.plan_yaml_api:
-    name: plan_yaml_api
-    module: web.routes.intents
-    line: 94
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 0
-  parser.dsl_parser.parse_dsl:
-    name: parse_dsl
-    module: parser.dsl_parser
-    line: 321
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 10
-  generator.session.write_session_artifacts:
-    name: write_session_artifacts
-    module: generator.session
-    line: 14
-    cyclomatic_complexity: 5
-    calls_out: 16
-    calls_in: 1
-  registry.discover_services.build_single_service:
-    name: build_single_service
-    module: registry.discover_services
-    line: 65
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 1
-  generator.intent_generator.IntentGenerator.generate:
-    name: generate
-    module: generator.intent_generator
-    line: 174
-    cyclomatic_complexity: 11
-    calls_out: 21
-    calls_in: 0
-  executor.runner.Executor.execute:
+  web.routes.intents.execute:
     name: execute
-    module: executor.runner
-    line: 45
-    cyclomatic_complexity: 18
-    calls_out: 22
-    calls_in: 0
-  web.routes.ai.ai_complete:
-    name: ai_complete
-    module: web.routes.ai
-    line: 65
-    cyclomatic_complexity: 3
+    module: web.routes.intents
+    line: 209
+    cyclomatic_complexity: 5
     calls_out: 6
     calls_in: 0
-  generator.contract_verify._probe_path:
-    name: _probe_path
-    module: generator.contract_verify
-    line: 45
+  cli.dispatch._print_execute_result:
+    name: _print_execute_result
+    module: cli.dispatch
+    line: 93
+    cyclomatic_complexity: 8
+    calls_out: 4
+    calls_in: 1
+  integrations.bridges.pipeline.refresh_registry_from_pipeline:
+    name: refresh_registry_from_pipeline
+    module: integrations.bridges.pipeline
+    line: 40
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  integrations.markpact_pack.pack_workspace:
+    name: pack_workspace
+    module: integrations.markpact_pack
+    line: 73
+    cyclomatic_complexity: 12
+    calls_out: 10
+    calls_in: 2
+  integrations.runtime_stop.stop_runtime_for_intent:
+    name: stop_runtime_for_intent
+    module: integrations.runtime_stop
+    line: 11
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  cli.shell.CLI.cmd_execute:
+    name: cmd_execute
+    module: cli.shell
+    line: 239
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 0
+  examples._scripts.intent_to_openapi._slug:
+    name: _slug
+    module: examples._scripts.intent_to_openapi
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  interfaces.service.IterunService.parse:
+    name: parse
+    module: interfaces.service
+    line: 153
     cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 2
-  generator.contract_verify.write_contract_artifacts:
-    name: write_contract_artifacts
-    module: generator.contract_verify
-    line: 157
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  planner.stack_planner._gateway_proxy_code:
-    name: _gateway_proxy_code
-    module: planner.stack_planner
-    line: 46
-    cyclomatic_complexity: 10
-    calls_out: 12
-    calls_in: 1
-  web.routes.intents.get_schema:
-    name: get_schema
-    module: web.routes.intents
-    line: 51
-    cyclomatic_complexity: 1
-    calls_out: 3
     calls_in: 0
-  registry.discover_io.load_session:
-    name: load_session
-    module: registry.discover_io
-    line: 15
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  web.routes.intents.plan:
-    name: plan
-    module: web.routes.intents
-    line: 150
-    cyclomatic_complexity: 3
-    calls_out: 5
+  executor.runner.Executor._validate_and_fix:
+    name: _validate_and_fix
+    module: executor.runner
+    line: 140
+    cyclomatic_complexity: 9
+    calls_out: 18
     calls_in: 0
-  examples._scripts.annotate_intract.annotate_python:
-    name: annotate_python
-    module: examples._scripts.annotate_intract
-    line: 43
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 1
-  cli.dispatch._dispatch_generate_yaml_only:
-    name: _dispatch_generate_yaml_only
-    module: cli.dispatch
-    line: 207
-    cyclomatic_complexity: 6
-    calls_out: 15
+  contracts.expectations._probe_path:
+    name: _probe_path
+    module: contracts.expectations
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 1
     calls_in: 1
   integrations.markpact_pack._run_command_for_ir:
     name: _run_command_for_ir
@@ -495,591 +810,10 @@ nodes:
     cyclomatic_complexity: 8
     calls_out: 0
     calls_in: 1
-  parser.dsl_parser.parse_dsl_file:
-    name: parse_dsl_file
-    module: parser.dsl_parser
-    line: 327
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  integrations.adapters.docker.DockerAdapter.enrich:
-    name: enrich
-    module: integrations.adapters.docker
-    line: 20
-    cyclomatic_complexity: 16
-    calls_out: 16
-    calls_in: 0
-  cli.shell.CLI.cmd_ai_health:
-    name: cmd_ai_health
-    module: cli.shell
-    line: 542
-    cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 0
-  generator.testql_scenario.write_testql_scenario:
-    name: write_testql_scenario
-    module: generator.testql_scenario
-    line: 70
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 4
-  web.routes.intents.generate_and_run_api:
-    name: generate_and_run_api
-    module: web.routes.intents
-    line: 89
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  planner.simulator.Planner._generate_fastapi_code:
-    name: _generate_fastapi_code
-    module: planner.simulator
-    line: 137
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 0
-  examples._scripts.annotate_intract._actions:
-    name: _actions
-    module: examples._scripts.annotate_intract
-    line: 18
-    cyclomatic_complexity: 7
-    calls_out: 11
-    calls_in: 2
-  examples._scripts.intent_to_openapi.intent_to_openapi:
-    name: intent_to_openapi
-    module: examples._scripts.intent_to_openapi
-    line: 18
-    cyclomatic_complexity: 8
-    calls_out: 17
-    calls_in: 1
-  dsl.schema.validate_yaml_document:
-    name: validate_yaml_document
-    module: dsl.schema
-    line: 193
-    cyclomatic_complexity: 10
-    calls_out: 8
-    calls_in: 4
-  generator.intract_manifest._slug:
-    name: _slug
-    module: generator.intract_manifest
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  integrations.pactown_runtime.execute_pactown:
-    name: execute_pactown
-    module: integrations.pactown_runtime
-    line: 88
-    cyclomatic_complexity: 21
-    calls_out: 50
-    calls_in: 1
-  cli.dispatch._dispatch_validate:
-    name: _dispatch_validate
-    module: cli.dispatch
-    line: 130
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 1
-  web.routes.intents.get_intent:
-    name: get_intent
-    module: web.routes.intents
-    line: 133
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  web.routes.registry.list_interfaces:
-    name: list_interfaces
-    module: web.routes.registry
-    line: 29
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  registry.discover_io.load_stack_urls:
-    name: load_stack_urls
-    module: registry.discover_io
-    line: 25
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  integrations.adapters.docker._running_iterun_containers:
-    name: _running_iterun_containers
-    module: integrations.adapters.docker
-    line: 53
-    cyclomatic_complexity: 11
-    calls_out: 8
-    calls_in: 1
-  generator.intract_manifest._safe_id:
-    name: _safe_id
-    module: generator.intract_manifest
-    line: 17
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  generator.contract_verify.verify_contract:
-    name: verify_contract
-    module: generator.contract_verify
-    line: 173
-    cyclomatic_complexity: 16
-    calls_out: 32
-    calls_in: 1
-  integrations.pactown_config._health_path:
-    name: _health_path
-    module: integrations.pactown_config
-    line: 13
-    cyclomatic_complexity: 8
-    calls_out: 0
-    calls_in: 2
-  cli.shell.CLI.cmd_plan:
-    name: cmd_plan
-    module: cli.shell
-    line: 133
-    cyclomatic_complexity: 11
-    calls_out: 24
-    calls_in: 0
-  generator.testql_scenario.build_testql_scenario:
-    name: build_testql_scenario
-    module: generator.testql_scenario
-    line: 29
-    cyclomatic_complexity: 7
-    calls_out: 10
-    calls_in: 1
-  executor.validation.filter_validation_endpoints:
-    name: filter_validation_endpoints
-    module: executor.validation
-    line: 21
-    cyclomatic_complexity: 9
-    calls_out: 6
-    calls_in: 2
-  web.routes.ai.ai_suggest:
-    name: ai_suggest
-    module: web.routes.ai
-    line: 100
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 0
-  web.routes.intents._get_service:
-    name: _get_service
-    module: web.routes.intents
-    line: 35
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 5
-  cli.shell.CLI.cmd_ai_apply:
-    name: cmd_ai_apply
-    module: cli.shell
-    line: 463
-    cyclomatic_complexity: 8
-    calls_out: 10
-    calls_in: 0
-  config.load_dotenv:
-    name: load_dotenv
-    module: config
-    line: 19
-    cyclomatic_complexity: 15
-    calls_out: 15
-    calls_in: 1
-  interfaces.service._write_plan_output:
-    name: _write_plan_output
-    module: interfaces.service
-    line: 18
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 1
-  interfaces.service.IterunService.schema:
-    name: schema
-    module: interfaces.service
-    line: 140
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  generator.pipeline._write_plan_artifacts:
-    name: _write_plan_artifacts
+  generator.pipeline._finish_without_verify:
+    name: _finish_without_verify
     module: generator.pipeline
-    line: 53
-    cyclomatic_complexity: 8
-    calls_out: 11
-    calls_in: 1
-  generator.intent_generator.extract_yaml_from_llm:
-    name: extract_yaml_from_llm
-    module: generator.intent_generator
-    line: 80
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 1
-  examples._scripts.verify_expectations._parse_actions:
-    name: _parse_actions
-    module: examples._scripts.verify_expectations
-    line: 22
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 1
-  web.routes.intents.generate_intent_api:
-    name: generate_intent_api
-    module: web.routes.intents
-    line: 61
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  registry.catalog.RegistryCatalog.discover:
-    name: discover
-    module: registry.catalog
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  executor.runner.Executor._restart_container:
-    name: _restart_container
-    module: executor.runner
-    line: 192
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  integrations.bridges.pipeline.refresh_registry_from_pipeline:
-    name: refresh_registry_from_pipeline
-    module: integrations.bridges.pipeline
-    line: 43
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  web.routes.ai.list_models:
-    name: list_models
-    module: web.routes.ai
-    line: 52
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  web.routes.ai.generate_code:
-    name: generate_code
-    module: web.routes.ai
-    line: 141
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  web.routes.intents.validate_intent:
-    name: validate_intent
-    module: web.routes.intents
-    line: 240
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 0
-  cli.shell.CLI.cmd_execute:
-    name: cmd_execute
-    module: cli.shell
-    line: 235
-    cyclomatic_complexity: 39
-    calls_out: 39
-    calls_in: 0
-  executor.runner.Executor.get_container_logs:
-    name: get_container_logs
-    module: executor.runner
-    line: 282
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 3
-  executor.runner.Executor.__init__:
-    name: __init__
-    module: executor.runner
-    line: 39
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  examples._scripts.intent_to_intract.main:
-    name: main
-    module: examples._scripts.intent_to_intract
-    line: 16
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  generator.expectations.check_expectations:
-    name: check_expectations
-    module: generator.expectations
-    line: 33
-    cyclomatic_complexity: 23
-    calls_out: 26
-    calls_in: 1
-  executor.docker_ops.stop_containers_for_intent:
-    name: stop_containers_for_intent
-    module: executor.docker_ops
-    line: 38
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 1
-  web.routes.intents.container_logs:
-    name: container_logs
-    module: web.routes.intents
-    line: 268
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  cli.shell.CLI.cmd_load:
-    name: cmd_load
-    module: cli.shell
-    line: 109
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  examples._scripts.annotate_intract._comment:
-    name: _comment
-    module: examples._scripts.annotate_intract
-    line: 35
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  examples._scripts.annotate_intract._slug:
-    name: _slug
-    module: examples._scripts.annotate_intract
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  interfaces.service.IterunService.plan_yaml:
-    name: plan_yaml
-    module: interfaces.service
-    line: 192
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  web.routes.intents.execute:
-    name: execute
-    module: web.routes.intents
-    line: 209
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 0
-  executor.validation.attempt_auto_fix:
-    name: attempt_auto_fix
-    module: executor.validation
-    line: 145
-    cyclomatic_complexity: 10
-    calls_out: 8
-    calls_in: 1
-  ai_gateway.feedback_loop.create_feedback_loop:
-    name: create_feedback_loop
-    module: ai_gateway.feedback_loop
-    line: 377
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 4
-  web.routes.intents.parse_intent:
-    name: parse_intent
-    module: web.routes.intents
-    line: 106
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  generator.pipeline._container_logs:
-    name: _container_logs
-    module: generator.pipeline
-    line: 121
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  integrations.pactown_config.write_pactown_config:
-    name: write_pactown_config
-    module: integrations.pactown_config
-    line: 65
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  interfaces.service.IterunService.plan_ir:
-    name: plan_ir
-    module: interfaces.service
-    line: 189
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  cli.dispatch._dispatch_execute:
-    name: _dispatch_execute
-    module: cli.dispatch
-    line: 80
-    cyclomatic_complexity: 17
-    calls_out: 15
-    calls_in: 1
-  planner.simulator._endpoint_to_func_name:
-    name: _endpoint_to_func_name
-    module: planner.simulator
-    line: 17
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 2
-  cli.dispatch._dispatch_generate:
-    name: _dispatch_generate
-    module: cli.dispatch
-    line: 149
-    cyclomatic_complexity: 8
-    calls_out: 6
-    calls_in: 1
-  generator.intract_manifest.parse_api_actions:
-    name: parse_api_actions
-    module: generator.intract_manifest
-    line: 36
-    cyclomatic_complexity: 9
-    calls_out: 11
-    calls_in: 5
-  web.routes.registry.get_registry:
-    name: get_registry
-    module: web.routes.registry
-    line: 34
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  cli.shell.CLI.cmd_ai_suggest:
-    name: cmd_ai_suggest
-    module: cli.shell
-    line: 422
-    cyclomatic_complexity: 11
-    calls_out: 21
-    calls_in: 0
-  planner.stack_planner.plan_stack:
-    name: plan_stack
-    module: planner.stack_planner
-    line: 168
-    cyclomatic_complexity: 18
-    calls_out: 21
-    calls_in: 1
-  examples._scripts.verify_expectations.main:
-    name: main
-    module: examples._scripts.verify_expectations
-    line: 111
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  integrations.runtime_stop.stop_runtime_for_intent:
-    name: stop_runtime_for_intent
-    module: integrations.runtime_stop
-    line: 11
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  examples._scripts.annotate_intract.main:
-    name: main
-    module: examples._scripts.annotate_intract
-    line: 81
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  web.routes.registry.list_registries:
-    name: list_registries
-    module: web.routes.registry
-    line: 47
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  cli.dispatch._dispatch_plan:
-    name: _dispatch_plan
-    module: cli.dispatch
-    line: 56
-    cyclomatic_complexity: 12
-    calls_out: 13
-    calls_in: 1
-  interfaces.service.IterunService.parse:
-    name: parse
-    module: interfaces.service
-    line: 152
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  web.routes.intents.validate_yaml:
-    name: validate_yaml
-    module: web.routes.intents
-    line: 56
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  registry.discover.discover_workspace:
-    name: discover_workspace
-    module: registry.discover
-    line: 13
-    cyclomatic_complexity: 25
-    calls_out: 38
-    calls_in: 2
-  examples._scripts.intent_to_openapi._slug:
-    name: _slug
-    module: examples._scripts.intent_to_openapi
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  generator.intract_manifest.intent_to_intract_dict:
-    name: intent_to_intract_dict
-    module: generator.intract_manifest
-    line: 100
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  ai_gateway.gateway.get_gateway:
-    name: get_gateway
-    module: ai_gateway.gateway
-    line: 337
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 13
-  generator.intract_manifest.write_intract_manifest:
-    name: write_intract_manifest
-    module: generator.intract_manifest
-    line: 109
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 4
-  registry.discover_io.phase_from_session:
-    name: phase_from_session
-    module: registry.discover_io
-    line: 53
-    cyclomatic_complexity: 7
-    calls_out: 5
-    calls_in: 1
-  planner.stack_planner._resolve_upstream:
-    name: _resolve_upstream
-    module: planner.stack_planner
-    line: 99
-    cyclomatic_complexity: 12
-    calls_out: 2
-    calls_in: 1
-  web.routes.ai.ai_chat:
-    name: ai_chat
-    module: web.routes.ai
-    line: 82
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  cli.shell.CLI.cmd_new:
-    name: cmd_new
-    module: cli.shell
-    line: 78
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  cli.dispatch.dispatch_command:
-    name: dispatch_command
-    module: cli.dispatch
-    line: 13
-    cyclomatic_complexity: 14
-    calls_out: 13
-    calls_in: 1
-  interfaces.service.IterunService.validate_yaml:
-    name: validate_yaml
-    module: interfaces.service
-    line: 143
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 0
-  cli.dispatch._dispatch_generate_pipeline:
-    name: _dispatch_generate_pipeline
-    module: cli.dispatch
-    line: 169
-    cyclomatic_complexity: 16
-    calls_out: 14
-    calls_in: 1
-  generator.expectations.load_and_check_expectations:
-    name: load_and_check_expectations
-    module: generator.expectations
-    line: 85
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 1
-  generator.contract_verify.readiness_paths:
-    name: readiness_paths
-    module: generator.contract_verify
-    line: 76
+    line: 155
     cyclomatic_complexity: 5
     calls_out: 2
     calls_in: 1
@@ -1090,104 +824,118 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 6
     calls_in: 0
-  executor.runner.execute_intent:
-    name: execute_intent
-    module: executor.runner
-    line: 292
+  parser.dsl_parser.parse_dsl_file:
+    name: parse_dsl_file
+    module: parser.dsl_parser
+    line: 334
     cyclomatic_complexity: 1
     calls_out: 2
-    calls_in: 4
-  cli.shell.CLI.cmd_parse:
-    name: cmd_parse
-    module: cli.shell
-    line: 123
-    cyclomatic_complexity: 2
+    calls_in: 1
+  generator.testql_scenario._startup_wait_ms:
+    name: _startup_wait_ms
+    module: generator.testql_scenario
+    line: 18
+    cyclomatic_complexity: 7
+    calls_out: 3
+    calls_in: 1
+  config._load_envstore:
+    name: _load_envstore
+    module: config
+    line: 41
+    cyclomatic_complexity: 1
     calls_out: 4
-    calls_in: 0
-  registry.discover_io.intent_from_workspace:
-    name: intent_from_workspace
-    module: registry.discover_io
+    calls_in: 1
+  cli.dispatch._dispatch_registry:
+    name: _dispatch_registry
+    module: cli.dispatch
+    line: 262
+    cyclomatic_complexity: 10
+    calls_out: 12
+    calls_in: 1
+  config._apply_env_pairs:
+    name: _apply_env_pairs
+    module: config
     line: 35
-    cyclomatic_complexity: 8
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 2
+  planner.simulator.Planner._generate_fastapi_code:
+    name: _generate_fastapi_code
+    module: planner.simulator
+    line: 137
+    cyclomatic_complexity: 5
     calls_out: 7
+    calls_in: 0
+  examples._scripts.intent_to_openapi.intent_to_openapi:
+    name: intent_to_openapi
+    module: examples._scripts.intent_to_openapi
+    line: 18
+    cyclomatic_complexity: 8
+    calls_out: 17
     calls_in: 1
   interfaces.service.IterunService.execute_ir:
     name: execute_ir
     module: interfaces.service
-    line: 213
+    line: 222
     cyclomatic_complexity: 3
     calls_out: 4
     calls_in: 0
-  generator.pipeline._expectations_summary:
-    name: _expectations_summary
-    module: generator.pipeline
-    line: 87
-    cyclomatic_complexity: 8
-    calls_out: 13
-    calls_in: 1
-  generator.intent_generator._build_user_prompt:
-    name: _build_user_prompt
-    module: generator.intent_generator
-    line: 135
+  contracts.expectations.check_expectations:
+    name: check_expectations
+    module: contracts.expectations
+    line: 84
     cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  generator.intent_generator.IntentGenerator.__init__:
-    name: __init__
-    module: generator.intent_generator
-    line: 161
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 0
-  planner.simulator.plan_intent:
-    name: plan_intent
-    module: planner.simulator
-    line: 378
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 5
-  generator.intract_manifest.build_intract_manifest:
-    name: build_intract_manifest
-    module: generator.intract_manifest
-    line: 50
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 1
-  examples._scripts.intent_to_openapi.main:
-    name: main
-    module: examples._scripts.intent_to_openapi
-    line: 63
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 0
-  examples._scripts.verify_expectations.verify:
-    name: verify
-    module: examples._scripts.verify_expectations
-    line: 51
-    cyclomatic_complexity: 23
-    calls_out: 27
-    calls_in: 1
-  executor.docker_ops.patch_compose_host_ports:
-    name: patch_compose_host_ports
-    module: executor.docker_ops
-    line: 102
-    cyclomatic_complexity: 7
-    calls_out: 7
-    calls_in: 1
-  sdk.client.IterunClient.parse:
-    name: parse
-    module: sdk.client
-    line: 166
-    cyclomatic_complexity: 3
     calls_out: 6
+    calls_in: 2
+  cli.shell.CLI.cmd_ai_suggest:
+    name: cmd_ai_suggest
+    module: cli.shell
+    line: 316
+    cyclomatic_complexity: 11
+    calls_out: 21
     calls_in: 0
-  web.routes.registry._get_service:
-    name: _get_service
-    module: web.routes.registry
-    line: 14
+  executor.pactown._collect_stack_endpoints:
+    name: _collect_stack_endpoints
+    module: executor.pactown
+    line: 31
+    cyclomatic_complexity: 8
+    calls_out: 2
+    calls_in: 1
+  cli.dispatch._dispatch_parse:
+    name: _dispatch_parse
+    module: cli.dispatch
+    line: 114
+    cyclomatic_complexity: 10
+    calls_out: 14
+    calls_in: 1
+  cli.main.main:
+    name: main
+    module: cli.main
+    line: 81
     cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 4
+    calls_out: 5
+    calls_in: 0
+  executor.pactown.execute_pactown:
+    name: execute_pactown
+    module: executor.pactown
+    line: 190
+    cyclomatic_complexity: 8
+    calls_out: 17
+    calls_in: 1
+  generator.pipeline._handle_verify_round:
+    name: _handle_verify_round
+    module: generator.pipeline
+    line: 172
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 1
+  cli.shell_output.print_validation_errors:
+    name: print_validation_errors
+    module: cli.shell_output
+    line: 64
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
   executor.docker_ops.execute_docker:
     name: execute_docker
     module: executor.docker_ops
@@ -1195,40 +943,327 @@ nodes:
     cyclomatic_complexity: 13
     calls_out: 24
     calls_in: 2
-  examples._scripts.annotate_intract.annotate_express:
-    name: annotate_express
-    module: examples._scripts.annotate_intract
-    line: 61
+  cli.shell.CLI.cmd_ai_chat:
+    name: cmd_ai_chat
+    module: cli.shell
+    line: 379
+    cyclomatic_complexity: 12
+    calls_out: 18
+    calls_in: 0
+  executor.pactown.stop_pactown_for_intent:
+    name: stop_pactown_for_intent
+    module: executor.pactown
+    line: 74
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  sdk.client.IterunClient.schema:
+    name: schema
+    module: sdk.client
+    line: 51
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  web.routes.intents.validate_intent:
+    name: validate_intent
+    module: web.routes.intents
+    line: 240
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 0
+  registry.catalog.RegistryCatalog.discover:
+    name: discover
+    module: registry.catalog
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  planner.simulator.Planner._generate_flask_code:
+    name: _generate_flask_code
+    module: planner.simulator
+    line: 177
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  interfaces.service.IterunService.schema:
+    name: schema
+    module: interfaces.service
+    line: 141
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  cli.plan_artifacts.write_plan_artifacts:
+    name: write_plan_artifacts
+    module: cli.plan_artifacts
+    line: 12
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 2
+  examples._scripts.verify_expectations.verify:
+    name: verify
+    module: examples._scripts.verify_expectations
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  cli.dispatch._dispatch_generate_yaml_only:
+    name: _dispatch_generate_yaml_only
+    module: cli.dispatch
+    line: 235
+    cyclomatic_complexity: 6
+    calls_out: 15
+    calls_in: 1
+  integrations.pactown_config._health_path:
+    name: _health_path
+    module: integrations.pactown_config
+    line: 13
+    cyclomatic_complexity: 8
+    calls_out: 0
+    calls_in: 2
+  integrations.markpact_pack._service_run_command:
+    name: _service_run_command
+    module: integrations.markpact_pack
+    line: 40
+    cyclomatic_complexity: 4
+    calls_out: 0
+    calls_in: 1
+  generator.testql_scenario.write_testql_scenario:
+    name: write_testql_scenario
+    module: generator.testql_scenario
+    line: 70
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 4
+  generator.testql_scenario.build_testql_scenario:
+    name: build_testql_scenario
+    module: generator.testql_scenario
+    line: 29
+    cyclomatic_complexity: 7
+    calls_out: 10
+    calls_in: 1
+  registry.discover.discover_workspace:
+    name: discover_workspace
+    module: registry.discover
+    line: 33
     cyclomatic_complexity: 6
     calls_out: 13
-    calls_in: 1
-  executor.docker_ops.find_available_port:
-    name: find_available_port
-    module: executor.docker_ops
-    line: 22
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 4
-  generator.pipeline._build_repair_prompt:
-    name: _build_repair_prompt
-    module: generator.pipeline
-    line: 106
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  cli.main.build_parser:
-    name: build_parser
-    module: cli.main
-    line: 17
+    calls_in: 2
+  parser.dsl_parser.parse_dsl:
+    name: parse_dsl
+    module: parser.dsl_parser
+    line: 328
     cyclomatic_complexity: 1
-    calls_out: 17
+    calls_out: 2
+    calls_in: 9
+  integrations.adapters.docker._match_service_containers:
+    name: _match_service_containers
+    module: integrations.adapters.docker
+    line: 45
+    cyclomatic_complexity: 6
+    calls_out: 5
     calls_in: 1
-  web.routes.intents.delete_intent:
-    name: delete_intent
-    module: web.routes.intents
-    line: 141
+  planner.stack_planner._plan_generated_service:
+    name: _plan_generated_service
+    module: planner.stack_planner
+    line: 173
+    cyclomatic_complexity: 10
+    calls_out: 7
+    calls_in: 1
+  integrations.markpact_pack._pack_service_readmes:
+    name: _pack_service_readmes
+    module: integrations.markpact_pack
+    line: 48
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  cli.dispatch._dispatch_generate_pipeline:
+    name: _dispatch_generate_pipeline
+    module: cli.dispatch
+    line: 217
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  cli.shell_interactive._dispatch_basic:
+    name: _dispatch_basic
+    module: cli.shell_interactive
+    line: 10
+    cyclomatic_complexity: 12
+    calls_out: 11
+    calls_in: 1
+  registry.discover_artifacts.discover_artifacts:
+    name: discover_artifacts
+    module: registry.discover_artifacts
+    line: 35
+    cyclomatic_complexity: 12
+    calls_out: 28
+    calls_in: 1
+  contracts.expectations._check_endpoint_response:
+    name: _check_endpoint_response
+    module: contracts.expectations
+    line: 57
+    cyclomatic_complexity: 7
+    calls_out: 5
+    calls_in: 1
+  generator.contract_verify._http_probe:
+    name: _http_probe
+    module: generator.contract_verify
+    line: 117
+    cyclomatic_complexity: 9
+    calls_out: 11
+    calls_in: 1
+  executor.validation.validate_endpoints:
+    name: validate_endpoints
+    module: executor.validation
+    line: 43
+    cyclomatic_complexity: 13
+    calls_out: 27
+    calls_in: 2
+  interfaces.service.IterunService.plan_yaml:
+    name: plan_yaml
+    module: interfaces.service
+    line: 201
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  executor.runner.Executor._restart_container:
+    name: _restart_container
+    module: executor.runner
+    line: 201
     cyclomatic_complexity: 2
     calls_out: 3
+    calls_in: 0
+  generator.intent_generator._build_user_prompt:
+    name: _build_user_prompt
+    module: generator.intent_generator
+    line: 135
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  contracts.api_actions.parse_api_actions:
+    name: parse_api_actions
+    module: contracts.api_actions
+    line: 24
+    cyclomatic_complexity: 9
+    calls_out: 11
+    calls_in: 5
+  contracts.expectations.load_and_check_expectations:
+    name: load_and_check_expectations
+    module: contracts.expectations
+    line: 97
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 1
+  examples._scripts.annotate_intract.annotate_python:
+    name: annotate_python
+    module: examples._scripts.annotate_intract
+    line: 43
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  cli.shell.CLI.cmd_new:
+    name: cmd_new
+    module: cli.shell
+    line: 64
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  registry.discover_io.load_session:
+    name: load_session
+    module: registry.discover_io
+    line: 15
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  sdk.client.IterunClient.validate:
+    name: validate
+    module: sdk.client
+    line: 59
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 0
+  executor.runner.Executor.get_container_logs:
+    name: get_container_logs
+    module: executor.runner
+    line: 291
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 3
+  integrations.pactown_config.write_pactown_config:
+    name: write_pactown_config
+    module: integrations.pactown_config
+    line: 65
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  executor.docker_ops.stop_containers_for_intent:
+    name: stop_containers_for_intent
+    module: executor.docker_ops
+    line: 38
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  web.routes.intents.generate_intent_api:
+    name: generate_intent_api
+    module: web.routes.intents
+    line: 61
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  web.routes.registry.list_registries:
+    name: list_registries
+    module: web.routes.registry
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  examples._scripts.annotate_intract._comment:
+    name: _comment
+    module: examples._scripts.annotate_intract
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  registry.discover_services.build_stack_services:
+    name: build_stack_services
+    module: registry.discover_services
+    line: 12
+    cyclomatic_complexity: 13
+    calls_out: 24
+    calls_in: 1
+  generator.contract_verify.readiness_paths:
+    name: readiness_paths
+    module: generator.contract_verify
+    line: 77
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 1
+  web.routes.intents.get_schema:
+    name: get_schema
+    module: web.routes.intents
+    line: 51
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  web.routes.intents.parse_intent:
+    name: parse_intent
+    module: web.routes.intents
+    line: 106
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  executor.runner.Executor._execute_local:
+    name: _execute_local
+    module: executor.runner
+    line: 264
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  ai_gateway.gateway.suggest_improvements:
+    name: suggest_improvements
+    module: ai_gateway.gateway
+    line: 350
+    cyclomatic_complexity: 1
+    calls_out: 2
     calls_in: 0
   web.routes.intents.iterate:
     name: iterate
@@ -1237,15 +1272,402 @@ nodes:
     cyclomatic_complexity: 6
     calls_out: 8
     calls_in: 0
+  planner.stack_planner._build_compose:
+    name: _build_compose
+    module: planner.stack_planner
+    line: 120
+    cyclomatic_complexity: 9
+    calls_out: 4
+    calls_in: 1
+  examples._scripts.verify_expectations._map_expectation_errors:
+    name: _map_expectation_errors
+    module: examples._scripts.verify_expectations
+    line: 18
+    cyclomatic_complexity: 8
+    calls_out: 19
+    calls_in: 1
+  config.get_config:
+    name: get_config
+    module: config
+    line: 161
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 9
+  generator.intent_generator.IntentGenerator.generate:
+    name: generate
+    module: generator.intent_generator
+    line: 174
+    cyclomatic_complexity: 11
+    calls_out: 21
+    calls_in: 0
+  cli.dispatch._maybe_plan_before_execute:
+    name: _maybe_plan_before_execute
+    module: cli.dispatch
+    line: 84
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
+  registry.labels.build_otel_resource:
+    name: build_otel_resource
+    module: registry.labels
+    line: 36
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 2
+  planner.stack_planner._gateway_proxy_code:
+    name: _gateway_proxy_code
+    module: planner.stack_planner
+    line: 46
+    cyclomatic_complexity: 10
+    calls_out: 12
+    calls_in: 1
+  interfaces.service.IterunService.plan_ir:
+    name: plan_ir
+    module: interfaces.service
+    line: 198
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  registry.discover_io.load_stack_urls:
+    name: load_stack_urls
+    module: registry.discover_io
+    line: 25
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  web.routes.intents._get_service:
+    name: _get_service
+    module: web.routes.intents
+    line: 35
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 5
+  dsl.schema.validate_yaml_document:
+    name: validate_yaml_document
+    module: dsl.schema
+    line: 192
+    cyclomatic_complexity: 8
+    calls_out: 5
+    calls_in: 4
+  examples._scripts.intent_to_intract.main:
+    name: main
+    module: examples._scripts.intent_to_intract
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  cli.dispatch._dispatch_plan:
+    name: _dispatch_plan
+    module: cli.dispatch
+    line: 56
+    cyclomatic_complexity: 12
+    calls_out: 13
+    calls_in: 1
+  dsl.schema.get_json_schema:
+    name: get_json_schema
+    module: dsl.schema
+    line: 183
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
+  executor.pactown._append_action_urls:
+    name: _append_action_urls
+    module: executor.pactown
+    line: 22
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 2
+  cli.main.build_parser:
+    name: build_parser
+    module: cli.main
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 17
+    calls_in: 1
+  examples._scripts.annotate_intract.main:
+    name: main
+    module: examples._scripts.annotate_intract
+    line: 81
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  registry.catalog.discover_glob:
+    name: discover_glob
+    module: registry.catalog
+    line: 59
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 2
+  generator.pipeline._generate_and_plan:
+    name: _generate_and_plan
+    module: generator.pipeline
+    line: 121
+    cyclomatic_complexity: 9
+    calls_out: 7
+    calls_in: 1
+  executor.pactown._collect_endpoints:
+    name: _collect_endpoints
+    module: executor.pactown
+    line: 49
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  generator.intract_manifest.write_intract_manifest:
+    name: write_intract_manifest
+    module: generator.intract_manifest
+    line: 82
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 4
+  executor.validation.attempt_auto_fix:
+    name: attempt_auto_fix
+    module: executor.validation
+    line: 145
+    cyclomatic_complexity: 10
+    calls_out: 8
+    calls_in: 1
+  cli.shell_interactive.handle_interactive_line:
+    name: handle_interactive_line
+    module: cli.shell_interactive
+    line: 68
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  cli.shell.CLI.cmd_ai_health:
+    name: cmd_ai_health
+    module: cli.shell
+    line: 436
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 0
+  generator.contract_verify.run_testql:
+    name: run_testql
+    module: generator.contract_verify
+    line: 138
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  executor.validation.add_main_block:
+    name: add_main_block
+    module: executor.validation
+    line: 115
+    cyclomatic_complexity: 7
+    calls_out: 0
+    calls_in: 1
+  web.routes.intents.validate_yaml:
+    name: validate_yaml
+    module: web.routes.intents
+    line: 56
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  registry.discover_context._stack_metadata:
+    name: _stack_metadata
+    module: registry.discover_context
+    line: 41
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  contracts.api_actions._parse_action_strings:
+    name: _parse_action_strings
+    module: contracts.api_actions
+    line: 9
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 2
+  web.routes.ai.ai_complete:
+    name: ai_complete
+    module: web.routes.ai
+    line: 65
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  cli.shell.CLI.cmd_models:
+    name: cmd_models
+    module: cli.shell
+    line: 420
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  generator.contract_verify.verify_contract:
+    name: verify_contract
+    module: generator.contract_verify
+    line: 207
+    cyclomatic_complexity: 6
+    calls_out: 20
+    calls_in: 1
+  cli.shell_output.print_execution_logs:
+    name: print_execution_logs
+    module: cli.shell_output
+    line: 22
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  web.routes.registry.get_registry:
+    name: get_registry
+    module: web.routes.registry
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  cli.dispatch._dispatch_execute:
+    name: _dispatch_execute
+    module: cli.dispatch
+    line: 101
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  ai_gateway.gateway.complete:
+    name: complete
+    module: ai_gateway.gateway
+    line: 345
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  cli.dispatch._workspace_has_artifacts:
+    name: _workspace_has_artifacts
+    module: cli.dispatch
+    line: 80
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  executor.pactown._collect_single_endpoints:
+    name: _collect_single_endpoints
+    module: executor.pactown
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  generator.contract_verify._write_verify_result:
+    name: _write_verify_result
+    module: generator.contract_verify
+    line: 198
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 3
+  registry.discover_context.load_workspace_context:
+    name: load_workspace_context
+    module: registry.discover_context
+    line: 55
+    cyclomatic_complexity: 6
+    calls_out: 14
+    calls_in: 1
+  web.routes.intents.generate_and_run_api:
+    name: generate_and_run_api
+    module: web.routes.intents
+    line: 89
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  cli.dispatch._dispatch_generate:
+    name: _dispatch_generate
+    module: cli.dispatch
+    line: 157
+    cyclomatic_complexity: 8
+    calls_out: 6
+    calls_in: 1
+  executor.pactown._prepare_pactown_workspace:
+    name: _prepare_pactown_workspace
+    module: executor.pactown
+    line: 92
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  cli.shell.CLI.cmd_ai_apply:
+    name: cmd_ai_apply
+    module: cli.shell
+    line: 357
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 0
+  web.routes.intents.delete_intent:
+    name: delete_intent
+    module: web.routes.intents
+    line: 141
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  executor.pactown._finalize_pactown:
+    name: _finalize_pactown
+    module: executor.pactown
+    line: 154
+    cyclomatic_complexity: 10
+    calls_out: 15
+    calls_in: 1
+  config._load_getv_profiles:
+    name: _load_getv_profiles
+    module: config
+    line: 19
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  generator.intent_generator.IntentGenerator.__init__:
+    name: __init__
+    module: generator.intent_generator
+    line: 161
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  generator.pipeline._write_plan_artifacts:
+    name: _write_plan_artifacts
+    module: generator.pipeline
+    line: 25
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 1
+  executor.runner.execute_intent:
+    name: execute_intent
+    module: executor.runner
+    line: 301
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 4
+  cli.shell_interactive._dispatch_ai:
+    name: _dispatch_ai
+    module: cli.shell_interactive
+    line: 46
+    cyclomatic_complexity: 10
+    calls_out: 6
+    calls_in: 1
+  executor.runner.Executor.__init__:
+    name: __init__
+    module: executor.runner
+    line: 39
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  executor.pactown._validate_urls:
+    name: _validate_urls
+    module: executor.pactown
+    line: 55
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 1
+  web.routes.ai.list_models:
+    name: list_models
+    module: web.routes.ai
+    line: 52
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
 edges:
+- caller: config._load_envstore
+  callee: config._apply_env_pairs
+  call_type: resolved
+- caller: config.load_dotenv
+  callee: config._load_getv_profiles
+  call_type: resolved
+- caller: config.load_dotenv
+  callee: config._apply_env_pairs
+  call_type: resolved
+- caller: config.load_dotenv
+  callee: config._load_envstore
+  call_type: resolved
+- caller: config.load_dotenv
+  callee: config._parse_dotenv_lines
+  call_type: resolved
 - caller: config.reload_config
   callee: config.load_dotenv
-  call_type: resolved
-- caller: generator.expectations.check_expectations
-  callee: generator.intract_manifest.parse_api_actions
-  call_type: resolved
-- caller: generator.expectations.load_and_check_expectations
-  callee: generator.expectations.check_expectations
   call_type: resolved
 - caller: generator.intent_generator.IntentGenerator.__init__
   callee: dsl.schema.get_system_prompt
@@ -1263,7 +1685,7 @@ edges:
   callee: dsl.schema.validate_yaml_document
   call_type: resolved
 - caller: generator.testql_scenario.build_testql_scenario
-  callee: generator.intract_manifest.parse_api_actions
+  callee: contracts.api_actions.parse_api_actions
   call_type: resolved
 - caller: generator.testql_scenario.build_testql_scenario
   callee: generator.testql_scenario._startup_wait_ms
@@ -1298,23 +1720,65 @@ edges:
 - caller: generator.pipeline._finalize
   callee: generator.session.write_session_artifacts
   call_type: resolved
-- caller: generator.pipeline._finalize
-  callee: integrations.bridges.pipeline.refresh_registry_from_pipeline
+- caller: generator.pipeline._generate_and_plan
+  callee: planner.plan.plan_intent
+  call_type: resolved
+- caller: generator.pipeline._generate_and_plan
+  callee: generator.pipeline._build_repair_prompt
+  call_type: resolved
+- caller: generator.pipeline._generate_and_plan
+  callee: generator.pipeline._write_plan_artifacts
+  call_type: resolved
+- caller: generator.pipeline._finish_without_verify
+  callee: generator.pipeline._finalize
+  call_type: resolved
+- caller: generator.pipeline._handle_verify_round
+  callee: generator.contract_verify.verify_contract
+  call_type: resolved
+- caller: generator.pipeline._handle_verify_round
+  callee: generator.pipeline._write_verify_round_log
+  call_type: resolved
+- caller: generator.pipeline._handle_verify_round
+  callee: generator.pipeline._finalize
+  call_type: resolved
+- caller: generator.pipeline._handle_execute_error
+  callee: generator.pipeline._write_verify_round_log
+  call_type: resolved
+- caller: generator.pipeline._handle_execute_error
+  callee: generator.pipeline._finalize
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: generator.pipeline._generate_and_plan
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: executor.runner.execute_intent
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: generator.pipeline._handle_verify_round
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: generator.pipeline._finalize
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: integrations.runtime_stop.stop_runtime_for_intent
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: generator.pipeline._handle_execute_error
+  call_type: resolved
+- caller: generator.pipeline._run_pipeline_round
+  callee: generator.pipeline._finish_without_verify
   call_type: resolved
 - caller: generator.pipeline.run_pipeline
   callee: generator.pipeline._finalize
   call_type: resolved
 - caller: generator.pipeline.run_pipeline
-  callee: planner.simulator.plan_intent
-  call_type: resolved
-- caller: generator.intract_manifest.parse_api_actions
-  callee: generator.intract_manifest._parse_action_strings
+  callee: generator.pipeline._run_pipeline_round
   call_type: resolved
 - caller: generator.intract_manifest.build_intract_manifest
   callee: generator.intract_manifest._safe_id
   call_type: resolved
 - caller: generator.intract_manifest.build_intract_manifest
-  callee: generator.intract_manifest.parse_api_actions
+  callee: contracts.api_actions.parse_api_actions
   call_type: resolved
 - caller: generator.intract_manifest.build_intract_manifest
   callee: generator.intract_manifest._slug
@@ -1329,7 +1793,7 @@ edges:
   callee: generator.contract_verify._probe_path
   call_type: resolved
 - caller: generator.contract_verify.readiness_paths
-  callee: generator.intract_manifest.parse_api_actions
+  callee: contracts.api_actions.parse_api_actions
   call_type: resolved
 - caller: generator.contract_verify.wait_for_service
   callee: generator.contract_verify.readiness_paths
@@ -1343,20 +1807,38 @@ edges:
 - caller: generator.contract_verify.write_contract_artifacts
   callee: generator.testql_scenario.write_testql_scenario
   call_type: resolved
+- caller: generator.contract_verify._run_testql_checks
+  callee: generator.contract_verify.run_testql
+  call_type: resolved
+- caller: generator.contract_verify._run_http_probes
+  callee: contracts.api_actions.parse_api_actions
+  call_type: resolved
+- caller: generator.contract_verify._run_http_probes
+  callee: generator.contract_verify._probe_path
+  call_type: resolved
+- caller: generator.contract_verify._run_http_probes
+  callee: generator.contract_verify._http_probe
+  call_type: resolved
 - caller: generator.contract_verify.verify_contract
   callee: generator.contract_verify.write_contract_artifacts
   call_type: resolved
 - caller: generator.contract_verify.verify_contract
-  callee: generator.intract_manifest.parse_api_actions
+  callee: generator.contract_verify._run_testql_checks
   call_type: resolved
 - caller: generator.contract_verify.verify_contract
-  callee: generator.expectations.load_and_check_expectations
+  callee: generator.contract_verify._run_http_probes
+  call_type: resolved
+- caller: generator.contract_verify.verify_contract
+  callee: generator.contract_verify._write_verify_result
   call_type: resolved
 - caller: examples._scripts.verify_expectations.verify
   callee: examples._scripts.verify_expectations._load_yaml
   call_type: resolved
 - caller: examples._scripts.verify_expectations.verify
-  callee: examples._scripts.verify_expectations._parse_actions
+  callee: examples._scripts.verify_expectations._map_expectation_errors
+  call_type: resolved
+- caller: examples._scripts.verify_expectations.verify
+  callee: contracts.expectations.check_expectations
   call_type: resolved
 - caller: examples._scripts.verify_expectations.main
   callee: examples._scripts.verify_expectations.verify
@@ -1388,11 +1870,20 @@ edges:
 - caller: examples._scripts.intent_to_openapi.main
   callee: examples._scripts.intent_to_openapi.intent_to_openapi
   call_type: resolved
+- caller: planner.plan.plan_intent
+  callee: planner.stack_planner.plan_stack
+  call_type: resolved
 - caller: planner.stack_planner._gateway_proxy_code
   callee: planner.stack_planner._resolve_upstream
   call_type: resolved
 - caller: planner.stack_planner._build_compose
   callee: registry.labels.build_service_labels
+  call_type: resolved
+- caller: planner.stack_planner._plan_generated_service
+  callee: planner.stack_planner._service_ir
+  call_type: resolved
+- caller: planner.stack_planner._plan_generated_service
+  callee: planner.stack_planner._gateway_proxy_code
   call_type: resolved
 - caller: planner.stack_planner.plan_stack
   callee: planner.stack_planner._build_compose
@@ -1402,9 +1893,6 @@ edges:
   call_type: resolved
 - caller: planner.simulator.Planner._generate_flask_code
   callee: planner.simulator._endpoint_to_func_name
-  call_type: resolved
-- caller: planner.simulator.plan_intent
-  callee: planner.stack_planner.plan_stack
   call_type: resolved
 - caller: web.routes.registry.list_interfaces
   callee: web.routes.registry._get_service
@@ -1494,7 +1982,7 @@ edges:
   callee: web.routes.intents._intents_store
   call_type: resolved
 - caller: web.routes.intents.plan
-  callee: planner.simulator.plan_intent
+  callee: planner.plan.plan_intent
   call_type: resolved
 - caller: web.routes.intents.iterate
   callee: web.routes.intents._intents_store
@@ -1532,14 +2020,107 @@ edges:
 - caller: ai_gateway.gateway.suggest_improvements
   callee: ai_gateway.gateway.get_gateway
   call_type: resolved
-- caller: ai_gateway.model_catalog.GatewayConfig.__post_init__
+- caller: ai_gateway.model_catalog.GatewayConfig._load_from_app_config
   callee: config.get_config
   call_type: resolved
 - caller: ai_gateway.feedback_loop.FeedbackLoop.__init__
   callee: ai_gateway.gateway.get_gateway
   call_type: resolved
+- caller: cli.shell_interactive.handle_interactive_line
+  callee: cli.shell_interactive._dispatch_basic
+  call_type: resolved
+- caller: cli.shell_interactive.handle_interactive_line
+  callee: cli.shell_interactive._dispatch_ai
+  call_type: resolved
 - caller: cli.plan_artifacts.write_plan_artifacts
   callee: planner.stack_artifacts.write_stack_artifacts
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_plan
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_execute
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_parse
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_validate
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_generate
+  call_type: resolved
+- caller: cli.dispatch.dispatch_command
+  callee: cli.dispatch._dispatch_registry
+  call_type: resolved
+- caller: cli.dispatch._dispatch_plan
+  callee: cli.plan_artifacts.write_plan_artifacts
+  call_type: resolved
+- caller: cli.dispatch._maybe_plan_before_execute
+  callee: cli.dispatch._workspace_has_artifacts
+  call_type: resolved
+- caller: cli.dispatch._maybe_plan_before_execute
+  callee: cli.plan_artifacts.write_plan_artifacts
+  call_type: resolved
+- caller: cli.dispatch._dispatch_execute
+  callee: cli.dispatch._maybe_plan_before_execute
+  call_type: resolved
+- caller: cli.dispatch._dispatch_execute
+  callee: cli.dispatch._print_execute_result
+  call_type: resolved
+- caller: cli.dispatch._dispatch_validate
+  callee: dsl.schema.validate_yaml_document
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate
+  callee: cli.dispatch._dispatch_generate_pipeline
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate
+  callee: cli.dispatch._dispatch_generate_yaml_only
+  call_type: resolved
+- caller: cli.dispatch._refresh_pipeline_registry
+  callee: integrations.bridges.pipeline.refresh_registry_from_pipeline
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_pipeline
+  callee: generator.pipeline.run_pipeline
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_pipeline
+  callee: cli.dispatch._refresh_pipeline_registry
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_pipeline
+  callee: cli.dispatch._print_generate_success
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_pipeline
+  callee: cli.dispatch._print_generate_failure
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_yaml_only
+  callee: generator.intract_manifest.write_intract_manifest
+  call_type: resolved
+- caller: cli.dispatch._dispatch_generate_yaml_only
+  callee: generator.testql_scenario.write_testql_scenario
+  call_type: resolved
+- caller: cli.dispatch._dispatch_registry
+  callee: integrations.bridges.pipeline.refresh_registry
+  call_type: resolved
+- caller: cli.dispatch._dispatch_registry
+  callee: registry.catalog.discover_glob
+  call_type: resolved
+- caller: cli.shell_output.print_execution_logs
+  callee: cli.shell_output.log_status_color
+  call_type: resolved
+- caller: cli.shell_output.print_execution_success
+  callee: cli.shell_output.print_validation_success
+  call_type: resolved
+- caller: cli.shell_output.print_container_logs
+  callee: executor.runner.Executor.get_container_logs
+  call_type: resolved
+- caller: cli.shell_output.print_container_logs
+  callee: config.get_config
+  call_type: resolved
+- caller: cli.shell_output.print_execution_failure
+  callee: cli.shell_output.print_validation_errors
+  call_type: resolved
+- caller: cli.shell_output.print_execution_failure
+  callee: cli.shell_output.print_container_logs
   call_type: resolved
 - caller: cli.shell.CLI.cmd_new
   callee: parser.dsl_parser.parse_dsl
@@ -1551,13 +2132,28 @@ edges:
   callee: parser.dsl_parser.parse_dsl
   call_type: resolved
 - caller: cli.shell.CLI.cmd_plan
-  callee: planner.simulator.plan_intent
+  callee: planner.plan.plan_intent
+  call_type: resolved
+- caller: cli.shell.CLI._skip_iterun_confirmation
+  callee: config.get_config
   call_type: resolved
 - caller: cli.shell.CLI.cmd_execute
   callee: executor.runner.execute_intent
   call_type: resolved
 - caller: cli.shell.CLI.cmd_execute
-  callee: config.get_config
+  callee: cli.shell_output.print_execution_logs
+  call_type: resolved
+- caller: cli.shell.CLI.cmd_execute
+  callee: cli.shell_output.print_execution_success
+  call_type: resolved
+- caller: cli.shell.CLI.cmd_execute
+  callee: cli.shell_output.print_execution_failure
+  call_type: resolved
+- caller: cli.shell.CLI.interactive_mode
+  callee: cli.shell_interactive.handle_interactive_line
+  call_type: resolved
+- caller: cli.shell.CLI.interactive_mode
+  callee: cli.shell_interactive.build_prompt
   call_type: resolved
 - caller: cli.shell.CLI.cmd_ai_suggest
   callee: ai_gateway.feedback_loop.create_feedback_loop
@@ -1595,20 +2191,35 @@ edges:
 - caller: registry.catalog.RegistryCatalog.discover
   callee: registry.discover.discover_workspace
   call_type: resolved
-- caller: registry.discover.discover_workspace
-  callee: registry.discover_io.load_session
+- caller: registry.discover._build_services
+  callee: registry.discover_services.build_single_service
+  call_type: resolved
+- caller: registry.discover._build_services
+  callee: registry.discover_services.build_stack_services
   call_type: resolved
 - caller: registry.discover.discover_workspace
-  callee: registry.discover_io.load_stack_urls
+  callee: registry.discover_context.load_workspace_context
+  call_type: resolved
+- caller: registry.discover.discover_workspace
+  callee: registry.discover._build_services
   call_type: resolved
 - caller: registry.discover.discover_workspace
   callee: registry.discover_artifacts.discover_artifacts
   call_type: resolved
-- caller: registry.discover.discover_workspace
-  callee: registry.discover_io.phase_from_session
+- caller: registry.discover_context.load_workspace_context
+  callee: registry.discover_io.load_session
   call_type: resolved
-- caller: registry.discover.discover_workspace
+- caller: registry.discover_context.load_workspace_context
+  callee: registry.discover_context._intent_identity
+  call_type: resolved
+- caller: registry.discover_context.load_workspace_context
+  callee: registry.discover_context._stack_metadata
+  call_type: resolved
+- caller: registry.discover_context.load_workspace_context
   callee: registry.discover_io.intent_from_workspace
+  call_type: resolved
+- caller: registry.discover_context.load_workspace_context
+  callee: registry.discover_io.load_stack_urls
   call_type: resolved
 - caller: interfaces.service._write_plan_output
   callee: planner.stack_artifacts.write_stack_artifacts
@@ -1622,14 +2233,17 @@ edges:
 - caller: interfaces.service.IterunService.parse
   callee: parser.dsl_parser.parse_dsl
   call_type: resolved
+- caller: interfaces.service.IterunService.run_pipeline
+  callee: integrations.bridges.pipeline.refresh_registry_from_pipeline
+  call_type: resolved
 - caller: interfaces.service.IterunService.plan_ir
-  callee: planner.simulator.plan_intent
+  callee: planner.plan.plan_intent
   call_type: resolved
 - caller: interfaces.service.IterunService.plan_yaml
   callee: parser.dsl_parser.parse_dsl
   call_type: resolved
 - caller: interfaces.service.IterunService.plan_yaml
-  callee: planner.simulator.plan_intent
+  callee: planner.plan.plan_intent
   call_type: resolved
 - caller: interfaces.service.IterunService.plan_yaml
   callee: interfaces.service._write_plan_output
@@ -1646,8 +2260,14 @@ edges:
 - caller: executor.runner.Executor.__init__
   callee: config.get_config
   call_type: resolved
+- caller: executor.runner.Executor._run_runtime
+  callee: executor.docker_ops.execute_compose_stack
+  call_type: resolved
+- caller: executor.runner.Executor._run_runtime
+  callee: executor.docker_ops.execute_docker
+  call_type: resolved
 - caller: executor.runner.Executor.execute
-  callee: integrations.pactown_runtime.execute_pactown
+  callee: executor.pactown.execute_pactown
   call_type: resolved
 - caller: executor.runner.Executor._validate_and_fix
   callee: executor.validation.filter_validation_endpoints
@@ -1667,6 +2287,42 @@ edges:
 - caller: executor.validation.attempt_auto_fix
   callee: executor.validation.add_main_block
   call_type: resolved
+- caller: executor.pactown._collect_stack_endpoints
+  callee: executor.pactown._append_action_urls
+  call_type: resolved
+- caller: executor.pactown._collect_single_endpoints
+  callee: executor.pactown._append_action_urls
+  call_type: resolved
+- caller: executor.pactown._collect_endpoints
+  callee: executor.pactown._collect_single_endpoints
+  call_type: resolved
+- caller: executor.pactown._collect_endpoints
+  callee: executor.pactown._collect_stack_endpoints
+  call_type: resolved
+- caller: executor.pactown._validate_urls
+  callee: executor.validation.filter_validation_endpoints
+  call_type: resolved
+- caller: executor.pactown._prepare_pactown_workspace
+  callee: integrations.markpact_pack.pack_workspace
+  call_type: resolved
+- caller: executor.pactown._prepare_pactown_workspace
+  callee: integrations.pactown_config.write_pactown_config
+  call_type: resolved
+- caller: executor.pactown._finalize_pactown
+  callee: executor.pactown._collect_endpoints
+  call_type: resolved
+- caller: executor.pactown._finalize_pactown
+  callee: executor.pactown._validate_urls
+  call_type: resolved
+- caller: executor.pactown.execute_pactown
+  callee: executor.pactown._prepare_pactown_workspace
+  call_type: resolved
+- caller: executor.pactown.execute_pactown
+  callee: executor.pactown._finalize_pactown
+  call_type: resolved
+- caller: executor.pactown.execute_pactown
+  callee: executor.pactown._start_pactown_stack
+  call_type: resolved
 - caller: executor.docker_ops.stop_containers_for_intent
   callee: config.get_config
   call_type: resolved
@@ -1679,14 +2335,41 @@ edges:
 - caller: executor.docker_ops.execute_docker
   callee: executor.docker_ops.find_available_port
   call_type: resolved
-- caller: integrations.pactown_runtime._validate_urls
-  callee: executor.validation.filter_validation_endpoints
+- caller: integrations.runtime_stop.stop_runtime_for_intent
+  callee: executor.docker_ops.stop_containers_for_intent
   call_type: resolved
-- caller: integrations.pactown_runtime.execute_pactown
-  callee: integrations.markpact_pack.pack_workspace
+- caller: integrations.runtime_stop.stop_runtime_for_intent
+  callee: executor.pactown.stop_pactown_for_intent
   call_type: resolved
-- caller: integrations.pactown_runtime.execute_pactown
-  callee: integrations.pactown_config.write_pactown_config
+- caller: integrations.runtime_stop.stop_runtime_for_intent
+  callee: config.get_config
+  call_type: resolved
+- caller: contracts.expectations._check_declared_endpoints
+  callee: contracts.api_actions.parse_api_actions
+  call_type: resolved
+- caller: contracts.expectations._check_live_endpoint
+  callee: contracts.expectations._probe_path
+  call_type: resolved
+- caller: contracts.expectations._check_live_endpoint
+  callee: contracts.expectations._http_probe
+  call_type: resolved
+- caller: contracts.expectations._check_live_endpoint
+  callee: contracts.expectations._check_endpoint_response
+  call_type: resolved
+- caller: contracts.expectations.check_expectations
+  callee: contracts.expectations._check_metadata
+  call_type: resolved
+- caller: contracts.expectations.check_expectations
+  callee: contracts.expectations._check_declared_endpoints
+  call_type: resolved
+- caller: contracts.expectations.check_expectations
+  callee: contracts.expectations._check_live_endpoint
+  call_type: resolved
+- caller: contracts.expectations.load_and_check_expectations
+  callee: contracts.expectations.check_expectations
+  call_type: resolved
+- caller: contracts.api_actions.parse_api_actions
+  callee: contracts.api_actions._parse_action_strings
   call_type: resolved
 - caller: integrations.pactown_config.build_pactown_config
   callee: integrations.pactown_config._health_path
@@ -1694,17 +2377,14 @@ edges:
 - caller: integrations.pactown_config.write_pactown_config
   callee: integrations.pactown_config.build_pactown_config
   call_type: resolved
+- caller: integrations.markpact_pack._pack_service_readmes
+  callee: integrations.markpact_pack._service_run_command
+  call_type: resolved
+- caller: integrations.markpact_pack.pack_workspace
+  callee: integrations.markpact_pack._pack_service_readmes
+  call_type: resolved
 - caller: integrations.markpact_pack.pack_workspace
   callee: integrations.markpact_pack._run_command_for_ir
-  call_type: resolved
-- caller: integrations.runtime_stop.stop_runtime_for_intent
-  callee: executor.docker_ops.stop_containers_for_intent
-  call_type: resolved
-- caller: integrations.runtime_stop.stop_runtime_for_intent
-  callee: integrations.pactown_runtime.stop_pactown_for_intent
-  call_type: resolved
-- caller: integrations.runtime_stop.stop_runtime_for_intent
-  callee: config.get_config
   call_type: resolved
 - caller: integrations.bridges.pipeline.refresh_registry_from_pipeline
   callee: integrations.bridges.pipeline.refresh_registry
@@ -1712,11 +2392,14 @@ edges:
 - caller: integrations.adapters.docker.DockerAdapter.enrich
   callee: integrations.adapters.docker._running_iterun_containers
   call_type: resolved
+- caller: integrations.adapters.docker.DockerAdapter._merge_container_state
+  callee: integrations.adapters.docker._match_service_containers
+  call_type: resolved
+- caller: integrations.adapters.docker.DockerAdapter._merge_container_state
+  callee: integrations.adapters.docker._apply_container_to_service
+  call_type: resolved
 - caller: integrations.adapters.filesystem.FilesystemAdapter.collect
   callee: registry.discover.discover_workspace
-  call_type: resolved
-- caller: dsl.schema.validate_yaml_document
-  callee: parser.dsl_parser.parse_dsl
   call_type: resolved
 - caller: dsl.schema.get_system_prompt
   callee: dsl.schema.get_json_schema
@@ -1730,51 +2413,6 @@ edges:
 - caller: sdk.client.IterunClient.parse
   callee: parser.dsl_parser.parse_dsl
   call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_plan
-  call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_execute
-  call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_parse
-  call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_validate
-  call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_generate
-  call_type: resolved
-- caller: cli.dispatch.dispatch_command
-  callee: cli.dispatch._dispatch_registry
-  call_type: resolved
-- caller: cli.dispatch._dispatch_plan
-  callee: cli.plan_artifacts.write_plan_artifacts
-  call_type: resolved
-- caller: cli.dispatch._dispatch_validate
-  callee: dsl.schema.validate_yaml_document
-  call_type: resolved
-- caller: cli.dispatch._dispatch_generate
-  callee: cli.dispatch._dispatch_generate_pipeline
-  call_type: resolved
-- caller: cli.dispatch._dispatch_generate
-  callee: cli.dispatch._dispatch_generate_yaml_only
-  call_type: resolved
-- caller: cli.dispatch._dispatch_generate_pipeline
-  callee: generator.pipeline.run_pipeline
-  call_type: resolved
-- caller: cli.dispatch._dispatch_generate_yaml_only
-  callee: generator.intract_manifest.write_intract_manifest
-  call_type: resolved
-- caller: cli.dispatch._dispatch_generate_yaml_only
-  callee: generator.testql_scenario.write_testql_scenario
-  call_type: resolved
-- caller: cli.dispatch._dispatch_registry
-  callee: integrations.bridges.pipeline.refresh_registry
-  call_type: resolved
-- caller: cli.dispatch._dispatch_registry
-  callee: registry.catalog.discover_glob
-  call_type: resolved
 modules:
   ai_gateway.feedback_loop:
   - ai_gateway.feedback_loop.FeedbackLoop.__init__
@@ -1784,7 +2422,7 @@ modules:
   - ai_gateway.gateway.get_gateway
   - ai_gateway.gateway.suggest_improvements
   ai_gateway.model_catalog:
-  - ai_gateway.model_catalog.GatewayConfig.__post_init__
+  - ai_gateway.model_catalog.GatewayConfig._load_from_app_config
   cli.dispatch:
   - cli.dispatch._dispatch_execute
   - cli.dispatch._dispatch_generate
@@ -1794,6 +2432,12 @@ modules:
   - cli.dispatch._dispatch_plan
   - cli.dispatch._dispatch_registry
   - cli.dispatch._dispatch_validate
+  - cli.dispatch._maybe_plan_before_execute
+  - cli.dispatch._print_execute_result
+  - cli.dispatch._print_generate_failure
+  - cli.dispatch._print_generate_success
+  - cli.dispatch._refresh_pipeline_registry
+  - cli.dispatch._workspace_has_artifacts
   - cli.dispatch.dispatch_command
   cli.main:
   - cli.main.build_parser
@@ -1801,6 +2445,7 @@ modules:
   cli.plan_artifacts:
   - cli.plan_artifacts.write_plan_artifacts
   cli.shell:
+  - cli.shell.CLI._skip_iterun_confirmation
   - cli.shell.CLI.cmd_ai_apply
   - cli.shell.CLI.cmd_ai_chat
   - cli.shell.CLI.cmd_ai_health
@@ -1811,10 +2456,40 @@ modules:
   - cli.shell.CLI.cmd_new
   - cli.shell.CLI.cmd_parse
   - cli.shell.CLI.cmd_plan
+  - cli.shell.CLI.interactive_mode
+  cli.shell_interactive:
+  - cli.shell_interactive._dispatch_ai
+  - cli.shell_interactive._dispatch_basic
+  - cli.shell_interactive.build_prompt
+  - cli.shell_interactive.handle_interactive_line
+  cli.shell_output:
+  - cli.shell_output.log_status_color
+  - cli.shell_output.print_container_logs
+  - cli.shell_output.print_execution_failure
+  - cli.shell_output.print_execution_logs
+  - cli.shell_output.print_execution_success
+  - cli.shell_output.print_validation_errors
+  - cli.shell_output.print_validation_success
   config:
+  - config._apply_env_pairs
+  - config._load_envstore
+  - config._load_getv_profiles
+  - config._parse_dotenv_lines
   - config.get_config
   - config.load_dotenv
   - config.reload_config
+  contracts.api_actions:
+  - contracts.api_actions._parse_action_strings
+  - contracts.api_actions.parse_api_actions
+  contracts.expectations:
+  - contracts.expectations._check_declared_endpoints
+  - contracts.expectations._check_endpoint_response
+  - contracts.expectations._check_live_endpoint
+  - contracts.expectations._check_metadata
+  - contracts.expectations._http_probe
+  - contracts.expectations._probe_path
+  - contracts.expectations.check_expectations
+  - contracts.expectations.load_and_check_expectations
   dsl.schema:
   - dsl.schema.get_json_schema
   - dsl.schema.get_system_prompt
@@ -1836,7 +2511,7 @@ modules:
   - examples._scripts.intent_to_testql.main
   examples._scripts.verify_expectations:
   - examples._scripts.verify_expectations._load_yaml
-  - examples._scripts.verify_expectations._parse_actions
+  - examples._scripts.verify_expectations._map_expectation_errors
   - examples._scripts.verify_expectations.main
   - examples._scripts.verify_expectations.verify
   executor.docker_ops:
@@ -1845,10 +2520,22 @@ modules:
   - executor.docker_ops.find_available_port
   - executor.docker_ops.patch_compose_host_ports
   - executor.docker_ops.stop_containers_for_intent
+  executor.pactown:
+  - executor.pactown._append_action_urls
+  - executor.pactown._collect_endpoints
+  - executor.pactown._collect_single_endpoints
+  - executor.pactown._collect_stack_endpoints
+  - executor.pactown._finalize_pactown
+  - executor.pactown._prepare_pactown_workspace
+  - executor.pactown._start_pactown_stack
+  - executor.pactown._validate_urls
+  - executor.pactown.execute_pactown
+  - executor.pactown.stop_pactown_for_intent
   executor.runner:
   - executor.runner.Executor.__init__
   - executor.runner.Executor._execute_local
   - executor.runner.Executor._restart_container
+  - executor.runner.Executor._run_runtime
   - executor.runner.Executor._validate_and_fix
   - executor.runner.Executor.execute
   - executor.runner.Executor.get_container_logs
@@ -1860,33 +2547,39 @@ modules:
   - executor.validation.validate_endpoints
   generator.contract_verify:
   - generator.contract_verify._endpoint_responding
+  - generator.contract_verify._http_probe
   - generator.contract_verify._probe_path
+  - generator.contract_verify._run_http_probes
+  - generator.contract_verify._run_testql_checks
+  - generator.contract_verify._write_verify_result
   - generator.contract_verify.readiness_paths
+  - generator.contract_verify.run_testql
   - generator.contract_verify.verify_contract
   - generator.contract_verify.wait_for_service
   - generator.contract_verify.write_contract_artifacts
-  generator.expectations:
-  - generator.expectations.check_expectations
-  - generator.expectations.load_and_check_expectations
   generator.intent_generator:
   - generator.intent_generator.IntentGenerator.__init__
   - generator.intent_generator.IntentGenerator.generate
   - generator.intent_generator._build_user_prompt
   - generator.intent_generator.extract_yaml_from_llm
   generator.intract_manifest:
-  - generator.intract_manifest._parse_action_strings
   - generator.intract_manifest._safe_id
   - generator.intract_manifest._slug
   - generator.intract_manifest.build_intract_manifest
   - generator.intract_manifest.intent_to_intract_dict
-  - generator.intract_manifest.parse_api_actions
   - generator.intract_manifest.write_intract_manifest
   generator.pipeline:
   - generator.pipeline._build_repair_prompt
   - generator.pipeline._container_logs
   - generator.pipeline._expectations_summary
   - generator.pipeline._finalize
+  - generator.pipeline._finish_without_verify
+  - generator.pipeline._generate_and_plan
+  - generator.pipeline._handle_execute_error
+  - generator.pipeline._handle_verify_round
+  - generator.pipeline._run_pipeline_round
   - generator.pipeline._write_plan_artifacts
+  - generator.pipeline._write_verify_round_log
   - generator.pipeline.run_pipeline
   generator.session:
   - generator.session.write_session_artifacts
@@ -1896,7 +2589,10 @@ modules:
   - generator.testql_scenario.build_testql_scenario
   - generator.testql_scenario.write_testql_scenario
   integrations.adapters.docker:
+  - integrations.adapters.docker.DockerAdapter._merge_container_state
   - integrations.adapters.docker.DockerAdapter.enrich
+  - integrations.adapters.docker._apply_container_to_service
+  - integrations.adapters.docker._match_service_containers
   - integrations.adapters.docker._running_iterun_containers
   integrations.adapters.filesystem:
   - integrations.adapters.filesystem.FilesystemAdapter.collect
@@ -1904,16 +2600,14 @@ modules:
   - integrations.bridges.pipeline.refresh_registry
   - integrations.bridges.pipeline.refresh_registry_from_pipeline
   integrations.markpact_pack:
+  - integrations.markpact_pack._pack_service_readmes
   - integrations.markpact_pack._run_command_for_ir
+  - integrations.markpact_pack._service_run_command
   - integrations.markpact_pack.pack_workspace
   integrations.pactown_config:
   - integrations.pactown_config._health_path
   - integrations.pactown_config.build_pactown_config
   - integrations.pactown_config.write_pactown_config
-  integrations.pactown_runtime:
-  - integrations.pactown_runtime._validate_urls
-  - integrations.pactown_runtime.execute_pactown
-  - integrations.pactown_runtime.stop_pactown_for_intent
   integrations.runtime_stop:
   - integrations.runtime_stop.stop_runtime_for_intent
   interfaces.service:
@@ -1923,36 +2617,44 @@ modules:
   - interfaces.service.IterunService.plan_yaml
   - interfaces.service.IterunService.registry_list
   - interfaces.service.IterunService.registry_refresh
+  - interfaces.service.IterunService.run_pipeline
   - interfaces.service.IterunService.schema
   - interfaces.service.IterunService.validate_yaml
   - interfaces.service._write_plan_output
   parser.dsl_parser:
   - parser.dsl_parser.parse_dsl
   - parser.dsl_parser.parse_dsl_file
+  planner.plan:
+  - planner.plan.plan_intent
   planner.simulator:
   - planner.simulator.Planner._generate_fastapi_code
   - planner.simulator.Planner._generate_flask_code
   - planner.simulator._endpoint_to_func_name
-  - planner.simulator.plan_intent
   planner.stack_artifacts:
   - planner.stack_artifacts.write_stack_artifacts
   planner.stack_planner:
   - planner.stack_planner._build_compose
   - planner.stack_planner._gateway_proxy_code
+  - planner.stack_planner._plan_generated_service
   - planner.stack_planner._resolve_upstream
+  - planner.stack_planner._service_ir
   - planner.stack_planner.plan_stack
   registry.catalog:
   - registry.catalog.RegistryCatalog.discover
   - registry.catalog.discover_glob
   registry.discover:
+  - registry.discover._build_services
   - registry.discover.discover_workspace
   registry.discover_artifacts:
   - registry.discover_artifacts.discover_artifacts
+  registry.discover_context:
+  - registry.discover_context._intent_identity
+  - registry.discover_context._stack_metadata
+  - registry.discover_context.load_workspace_context
   registry.discover_io:
   - registry.discover_io.intent_from_workspace
   - registry.discover_io.load_session
   - registry.discover_io.load_stack_urls
-  - registry.discover_io.phase_from_session
   registry.discover_services:
   - registry.discover_services.build_single_service
   - registry.discover_services.build_stack_services
@@ -2001,10 +2703,13 @@ modules:
 entry_points:
 - ai_gateway.feedback_loop.FeedbackLoop.__init__
 - ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt
+- ai_gateway.feedback_loop.FeedbackLoop._endpoint_paths
 - ai_gateway.feedback_loop.FeedbackLoop._extract_action
 - ai_gateway.feedback_loop.FeedbackLoop._parse_action
 - ai_gateway.feedback_loop.FeedbackLoop._parse_suggestions
 - ai_gateway.feedback_loop.FeedbackLoop._process_user_feedback
+- ai_gateway.feedback_loop.FeedbackLoop._suggest_health_endpoints
+- ai_gateway.feedback_loop.FeedbackLoop._suggest_workflow_steps
 - ai_gateway.feedback_loop.FeedbackLoop.analyze
 - ai_gateway.feedback_loop.FeedbackLoop.apply_suggestions
 - ai_gateway.feedback_loop.FeedbackLoop.iterate
@@ -2025,6 +2730,9 @@ entry_points:
 - ai_gateway.gateway.complete
 - ai_gateway.gateway.suggest_improvements
 - ai_gateway.model_catalog.GatewayConfig.__post_init__
+- ai_gateway.model_catalog.GatewayConfig._load_from_app_config
+- ai_gateway.model_catalog.GatewayConfig._load_from_env
+- ai_gateway.model_catalog.GatewayConfig._resolve_default_provider
 - ai_gateway.model_catalog.GatewayConfig.get_available_models
 - ai_gateway.model_catalog.GatewayConfig.get_model
 - ai_gateway.model_catalog.GatewayConfig.litellm_model_id
@@ -2032,9 +2740,12 @@ entry_points:
 - ai_gateway.model_catalog.GatewayConfig.to_dict
 - ai_gateway.model_catalog.ModelConfig.to_dict
 - cli.__getattr__
+- cli.colors.Colors.disable
 - cli.main.main
 - cli.shell.CLI.__init__
+- cli.shell.CLI._ensure_execute_approved
 - cli.shell.CLI._show_help
+- cli.shell.CLI._skip_iterun_confirmation
 - cli.shell.CLI.cmd_ai_apply
 - cli.shell.CLI.cmd_ai_chat
 - cli.shell.CLI.cmd_ai_health
@@ -2055,7 +2766,6 @@ entry_points:
 - cli.shell.CLI.print_info
 - cli.shell.CLI.print_success
 - cli.shell.CLI.print_warning
-- cli.shell.Colors.disable
 - config.configure
 - config.get_env
 - config.get_env_bool
@@ -2105,8 +2815,11 @@ entry_points:
 - executor.models.ValidationResult.add_check
 - executor.models.ValidationResult.to_dict
 - executor.runner.Executor.__init__
+- executor.runner.Executor._check_iterun_boundary
 - executor.runner.Executor._execute_local
+- executor.runner.Executor._finalize_success
 - executor.runner.Executor._restart_container
+- executor.runner.Executor._run_runtime
 - executor.runner.Executor._validate_and_fix
 - executor.runner.Executor._write_artifacts
 - executor.runner.Executor.cleanup
@@ -2116,11 +2829,12 @@ entry_points:
 - generator.intent_generator.GenerateResult.to_dict
 - generator.intent_generator.IntentGenerator.__init__
 - generator.intent_generator.IntentGenerator.generate
-- generator.pipeline.PipelineResult.to_dict
+- generator.results.PipelineResult.to_dict
 - integrations.adapters.backstage.BackstageExporter.export
 - integrations.adapters.base.RegistryAdapter.collect
 - integrations.adapters.base.RegistryAdapter.enrich
 - integrations.adapters.base.RegistryExporter.export
+- integrations.adapters.docker.DockerAdapter._merge_container_state
 - integrations.adapters.docker.DockerAdapter.collect
 - integrations.adapters.docker.DockerAdapter.enrich
 - integrations.adapters.filesystem.FilesystemAdapter.collect
@@ -2135,6 +2849,7 @@ entry_points:
 - interfaces.service.IterunService.registry_get
 - interfaces.service.IterunService.registry_list
 - interfaces.service.IterunService.registry_refresh
+- interfaces.service.IterunService.run_pipeline
 - interfaces.service.IterunService.schema
 - interfaces.service.IterunService.validate_yaml
 - ir.models.Action.from_dict
@@ -2163,6 +2878,10 @@ entry_points:
 - parser.dsl_parser.DSLParser._parse_intent
 - parser.dsl_parser.DSLParser._parse_stack
 - parser.dsl_parser.DSLParser._validate
+- parser.dsl_parser.DSLParser._validate_actions_required
+- parser.dsl_parser.DSLParser._validate_dangerous_actions
+- parser.dsl_parser.DSLParser._validate_framework_compat
+- parser.dsl_parser.DSLParser._validate_stack_services
 - parser.dsl_parser.DSLParser.parse
 - parser.dsl_parser.DSLParser.parse_file
 - parser.dsl_parser.ParseError.__init__

@@ -5,41 +5,41 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph CLI
+        cli__shell_interactive___dispatch_basic["_dispatch_basic"]
+        cli__shell_interactive___dispatch_ai["_dispatch_ai"]
+        cli__shell_interactive__handle_interactive_line["handle_interactive_line"]
+        cli__shell_interactive__build_prompt["build_prompt"]
         cli__plan_artifacts__write_plan_artifacts["write_plan_artifacts"]
-        cli____getattr__["__getattr__"]
-        cli__shell__Colors__disable["disable"]
-        cli__shell__CLI__print_header["print_header"]
-        cli__shell__CLI__print_success["print_success"]
-        cli__shell__CLI__print_error["print_error"]
-        cli__shell__CLI__print_warning["print_warning"]
-        cli__shell__CLI__print_info["print_info"]
-        cli__shell__CLI__cmd_new["cmd_new"]
-        cli__shell__CLI__cmd_load["cmd_load"]
-        cli__shell__CLI__cmd_parse["cmd_parse"]
-        cli__shell__CLI__cmd_plan["cmd_plan"]
-        cli__shell__CLI__cmd_iterate["cmd_iterate"]
-        cli__shell__CLI__cmd_iterun["cmd_iterun"]
-        cli__shell__CLI__cmd_execute["cmd_execute"]
-        ...["+35 more"]
+        cli__colors__Colors__disable["disable"]
+        cli__dispatch__dispatch_command["dispatch_command"]
+        cli__dispatch___dispatch_plan["_dispatch_plan"]
+        cli__dispatch___workspace_has_artifacts["_workspace_has_artifacts"]
+        cli__dispatch___maybe_plan_before_execute["_maybe_plan_before_execute"]
+        cli__dispatch___print_execute_result["_print_execute_result"]
+        cli__dispatch___dispatch_execute["_dispatch_execute"]
+        cli__dispatch___dispatch_parse["_dispatch_parse"]
+        cli__dispatch___dispatch_validate["_dispatch_validate"]
+        cli__dispatch___dispatch_generate["_dispatch_generate"]
+        ...["+54 more"]
     end
 
     subgraph Core
-        config__load_dotenv{{load_dotenv CC=15}}
         config__get_env["get_env"]
         config__get_env_bool["get_env_bool"]
         config__get_env_int["get_env_int"]
         config__get_env_float["get_env_float"]
         config__configure["configure"]
-        generator__expectations__check_expectations{{check_expectations CC=23}}
         generator__intent_generator__GenerateAttempt__to_dict["to_dict"]
         generator__intent_generator__GenerateResult__to_dict["to_dict"]
         generator__intent_generator__IntentGenerator__generate["generate"]
-        generator__pipeline__PipelineResult__to_dict["to_dict"]
-        generator__pipeline__run_pipeline{{run_pipeline CC=33}}
-        generator__intract_manifest___parse_action_strings["_parse_action_strings"]
-        generator__intract_manifest__parse_api_actions("parse_api_actions CC=9")
+        generator__results__PipelineResult__to_dict["to_dict"]
+        generator__pipeline___handle_verify_round["_handle_verify_round"]
+        generator__pipeline___run_pipeline_round["_run_pipeline_round"]
+        generator__pipeline__run_pipeline("run_pipeline CC=11")
         generator__intract_manifest__build_intract_manifest["build_intract_manifest"]
-        ...["+147 more"]
+        generator__intract_manifest__intent_to_intract_dict["intent_to_intract_dict"]
+        generator__intract_manifest__write_intract_manifest["write_intract_manifest"]
+        ...["+157 more"]
     end
 
     subgraph Exporters
@@ -48,4 +48,4 @@ flowchart TD
         integrations__adapters__opentelemetry__OpenTelemetryExporter__export["export"]
     end
 
-    class config__get_env,config__get_env_bool,config__get_env_int,config__get_env_float,config__configure,generator__intent_generator__GenerateAttempt__to_dict,generator__intent_generator__GenerateResult__to_dict,generator__intent_generator__IntentGenerator__generate,generator__pipeline__PipelineResult__to_dict,generator__contract_verify__VerifyResult__to_dict entry
+    class config__get_env,config__get_env_bool,config__get_env_int,config__get_env_float,config__configure,generator__intent_generator__GenerateAttempt__to_dict,generator__intent_generator__GenerateResult__to_dict,generator__intent_generator__IntentGenerator__generate,generator__results__PipelineResult__to_dict,generator__contract_verify__VerifyResult__to_dict entry

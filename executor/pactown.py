@@ -5,8 +5,6 @@ from __future__ import annotations
 import asyncio
 import time
 from pathlib import Path
-from typing import Any
-from urllib.parse import urlparse
 
 from ir.models import ActionType, IntentIR
 

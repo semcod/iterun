@@ -115,7 +115,7 @@ class Executor:
         result.add_log(f"Workspace: {self.workspace}")
 
         if self.config.runtime == "pactown":
-            from integrations.pactown_runtime import execute_pactown
+            from executor.pactown import execute_pactown
 
             return execute_pactown(
                 ir,

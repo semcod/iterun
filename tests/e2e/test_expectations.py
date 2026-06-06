@@ -2,7 +2,7 @@
 
 import yaml
 
-from generator.expectations import check_expectations
+from contracts.expectations import check_expectations
 
 INTENT_MINIMAL = """
 INTENT:
@@ -60,7 +60,7 @@ endpoints:
     from unittest.mock import patch
 
     with patch(
-        "generator.expectations._http_probe",
+        "contracts.expectations._http_probe",
         return_value=(True, '{"status": "ok"}', 200),
     ):
         errors = check_expectations(intent, exp, base_url="http://localhost:8000")

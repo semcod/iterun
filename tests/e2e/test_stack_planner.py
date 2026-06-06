@@ -5,7 +5,7 @@ from pathlib import Path
 import yaml
 
 from parser import parse_dsl
-from planner.simulator import plan_intent
+from planner.plan import plan_intent
 from planner.stack_artifacts import write_stack_artifacts
 
 SHOP_STACK = """

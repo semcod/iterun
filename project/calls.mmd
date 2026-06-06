@@ -1,27 +1,33 @@
 flowchart LR
 %% generated in 0.01s
     subgraph ai_gateway__feedback_loop
-        ai_gateway__feedback_loop__FeedbackLoop____init__["__init__"]
         ai_gateway__feedback_loop__create_feedback_loop["create_feedback_loop"]
+        ai_gateway__feedback_loop__FeedbackLoop____init__["__init__"]
     end
     subgraph ai_gateway__gateway
-        ai_gateway__gateway__complete["complete"]
-        ai_gateway__gateway__suggest_improvements["suggest_improvements"]
         ai_gateway__gateway__get_gateway["get_gateway"]
+        ai_gateway__gateway__suggest_improvements["suggest_improvements"]
+        ai_gateway__gateway__complete["complete"]
     end
     subgraph ai_gateway__model_catalog
-        ai_gateway__model_catalog__GatewayConfig____post_init__["__post_init__"]
+        ai_gateway__model_catalog__GatewayConfig___load_from_app_config["_load_from_app_config"]
     end
     subgraph cli__dispatch
+        cli__dispatch___dispatch_validate["_dispatch_validate"]
+        cli__dispatch___print_generate_success["_print_generate_success"]
+        cli__dispatch___refresh_pipeline_registry["_refresh_pipeline_registry"]
+        cli__dispatch___print_generate_failure["_print_generate_failure"]
+        cli__dispatch__dispatch_command["dispatch_command"]
+        cli__dispatch___print_execute_result["_print_execute_result"]
         cli__dispatch___dispatch_registry["_dispatch_registry"]
         cli__dispatch___dispatch_parse["_dispatch_parse"]
         cli__dispatch___dispatch_generate_yaml_only["_dispatch_generate_yaml_only"]
-        cli__dispatch___dispatch_validate["_dispatch_validate"]
-        cli__dispatch___dispatch_execute["_dispatch_execute"]
-        cli__dispatch___dispatch_generate["_dispatch_generate"]
-        cli__dispatch___dispatch_plan["_dispatch_plan"]
-        cli__dispatch__dispatch_command["dispatch_command"]
         cli__dispatch___dispatch_generate_pipeline["_dispatch_generate_pipeline"]
+        cli__dispatch___maybe_plan_before_execute["_maybe_plan_before_execute"]
+        cli__dispatch___dispatch_plan["_dispatch_plan"]
+        cli__dispatch___dispatch_execute["_dispatch_execute"]
+        cli__dispatch___workspace_has_artifacts["_workspace_has_artifacts"]
+        cli__dispatch___dispatch_generate["_dispatch_generate"]
     end
     subgraph cli__main
         cli__main__main["main"]
@@ -31,114 +37,170 @@ flowchart LR
         cli__plan_artifacts__write_plan_artifacts["write_plan_artifacts"]
     end
     subgraph cli__shell
-        cli__shell__CLI__cmd_models["cmd_models"]
-        cli__shell__CLI__cmd_ai_chat["cmd_ai_chat"]
-        cli__shell__CLI__cmd_ai_health["cmd_ai_health"]
         cli__shell__CLI__cmd_plan["cmd_plan"]
-        cli__shell__CLI__cmd_ai_apply["cmd_ai_apply"]
-        cli__shell__CLI__cmd_execute["cmd_execute"]
-        cli__shell__CLI__cmd_load["cmd_load"]
-        cli__shell__CLI__cmd_ai_suggest["cmd_ai_suggest"]
-        cli__shell__CLI__cmd_new["cmd_new"]
         cli__shell__CLI__cmd_parse["cmd_parse"]
+        cli__shell__CLI__cmd_load["cmd_load"]
+        cli__shell__CLI___skip_iterun_confirmation["_skip_iterun_confirmation"]
+        cli__shell__CLI__interactive_mode["interactive_mode"]
+        cli__shell__CLI__cmd_execute["cmd_execute"]
+        cli__shell__CLI__cmd_ai_suggest["cmd_ai_suggest"]
+        cli__shell__CLI__cmd_ai_chat["cmd_ai_chat"]
+        cli__shell__CLI__cmd_new["cmd_new"]
+        cli__shell__CLI__cmd_ai_health["cmd_ai_health"]
+        cli__shell__CLI__cmd_models["cmd_models"]
+        cli__shell__CLI__cmd_ai_apply["cmd_ai_apply"]
+    end
+    subgraph cli__shell_interactive
+        cli__shell_interactive__build_prompt["build_prompt"]
+        cli__shell_interactive___dispatch_basic["_dispatch_basic"]
+        cli__shell_interactive__handle_interactive_line["handle_interactive_line"]
+        cli__shell_interactive___dispatch_ai["_dispatch_ai"]
+    end
+    subgraph cli__shell_output
+        cli__shell_output__print_validation_success["print_validation_success"]
+        cli__shell_output__print_execution_failure["print_execution_failure"]
+        cli__shell_output__log_status_color["log_status_color"]
+        cli__shell_output__print_container_logs["print_container_logs"]
+        cli__shell_output__print_execution_success["print_execution_success"]
+        cli__shell_output__print_validation_errors["print_validation_errors"]
+        cli__shell_output__print_execution_logs["print_execution_logs"]
     end
     subgraph config
         config__reload_config["reload_config"]
-        config__get_config["get_config"]
         config__load_dotenv["load_dotenv"]
+        config___parse_dotenv_lines["_parse_dotenv_lines"]
+        config___load_envstore["_load_envstore"]
+        config___apply_env_pairs["_apply_env_pairs"]
+        config__get_config["get_config"]
+        config___load_getv_profiles["_load_getv_profiles"]
+    end
+    subgraph contracts__api_actions
+        contracts__api_actions__parse_api_actions["parse_api_actions"]
+        contracts__api_actions___parse_action_strings["_parse_action_strings"]
+    end
+    subgraph contracts__expectations
+        contracts__expectations___http_probe["_http_probe"]
+        contracts__expectations___check_declared_endpoints["_check_declared_endpoints"]
+        contracts__expectations___check_metadata["_check_metadata"]
+        contracts__expectations___check_live_endpoint["_check_live_endpoint"]
+        contracts__expectations___probe_path["_probe_path"]
+        contracts__expectations__check_expectations["check_expectations"]
+        contracts__expectations___check_endpoint_response["_check_endpoint_response"]
+        contracts__expectations__load_and_check_expectations["load_and_check_expectations"]
     end
     subgraph dsl__schema
         dsl__schema__get_system_prompt["get_system_prompt"]
-        dsl__schema__get_json_schema["get_json_schema"]
         dsl__schema__validate_yaml_document["validate_yaml_document"]
+        dsl__schema__get_json_schema["get_json_schema"]
     end
     subgraph examples___scripts
-        examples___scripts__verify_expectations___load_yaml["_load_yaml"]
-        examples___scripts__annotate_intract__annotate_python["annotate_python"]
-        examples___scripts__annotate_intract___actions["_actions"]
-        examples___scripts__intent_to_openapi__intent_to_openapi["intent_to_openapi"]
-        examples___scripts__verify_expectations___parse_actions["_parse_actions"]
-        examples___scripts__intent_to_intract__main["main"]
-        examples___scripts__annotate_intract___comment["_comment"]
-        examples___scripts__annotate_intract___slug["_slug"]
         examples___scripts__verify_expectations__main["main"]
-        examples___scripts__annotate_intract__main["main"]
+        examples___scripts__annotate_intract___slug["_slug"]
+        examples___scripts__annotate_intract___actions["_actions"]
+        examples___scripts__verify_expectations___load_yaml["_load_yaml"]
+        examples___scripts__annotate_intract__annotate_express["annotate_express"]
+        examples___scripts__intent_to_openapi__main["main"]
         examples___scripts__intent_to_openapi___slug["_slug"]
         examples___scripts__intent_to_testql__main["main"]
-        examples___scripts__intent_to_openapi__main["main"]
+        examples___scripts__intent_to_openapi__intent_to_openapi["intent_to_openapi"]
         examples___scripts__verify_expectations__verify["verify"]
-        examples___scripts__annotate_intract__annotate_express["annotate_express"]
+        examples___scripts__annotate_intract__annotate_python["annotate_python"]
+        examples___scripts__annotate_intract___comment["_comment"]
+        examples___scripts__verify_expectations___map_expectation_errors["_map_expectation_errors"]
+        examples___scripts__intent_to_intract__main["main"]
+        examples___scripts__annotate_intract__main["main"]
     end
     subgraph executor__docker_ops
-        executor__docker_ops__execute_compose_stack["execute_compose_stack"]
-        executor__docker_ops__stop_containers_for_intent["stop_containers_for_intent"]
         executor__docker_ops__patch_compose_host_ports["patch_compose_host_ports"]
-        executor__docker_ops__execute_docker["execute_docker"]
+        executor__docker_ops__execute_compose_stack["execute_compose_stack"]
         executor__docker_ops__find_available_port["find_available_port"]
+        executor__docker_ops__execute_docker["execute_docker"]
+        executor__docker_ops__stop_containers_for_intent["stop_containers_for_intent"]
+    end
+    subgraph executor__pactown
+        executor__pactown___start_pactown_stack["_start_pactown_stack"]
+        executor__pactown___collect_stack_endpoints["_collect_stack_endpoints"]
+        executor__pactown__execute_pactown["execute_pactown"]
+        executor__pactown__stop_pactown_for_intent["stop_pactown_for_intent"]
+        executor__pactown___append_action_urls["_append_action_urls"]
+        executor__pactown___collect_endpoints["_collect_endpoints"]
+        executor__pactown___collect_single_endpoints["_collect_single_endpoints"]
+        executor__pactown___prepare_pactown_workspace["_prepare_pactown_workspace"]
+        executor__pactown___finalize_pactown["_finalize_pactown"]
+        executor__pactown___validate_urls["_validate_urls"]
     end
     subgraph executor__runner
-        executor__runner__Executor___validate_and_fix["_validate_and_fix"]
-        executor__runner__Executor___execute_local["_execute_local"]
+        executor__runner__Executor___run_runtime["_run_runtime"]
         executor__runner__Executor__execute["execute"]
+        executor__runner__Executor___validate_and_fix["_validate_and_fix"]
         executor__runner__Executor___restart_container["_restart_container"]
         executor__runner__Executor__get_container_logs["get_container_logs"]
-        executor__runner__Executor____init__["__init__"]
+        executor__runner__Executor___execute_local["_execute_local"]
         executor__runner__execute_intent["execute_intent"]
+        executor__runner__Executor____init__["__init__"]
     end
     subgraph executor__validation
-        executor__validation__validate_endpoints["validate_endpoints"]
-        executor__validation__add_main_block["add_main_block"]
         executor__validation__filter_validation_endpoints["filter_validation_endpoints"]
+        executor__validation__validate_endpoints["validate_endpoints"]
         executor__validation__attempt_auto_fix["attempt_auto_fix"]
+        executor__validation__add_main_block["add_main_block"]
     end
     subgraph generator__contract_verify
         generator__contract_verify___endpoint_responding["_endpoint_responding"]
-        generator__contract_verify__wait_for_service["wait_for_service"]
-        generator__contract_verify___probe_path["_probe_path"]
         generator__contract_verify__write_contract_artifacts["write_contract_artifacts"]
-        generator__contract_verify__verify_contract["verify_contract"]
+        generator__contract_verify__wait_for_service["wait_for_service"]
+        generator__contract_verify___run_http_probes["_run_http_probes"]
+        generator__contract_verify___probe_path["_probe_path"]
+        generator__contract_verify___run_testql_checks["_run_testql_checks"]
+        generator__contract_verify___http_probe["_http_probe"]
         generator__contract_verify__readiness_paths["readiness_paths"]
-    end
-    subgraph generator__expectations
-        generator__expectations__check_expectations["check_expectations"]
-        generator__expectations__load_and_check_expectations["load_and_check_expectations"]
+        generator__contract_verify__run_testql["run_testql"]
+        generator__contract_verify__verify_contract["verify_contract"]
+        generator__contract_verify___write_verify_result["_write_verify_result"]
     end
     subgraph generator__intent_generator
-        generator__intent_generator__IntentGenerator__generate["generate"]
         generator__intent_generator__extract_yaml_from_llm["extract_yaml_from_llm"]
         generator__intent_generator___build_user_prompt["_build_user_prompt"]
+        generator__intent_generator__IntentGenerator__generate["generate"]
         generator__intent_generator__IntentGenerator____init__["__init__"]
     end
     subgraph generator__intract_manifest
-        generator__intract_manifest___parse_action_strings["_parse_action_strings"]
+        generator__intract_manifest__intent_to_intract_dict["intent_to_intract_dict"]
         generator__intract_manifest___slug["_slug"]
         generator__intract_manifest___safe_id["_safe_id"]
-        generator__intract_manifest__parse_api_actions["parse_api_actions"]
-        generator__intract_manifest__intent_to_intract_dict["intent_to_intract_dict"]
-        generator__intract_manifest__write_intract_manifest["write_intract_manifest"]
         generator__intract_manifest__build_intract_manifest["build_intract_manifest"]
+        generator__intract_manifest__write_intract_manifest["write_intract_manifest"]
     end
     subgraph generator__pipeline
-        generator__pipeline__run_pipeline["run_pipeline"]
+        generator__pipeline___handle_execute_error["_handle_execute_error"]
         generator__pipeline___finalize["_finalize"]
-        generator__pipeline___write_plan_artifacts["_write_plan_artifacts"]
+        generator__pipeline___write_verify_round_log["_write_verify_round_log"]
         generator__pipeline___container_logs["_container_logs"]
-        generator__pipeline___expectations_summary["_expectations_summary"]
+        generator__pipeline___run_pipeline_round["_run_pipeline_round"]
+        generator__pipeline__run_pipeline["run_pipeline"]
         generator__pipeline___build_repair_prompt["_build_repair_prompt"]
+        generator__pipeline___expectations_summary["_expectations_summary"]
+        generator__pipeline___finish_without_verify["_finish_without_verify"]
+        generator__pipeline___handle_verify_round["_handle_verify_round"]
+        generator__pipeline___generate_and_plan["_generate_and_plan"]
+        generator__pipeline___write_plan_artifacts["_write_plan_artifacts"]
     end
     subgraph generator__session
         generator__session__write_session_artifacts["write_session_artifacts"]
     end
     subgraph generator__testql_scenario
-        generator__testql_scenario___startup_wait_ms["_startup_wait_ms"]
         generator__testql_scenario___probe_path["_probe_path"]
+        generator__testql_scenario___startup_wait_ms["_startup_wait_ms"]
         generator__testql_scenario__write_testql_scenario["write_testql_scenario"]
         generator__testql_scenario__build_testql_scenario["build_testql_scenario"]
     end
     subgraph integrations__adapters
+        integrations__adapters__docker__DockerAdapter___merge_container_state["_merge_container_state"]
         integrations__adapters__filesystem__FilesystemAdapter__collect["collect"]
-        integrations__adapters__docker__DockerAdapter__enrich["enrich"]
         integrations__adapters__docker___running_iterun_containers["_running_iterun_containers"]
+        integrations__adapters__docker__DockerAdapter__enrich["enrich"]
+        integrations__adapters__docker___apply_container_to_service["_apply_container_to_service"]
+        integrations__adapters__docker___match_service_containers["_match_service_containers"]
     end
     subgraph integrations__bridges
         integrations__bridges__pipeline__refresh_registry["refresh_registry"]
@@ -147,122 +209,132 @@ flowchart LR
     subgraph integrations__markpact_pack
         integrations__markpact_pack__pack_workspace["pack_workspace"]
         integrations__markpact_pack___run_command_for_ir["_run_command_for_ir"]
+        integrations__markpact_pack___service_run_command["_service_run_command"]
+        integrations__markpact_pack___pack_service_readmes["_pack_service_readmes"]
     end
     subgraph integrations__pactown_config
         integrations__pactown_config__build_pactown_config["build_pactown_config"]
         integrations__pactown_config___health_path["_health_path"]
         integrations__pactown_config__write_pactown_config["write_pactown_config"]
     end
-    subgraph integrations__pactown_runtime
-        integrations__pactown_runtime__stop_pactown_for_intent["stop_pactown_for_intent"]
-        integrations__pactown_runtime___validate_urls["_validate_urls"]
-        integrations__pactown_runtime__execute_pactown["execute_pactown"]
-    end
     subgraph integrations__runtime_stop
         integrations__runtime_stop__stop_runtime_for_intent["stop_runtime_for_intent"]
     end
     subgraph interfaces__service
+        interfaces__service__IterunService__run_pipeline["run_pipeline"]
         interfaces__service__IterunService__registry_refresh["registry_refresh"]
-        interfaces__service__IterunService__registry_list["registry_list"]
+        interfaces__service__IterunService__validate_yaml["validate_yaml"]
         interfaces__service___write_plan_output["_write_plan_output"]
+        interfaces__service__IterunService__registry_list["registry_list"]
+        interfaces__service__IterunService__parse["parse"]
+        interfaces__service__IterunService__execute_ir["execute_ir"]
         interfaces__service__IterunService__schema["schema"]
         interfaces__service__IterunService__plan_yaml["plan_yaml"]
         interfaces__service__IterunService__plan_ir["plan_ir"]
-        interfaces__service__IterunService__parse["parse"]
-        interfaces__service__IterunService__validate_yaml["validate_yaml"]
-        interfaces__service__IterunService__execute_ir["execute_ir"]
     end
     subgraph parser__dsl_parser
-        parser__dsl_parser__parse_dsl["parse_dsl"]
         parser__dsl_parser__parse_dsl_file["parse_dsl_file"]
+        parser__dsl_parser__parse_dsl["parse_dsl"]
+    end
+    subgraph planner__plan
+        planner__plan__plan_intent["plan_intent"]
     end
     subgraph planner__simulator
-        planner__simulator__Planner___generate_flask_code["_generate_flask_code"]
-        planner__simulator__Planner___generate_fastapi_code["_generate_fastapi_code"]
         planner__simulator___endpoint_to_func_name["_endpoint_to_func_name"]
-        planner__simulator__plan_intent["plan_intent"]
+        planner__simulator__Planner___generate_fastapi_code["_generate_fastapi_code"]
+        planner__simulator__Planner___generate_flask_code["_generate_flask_code"]
     end
     subgraph planner__stack_artifacts
         planner__stack_artifacts__write_stack_artifacts["write_stack_artifacts"]
     end
     subgraph planner__stack_planner
-        planner__stack_planner___build_compose["_build_compose"]
-        planner__stack_planner___gateway_proxy_code["_gateway_proxy_code"]
         planner__stack_planner__plan_stack["plan_stack"]
         planner__stack_planner___resolve_upstream["_resolve_upstream"]
+        planner__stack_planner___service_ir["_service_ir"]
+        planner__stack_planner___plan_generated_service["_plan_generated_service"]
+        planner__stack_planner___build_compose["_build_compose"]
+        planner__stack_planner___gateway_proxy_code["_gateway_proxy_code"]
     end
     subgraph registry__catalog
-        registry__catalog__discover_glob["discover_glob"]
         registry__catalog__RegistryCatalog__discover["discover"]
+        registry__catalog__discover_glob["discover_glob"]
     end
     subgraph registry__discover
+        registry__discover___build_services["_build_services"]
         registry__discover__discover_workspace["discover_workspace"]
     end
     subgraph registry__discover_artifacts
         registry__discover_artifacts__discover_artifacts["discover_artifacts"]
     end
+    subgraph registry__discover_context
+        registry__discover_context___intent_identity["_intent_identity"]
+        registry__discover_context___stack_metadata["_stack_metadata"]
+        registry__discover_context__load_workspace_context["load_workspace_context"]
+    end
     subgraph registry__discover_io
+        registry__discover_io__intent_from_workspace["intent_from_workspace"]
         registry__discover_io__load_session["load_session"]
         registry__discover_io__load_stack_urls["load_stack_urls"]
-        registry__discover_io__phase_from_session["phase_from_session"]
-        registry__discover_io__intent_from_workspace["intent_from_workspace"]
     end
     subgraph registry__discover_services
-        registry__discover_services__build_stack_services["build_stack_services"]
         registry__discover_services__build_single_service["build_single_service"]
+        registry__discover_services__build_stack_services["build_stack_services"]
     end
     subgraph registry__labels
-        registry__labels__build_otel_resource["build_otel_resource"]
         registry__labels__build_service_labels["build_service_labels"]
+        registry__labels__build_otel_resource["build_otel_resource"]
     end
     subgraph sdk__client
-        sdk__client__IterunClient__validate["validate"]
-        sdk__client__IterunClient__schema["schema"]
         sdk__client__IterunClient__parse["parse"]
+        sdk__client__IterunClient__schema["schema"]
+        sdk__client__IterunClient__validate["validate"]
     end
     subgraph web__routes
-        web__routes__intents__approve_iterun["approve_iterun"]
-        web__routes__intents__list_intents["list_intents"]
-        web__routes__ai__ai_apply_suggestions["ai_apply_suggestions"]
-        web__routes__ai___intents_store["_intents_store"]
-        web__routes__ai__ai_status["ai_status"]
-        web__routes__intents__get_generated_code["get_generated_code"]
-        web__routes__intents__run_pipeline_api["run_pipeline_api"]
-        web__routes__intents___intents_store["_intents_store"]
-        web__routes__registry__refresh_registry_api["refresh_registry_api"]
-        web__routes__intents__plan_yaml_api["plan_yaml_api"]
-        web__routes__ai__ai_complete["ai_complete"]
-        web__routes__intents__get_schema["get_schema"]
-        web__routes__intents__plan["plan"]
-        web__routes__intents__generate_and_run_api["generate_and_run_api"]
-        web__routes__intents__get_intent["get_intent"]
-        web__routes__registry__list_interfaces["list_interfaces"]
-        web__routes__ai__ai_suggest["ai_suggest"]
-        web__routes__intents___get_service["_get_service"]
-        web__routes__intents__generate_intent_api["generate_intent_api"]
-        web__routes__ai__list_models["list_models"]
         web__routes__ai__generate_code["generate_code"]
-        web__routes__intents__validate_intent["validate_intent"]
         web__routes__intents__container_logs["container_logs"]
-        web__routes__intents__execute["execute"]
-        web__routes__intents__parse_intent["parse_intent"]
-        web__routes__registry__get_registry["get_registry"]
-        web__routes__registry__list_registries["list_registries"]
-        web__routes__intents__validate_yaml["validate_yaml"]
-        web__routes__ai__ai_chat["ai_chat"]
+        web__routes__ai__ai_suggest["ai_suggest"]
+        web__routes__ai__ai_apply_suggestions["ai_apply_suggestions"]
         web__routes__registry___get_service["_get_service"]
-        web__routes__intents__delete_intent["delete_intent"]
+        web__routes__intents__list_intents["list_intents"]
+        web__routes__intents__plan["plan"]
+        web__routes__intents__get_intent["get_intent"]
+        web__routes__ai__ai_status["ai_status"]
+        web__routes__ai__ai_chat["ai_chat"]
+        web__routes__intents___intents_store["_intents_store"]
+        web__routes__ai___intents_store["_intents_store"]
+        web__routes__intents__run_pipeline_api["run_pipeline_api"]
+        web__routes__intents__plan_yaml_api["plan_yaml_api"]
+        web__routes__registry__refresh_registry_api["refresh_registry_api"]
+        web__routes__intents__get_generated_code["get_generated_code"]
+        web__routes__intents__approve_iterun["approve_iterun"]
+        web__routes__registry__list_interfaces["list_interfaces"]
+        web__routes__intents__execute["execute"]
+        web__routes__intents__validate_intent["validate_intent"]
+        web__routes__intents__generate_intent_api["generate_intent_api"]
+        web__routes__registry__list_registries["list_registries"]
+        web__routes__intents__get_schema["get_schema"]
+        web__routes__intents__parse_intent["parse_intent"]
         web__routes__intents__iterate["iterate"]
+        web__routes__intents___get_service["_get_service"]
+        web__routes__intents__validate_yaml["validate_yaml"]
+        web__routes__ai__ai_complete["ai_complete"]
+        web__routes__registry__get_registry["get_registry"]
+        web__routes__intents__generate_and_run_api["generate_and_run_api"]
+        web__routes__intents__delete_intent["delete_intent"]
+        web__routes__ai__list_models["list_models"]
     end
+    config___load_envstore --> config___apply_env_pairs
+    config__load_dotenv --> config___load_getv_profiles
+    config__load_dotenv --> config___apply_env_pairs
+    config__load_dotenv --> config___load_envstore
+    config__load_dotenv --> config___parse_dotenv_lines
     config__reload_config --> config__load_dotenv
-    generator__expectations__check_expectations --> generator__intract_manifest__parse_api_actions
-    generator__expectations__load_and_check_expectations --> generator__expectations__check_expectations
     generator__intent_generator__IntentGenerator____init__ --> dsl__schema__get_system_prompt
     generator__intent_generator__IntentGenerator____init__ --> ai_gateway__gateway__get_gateway
     generator__intent_generator__IntentGenerator__generate --> generator__intent_generator___build_user_prompt
     generator__intent_generator__IntentGenerator__generate --> generator__intent_generator__extract_yaml_from_llm
     generator__intent_generator__IntentGenerator__generate --> dsl__schema__validate_yaml_document
-    generator__testql_scenario__build_testql_scenario --> generator__intract_manifest__parse_api_actions
+    generator__testql_scenario__build_testql_scenario --> contracts__api_actions__parse_api_actions
     generator__testql_scenario__build_testql_scenario --> generator__testql_scenario___startup_wait_ms
     generator__testql_scenario__build_testql_scenario --> generator__testql_scenario___probe_path
     generator__testql_scenario__write_testql_scenario --> generator__testql_scenario__build_testql_scenario
@@ -274,26 +346,46 @@ flowchart LR
     generator__pipeline___container_logs --> executor__runner__Executor__get_container_logs
     generator__pipeline___finalize --> generator__pipeline___container_logs
     generator__pipeline___finalize --> generator__session__write_session_artifacts
-    generator__pipeline___finalize --> integrations__bridges__pipeline__refresh_registry_from_pipeline
+    generator__pipeline___generate_and_plan --> planner__plan__plan_intent
+    generator__pipeline___generate_and_plan --> generator__pipeline___build_repair_prompt
+    generator__pipeline___generate_and_plan --> generator__pipeline___write_plan_artifacts
+    generator__pipeline___finish_without_verify --> generator__pipeline___finalize
+    generator__pipeline___handle_verify_round --> generator__contract_verify__verify_contract
+    generator__pipeline___handle_verify_round --> generator__pipeline___write_verify_round_log
+    generator__pipeline___handle_verify_round --> generator__pipeline___finalize
+    generator__pipeline___handle_execute_error --> generator__pipeline___write_verify_round_log
+    generator__pipeline___handle_execute_error --> generator__pipeline___finalize
+    generator__pipeline___run_pipeline_round --> generator__pipeline___generate_and_plan
+    generator__pipeline___run_pipeline_round --> executor__runner__execute_intent
+    generator__pipeline___run_pipeline_round --> generator__pipeline___handle_verify_round
+    generator__pipeline___run_pipeline_round --> generator__pipeline___finalize
+    generator__pipeline___run_pipeline_round --> integrations__runtime_stop__stop_runtime_for_intent
+    generator__pipeline___run_pipeline_round --> generator__pipeline___handle_execute_error
+    generator__pipeline___run_pipeline_round --> generator__pipeline___finish_without_verify
     generator__pipeline__run_pipeline --> generator__pipeline___finalize
-    generator__pipeline__run_pipeline --> planner__simulator__plan_intent
-    generator__intract_manifest__parse_api_actions --> generator__intract_manifest___parse_action_strings
+    generator__pipeline__run_pipeline --> generator__pipeline___run_pipeline_round
     generator__intract_manifest__build_intract_manifest --> generator__intract_manifest___safe_id
-    generator__intract_manifest__build_intract_manifest --> generator__intract_manifest__parse_api_actions
+    generator__intract_manifest__build_intract_manifest --> contracts__api_actions__parse_api_actions
     generator__intract_manifest__build_intract_manifest --> generator__intract_manifest___slug
     generator__intract_manifest__intent_to_intract_dict --> generator__intract_manifest__build_intract_manifest
     generator__intract_manifest__write_intract_manifest --> generator__intract_manifest__intent_to_intract_dict
     generator__contract_verify__readiness_paths --> generator__contract_verify___probe_path
-    generator__contract_verify__readiness_paths --> generator__intract_manifest__parse_api_actions
+    generator__contract_verify__readiness_paths --> contracts__api_actions__parse_api_actions
     generator__contract_verify__wait_for_service --> generator__contract_verify__readiness_paths
     generator__contract_verify__wait_for_service --> generator__contract_verify___endpoint_responding
     generator__contract_verify__write_contract_artifacts --> generator__intract_manifest__write_intract_manifest
     generator__contract_verify__write_contract_artifacts --> generator__testql_scenario__write_testql_scenario
+    generator__contract_verify___run_testql_checks --> generator__contract_verify__run_testql
+    generator__contract_verify___run_http_probes --> contracts__api_actions__parse_api_actions
+    generator__contract_verify___run_http_probes --> generator__contract_verify___probe_path
+    generator__contract_verify___run_http_probes --> generator__contract_verify___http_probe
     generator__contract_verify__verify_contract --> generator__contract_verify__write_contract_artifacts
-    generator__contract_verify__verify_contract --> generator__intract_manifest__parse_api_actions
-    generator__contract_verify__verify_contract --> generator__expectations__load_and_check_expectations
+    generator__contract_verify__verify_contract --> generator__contract_verify___run_testql_checks
+    generator__contract_verify__verify_contract --> generator__contract_verify___run_http_probes
+    generator__contract_verify__verify_contract --> generator__contract_verify___write_verify_result
     examples___scripts__verify_expectations__verify --> examples___scripts__verify_expectations___load_yaml
-    examples___scripts__verify_expectations__verify --> examples___scripts__verify_expectations___parse_actions
+    examples___scripts__verify_expectations__verify --> examples___scripts__verify_expectations___map_expectation_errors
+    examples___scripts__verify_expectations__verify --> contracts__expectations__check_expectations
     examples___scripts__verify_expectations__main --> examples___scripts__verify_expectations__verify
     examples___scripts__annotate_intract___comment --> examples___scripts__annotate_intract___slug
     examples___scripts__annotate_intract__annotate_python --> examples___scripts__annotate_intract___actions
@@ -304,12 +396,14 @@ flowchart LR
     examples___scripts__intent_to_intract__main --> generator__intract_manifest__write_intract_manifest
     examples___scripts__intent_to_openapi__intent_to_openapi --> examples___scripts__intent_to_openapi___slug
     examples___scripts__intent_to_openapi__main --> examples___scripts__intent_to_openapi__intent_to_openapi
+    planner__plan__plan_intent --> planner__stack_planner__plan_stack
     planner__stack_planner___gateway_proxy_code --> planner__stack_planner___resolve_upstream
     planner__stack_planner___build_compose --> registry__labels__build_service_labels
+    planner__stack_planner___plan_generated_service --> planner__stack_planner___service_ir
+    planner__stack_planner___plan_generated_service --> planner__stack_planner___gateway_proxy_code
     planner__stack_planner__plan_stack --> planner__stack_planner___build_compose
     planner__simulator__Planner___generate_fastapi_code --> planner__simulator___endpoint_to_func_name
     planner__simulator__Planner___generate_flask_code --> planner__simulator___endpoint_to_func_name
-    planner__simulator__plan_intent --> planner__stack_planner__plan_stack
     web__routes__registry__list_interfaces --> web__routes__registry___get_service
     web__routes__registry__get_registry --> web__routes__registry___get_service
     web__routes__registry__refresh_registry_api --> web__routes__registry___get_service
@@ -339,7 +433,7 @@ flowchart LR
     web__routes__intents__get_intent --> web__routes__intents___intents_store
     web__routes__intents__delete_intent --> web__routes__intents___intents_store
     web__routes__intents__plan --> web__routes__intents___intents_store
-    web__routes__intents__plan --> planner__simulator__plan_intent
+    web__routes__intents__plan --> planner__plan__plan_intent
     web__routes__intents__iterate --> web__routes__intents___intents_store
     web__routes__intents__approve_iterun --> web__routes__intents___intents_store
     web__routes__intents__execute --> web__routes__intents___intents_store
@@ -352,15 +446,51 @@ flowchart LR
     web__routes__intents__get_generated_code --> web__routes__intents___intents_store
     ai_gateway__gateway__complete --> ai_gateway__gateway__get_gateway
     ai_gateway__gateway__suggest_improvements --> ai_gateway__gateway__get_gateway
-    ai_gateway__model_catalog__GatewayConfig____post_init__ --> config__get_config
+    ai_gateway__model_catalog__GatewayConfig___load_from_app_config --> config__get_config
     ai_gateway__feedback_loop__FeedbackLoop____init__ --> ai_gateway__gateway__get_gateway
+    cli__shell_interactive__handle_interactive_line --> cli__shell_interactive___dispatch_basic
+    cli__shell_interactive__handle_interactive_line --> cli__shell_interactive___dispatch_ai
     cli__plan_artifacts__write_plan_artifacts --> planner__stack_artifacts__write_stack_artifacts
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_plan
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_execute
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_parse
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_validate
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_generate
+    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_registry
+    cli__dispatch___dispatch_plan --> cli__plan_artifacts__write_plan_artifacts
+    cli__dispatch___maybe_plan_before_execute --> cli__dispatch___workspace_has_artifacts
+    cli__dispatch___maybe_plan_before_execute --> cli__plan_artifacts__write_plan_artifacts
+    cli__dispatch___dispatch_execute --> cli__dispatch___maybe_plan_before_execute
+    cli__dispatch___dispatch_execute --> cli__dispatch___print_execute_result
+    cli__dispatch___dispatch_validate --> dsl__schema__validate_yaml_document
+    cli__dispatch___dispatch_generate --> cli__dispatch___dispatch_generate_pipeline
+    cli__dispatch___dispatch_generate --> cli__dispatch___dispatch_generate_yaml_only
+    cli__dispatch___refresh_pipeline_registry --> integrations__bridges__pipeline__refresh_registry_from_pipeline
+    cli__dispatch___dispatch_generate_pipeline --> generator__pipeline__run_pipeline
+    cli__dispatch___dispatch_generate_pipeline --> cli__dispatch___refresh_pipeline_registry
+    cli__dispatch___dispatch_generate_pipeline --> cli__dispatch___print_generate_success
+    cli__dispatch___dispatch_generate_pipeline --> cli__dispatch___print_generate_failure
+    cli__dispatch___dispatch_generate_yaml_only --> generator__intract_manifest__write_intract_manifest
+    cli__dispatch___dispatch_generate_yaml_only --> generator__testql_scenario__write_testql_scenario
+    cli__dispatch___dispatch_registry --> integrations__bridges__pipeline__refresh_registry
+    cli__dispatch___dispatch_registry --> registry__catalog__discover_glob
+    cli__shell_output__print_execution_logs --> cli__shell_output__log_status_color
+    cli__shell_output__print_execution_success --> cli__shell_output__print_validation_success
+    cli__shell_output__print_container_logs --> executor__runner__Executor__get_container_logs
+    cli__shell_output__print_container_logs --> config__get_config
+    cli__shell_output__print_execution_failure --> cli__shell_output__print_validation_errors
+    cli__shell_output__print_execution_failure --> cli__shell_output__print_container_logs
     cli__shell__CLI__cmd_new --> parser__dsl_parser__parse_dsl
     cli__shell__CLI__cmd_load --> parser__dsl_parser__parse_dsl_file
     cli__shell__CLI__cmd_parse --> parser__dsl_parser__parse_dsl
-    cli__shell__CLI__cmd_plan --> planner__simulator__plan_intent
+    cli__shell__CLI__cmd_plan --> planner__plan__plan_intent
+    cli__shell__CLI___skip_iterun_confirmation --> config__get_config
     cli__shell__CLI__cmd_execute --> executor__runner__execute_intent
-    cli__shell__CLI__cmd_execute --> config__get_config
+    cli__shell__CLI__cmd_execute --> cli__shell_output__print_execution_logs
+    cli__shell__CLI__cmd_execute --> cli__shell_output__print_execution_success
+    cli__shell__CLI__cmd_execute --> cli__shell_output__print_execution_failure
+    cli__shell__CLI__interactive_mode --> cli__shell_interactive__handle_interactive_line
+    cli__shell__CLI__interactive_mode --> cli__shell_interactive__build_prompt
     cli__shell__CLI__cmd_ai_suggest --> ai_gateway__feedback_loop__create_feedback_loop
     cli__shell__CLI__cmd_ai_apply --> ai_gateway__feedback_loop__create_feedback_loop
     cli__shell__CLI__cmd_ai_chat --> ai_gateway__gateway__get_gateway
@@ -373,63 +503,77 @@ flowchart LR
     registry__discover_services__build_single_service --> registry__labels__build_service_labels
     registry__discover_services__build_single_service --> registry__labels__build_otel_resource
     registry__catalog__RegistryCatalog__discover --> registry__discover__discover_workspace
-    registry__discover__discover_workspace --> registry__discover_io__load_session
-    registry__discover__discover_workspace --> registry__discover_io__load_stack_urls
+    registry__discover___build_services --> registry__discover_services__build_single_service
+    registry__discover___build_services --> registry__discover_services__build_stack_services
+    registry__discover__discover_workspace --> registry__discover_context__load_workspace_context
+    registry__discover__discover_workspace --> registry__discover___build_services
     registry__discover__discover_workspace --> registry__discover_artifacts__discover_artifacts
-    registry__discover__discover_workspace --> registry__discover_io__phase_from_session
-    registry__discover__discover_workspace --> registry__discover_io__intent_from_workspace
+    registry__discover_context__load_workspace_context --> registry__discover_io__load_session
+    registry__discover_context__load_workspace_context --> registry__discover_context___intent_identity
+    registry__discover_context__load_workspace_context --> registry__discover_context___stack_metadata
+    registry__discover_context__load_workspace_context --> registry__discover_io__intent_from_workspace
+    registry__discover_context__load_workspace_context --> registry__discover_io__load_stack_urls
     interfaces__service___write_plan_output --> planner__stack_artifacts__write_stack_artifacts
     interfaces__service__IterunService__schema --> dsl__schema__get_json_schema
     interfaces__service__IterunService__validate_yaml --> dsl__schema__validate_yaml_document
     interfaces__service__IterunService__parse --> parser__dsl_parser__parse_dsl
-    interfaces__service__IterunService__plan_ir --> planner__simulator__plan_intent
+    interfaces__service__IterunService__run_pipeline --> integrations__bridges__pipeline__refresh_registry_from_pipeline
+    interfaces__service__IterunService__plan_ir --> planner__plan__plan_intent
     interfaces__service__IterunService__plan_yaml --> parser__dsl_parser__parse_dsl
-    interfaces__service__IterunService__plan_yaml --> planner__simulator__plan_intent
+    interfaces__service__IterunService__plan_yaml --> planner__plan__plan_intent
     interfaces__service__IterunService__plan_yaml --> interfaces__service___write_plan_output
     interfaces__service__IterunService__execute_ir --> executor__runner__execute_intent
     interfaces__service__IterunService__registry_refresh --> integrations__bridges__pipeline__refresh_registry
     interfaces__service__IterunService__registry_list --> registry__catalog__discover_glob
     executor__runner__Executor____init__ --> config__get_config
-    executor__runner__Executor__execute --> integrations__pactown_runtime__execute_pactown
+    executor__runner__Executor___run_runtime --> executor__docker_ops__execute_compose_stack
+    executor__runner__Executor___run_runtime --> executor__docker_ops__execute_docker
+    executor__runner__Executor__execute --> executor__pactown__execute_pactown
     executor__runner__Executor___validate_and_fix --> executor__validation__filter_validation_endpoints
     executor__runner__Executor___validate_and_fix --> executor__validation__validate_endpoints
     executor__runner__Executor___validate_and_fix --> executor__validation__attempt_auto_fix
     executor__runner__Executor___restart_container --> executor__docker_ops__execute_docker
     executor__runner__Executor___execute_local --> executor__docker_ops__find_available_port
     executor__validation__attempt_auto_fix --> executor__validation__add_main_block
+    executor__pactown___collect_stack_endpoints --> executor__pactown___append_action_urls
+    executor__pactown___collect_single_endpoints --> executor__pactown___append_action_urls
+    executor__pactown___collect_endpoints --> executor__pactown___collect_single_endpoints
+    executor__pactown___collect_endpoints --> executor__pactown___collect_stack_endpoints
+    executor__pactown___validate_urls --> executor__validation__filter_validation_endpoints
+    executor__pactown___prepare_pactown_workspace --> integrations__markpact_pack__pack_workspace
+    executor__pactown___prepare_pactown_workspace --> integrations__pactown_config__write_pactown_config
+    executor__pactown___finalize_pactown --> executor__pactown___collect_endpoints
+    executor__pactown___finalize_pactown --> executor__pactown___validate_urls
+    executor__pactown__execute_pactown --> executor__pactown___prepare_pactown_workspace
+    executor__pactown__execute_pactown --> executor__pactown___finalize_pactown
+    executor__pactown__execute_pactown --> executor__pactown___start_pactown_stack
     executor__docker_ops__stop_containers_for_intent --> config__get_config
     executor__docker_ops__patch_compose_host_ports --> executor__docker_ops__find_available_port
     executor__docker_ops__execute_compose_stack --> executor__docker_ops__patch_compose_host_ports
     executor__docker_ops__execute_docker --> executor__docker_ops__find_available_port
-    integrations__pactown_runtime___validate_urls --> executor__validation__filter_validation_endpoints
-    integrations__pactown_runtime__execute_pactown --> integrations__markpact_pack__pack_workspace
-    integrations__pactown_runtime__execute_pactown --> integrations__pactown_config__write_pactown_config
+    integrations__runtime_stop__stop_runtime_for_intent --> executor__docker_ops__stop_containers_for_intent
+    integrations__runtime_stop__stop_runtime_for_intent --> executor__pactown__stop_pactown_for_intent
+    integrations__runtime_stop__stop_runtime_for_intent --> config__get_config
+    contracts__expectations___check_declared_endpoints --> contracts__api_actions__parse_api_actions
+    contracts__expectations___check_live_endpoint --> contracts__expectations___probe_path
+    contracts__expectations___check_live_endpoint --> contracts__expectations___http_probe
+    contracts__expectations___check_live_endpoint --> contracts__expectations___check_endpoint_response
+    contracts__expectations__check_expectations --> contracts__expectations___check_metadata
+    contracts__expectations__check_expectations --> contracts__expectations___check_declared_endpoints
+    contracts__expectations__check_expectations --> contracts__expectations___check_live_endpoint
+    contracts__expectations__load_and_check_expectations --> contracts__expectations__check_expectations
+    contracts__api_actions__parse_api_actions --> contracts__api_actions___parse_action_strings
     integrations__pactown_config__build_pactown_config --> integrations__pactown_config___health_path
     integrations__pactown_config__write_pactown_config --> integrations__pactown_config__build_pactown_config
+    integrations__markpact_pack___pack_service_readmes --> integrations__markpact_pack___service_run_command
+    integrations__markpact_pack__pack_workspace --> integrations__markpact_pack___pack_service_readmes
     integrations__markpact_pack__pack_workspace --> integrations__markpact_pack___run_command_for_ir
-    integrations__runtime_stop__stop_runtime_for_intent --> executor__docker_ops__stop_containers_for_intent
-    integrations__runtime_stop__stop_runtime_for_intent --> integrations__pactown_runtime__stop_pactown_for_intent
-    integrations__runtime_stop__stop_runtime_for_intent --> config__get_config
     integrations__bridges__pipeline__refresh_registry_from_pipeline --> integrations__bridges__pipeline__refresh_registry
     integrations__adapters__docker__DockerAdapter__enrich --> integrations__adapters__docker___running_iterun_containers
+    integrations__adapters__docker__DockerAdapter___merge_container_state --> integrations__adapters__docker___match_service_containers
+    integrations__adapters__docker__DockerAdapter___merge_container_state --> integrations__adapters__docker___apply_container_to_service
     integrations__adapters__filesystem__FilesystemAdapter__collect --> registry__discover__discover_workspace
-    dsl__schema__validate_yaml_document --> parser__dsl_parser__parse_dsl
     dsl__schema__get_system_prompt --> dsl__schema__get_json_schema
     sdk__client__IterunClient__schema --> dsl__schema__get_json_schema
     sdk__client__IterunClient__validate --> dsl__schema__validate_yaml_document
     sdk__client__IterunClient__parse --> parser__dsl_parser__parse_dsl
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_plan
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_execute
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_parse
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_validate
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_generate
-    cli__dispatch__dispatch_command --> cli__dispatch___dispatch_registry
-    cli__dispatch___dispatch_plan --> cli__plan_artifacts__write_plan_artifacts
-    cli__dispatch___dispatch_validate --> dsl__schema__validate_yaml_document
-    cli__dispatch___dispatch_generate --> cli__dispatch___dispatch_generate_pipeline
-    cli__dispatch___dispatch_generate --> cli__dispatch___dispatch_generate_yaml_only
-    cli__dispatch___dispatch_generate_pipeline --> generator__pipeline__run_pipeline
-    cli__dispatch___dispatch_generate_yaml_only --> generator__intract_manifest__write_intract_manifest
-    cli__dispatch___dispatch_generate_yaml_only --> generator__testql_scenario__write_testql_scenario
-    cli__dispatch___dispatch_registry --> integrations__bridges__pipeline__refresh_registry
-    cli__dispatch___dispatch_registry --> registry__catalog__discover_glob
