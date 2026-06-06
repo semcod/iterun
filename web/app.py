@@ -63,10 +63,11 @@ class ExecutionRequest(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     """Render main dashboard."""
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "intents": list(intents_store.values())
-    })
+    return templates.TemplateResponse(
+        request,
+        "index.html",
+        {"intents": list(intents_store.values())},
+    )
 
 
 @app.get("/api/intents")
@@ -185,21 +186,19 @@ async def approve_amen(intent_id: str):
 
 
 @app.post("/api/intents/{intent_id}/execute")
-async def execute(intent_id: str, data: ExecutionRequest = None):
-    """Execute approved intent."""
+async def execute(intent_id: str, data: ExecutionRequest = None, validate: bool = True, auto_fix: bool = True):
+    """Execute approved intent with validation and auto-fix."""
     if intent_id not in intents_store:
         raise HTTPException(status_code=404, detail="Intent not found")
     
     ir = intents_store[intent_id]
     
+    # Auto-approve if not approved (skip AMEN)
     if not ir.amen_approved:
-        raise HTTPException(
-            status_code=400, 
-            detail="Intent not approved. Call /amen endpoint first."
-        )
+        ir.approve_amen()
     
     workspace = data.workspace if data else None
-    result = execute_intent(ir, workspace)
+    result = execute_intent(ir, workspace, skip_amen_check=True, validate=validate, auto_fix=auto_fix)
     
     return {
         "success": result.success,
@@ -208,8 +207,58 @@ async def execute(intent_id: str, data: ExecutionRequest = None):
         "container_id": result.container_id,
         "endpoints": result.endpoints,
         "error": result.error,
-        "execution_time": result.execution_time
+        "execution_time": result.execution_time,
+        "validation": result.validation.to_dict() if result.validation else None,
+        "auto_fix_applied": result.auto_fix_applied,
+        "fix_iterations": result.fix_iterations
     }
+
+
+@app.post("/api/intents/{intent_id}/validate")
+async def validate_intent(intent_id: str):
+    """Validate running container endpoints for an intent."""
+    if intent_id not in intents_store:
+        raise HTTPException(status_code=404, detail="Intent not found")
+    
+    ir = intents_store[intent_id]
+    
+    from executor.runner import Executor, ExecutionResult
+    executor = Executor()
+    
+    # Build endpoints from intent
+    from config import get_config
+    config = get_config()
+    port = config.container_port
+    base_url = f"http://localhost:{port}"
+    endpoints = [base_url]
+    
+    seen_paths = set()
+    for action in ir.implementation.actions:
+        if action.type.value == "api.expose" and action.target:
+            if action.target not in seen_paths:
+                seen_paths.add(action.target)
+                endpoints.append(f"{base_url}{action.target}")
+    
+    result = ExecutionResult()
+    validation = executor._validate_endpoints(endpoints, result)
+    
+    return {
+        "success": validation.success,
+        "checks": validation.checks,
+        "failed_endpoints": validation.failed_endpoints,
+        "errors": validation.errors,
+        "suggestions": validation.suggestions,
+        "logs": result.logs
+    }
+
+
+@app.get("/api/containers/{container_id}/logs")
+async def get_container_logs(container_id: str, tail: int = 50):
+    """Get logs from a running container."""
+    from executor.runner import Executor
+    executor = Executor()
+    logs = executor.get_container_logs(container_id, tail=tail)
+    return {"container_id": container_id, "logs": logs}
 
 
 @app.get("/api/intents/{intent_id}/code")

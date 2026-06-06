@@ -1,0 +1,25 @@
+flowchart TD
+%% generated in 0.00s
+    ai_gateway__feedback_loop["ai_gateway.feedback_loop<br/>14 funcs"]
+    ai_gateway__gateway["ai_gateway.gateway<br/>18 funcs"]
+    cli__main["cli.main<br/>24 funcs"]
+    config["config<br/>8 funcs"]
+    executor__runner["executor.runner<br/>20 funcs"]
+    parser__dsl_parser["parser.dsl_parser<br/>13 funcs"]
+    planner__simulator["planner.simulator<br/>16 funcs"]
+    web__app["web.app<br/>21 funcs"]
+    web__app ==>|5| ai_gateway__gateway
+    cli__main ==>|4| ai_gateway__gateway
+    cli__main -->|3| parser__dsl_parser
+    web__app -->|2| ai_gateway__feedback_loop
+    cli__main -->|2| config
+    cli__main -->|2| ai_gateway__feedback_loop
+    web__app -->|1| parser__dsl_parser
+    web__app -->|1| planner__simulator
+    web__app -->|1| executor__runner
+    web__app -->|1| config
+    ai_gateway__gateway -->|1| config
+    ai_gateway__feedback_loop -->|1| ai_gateway__gateway
+    cli__main -->|1| planner__simulator
+    cli__main -->|1| executor__runner
+    executor__runner -->|1| config

@@ -1,0 +1,42 @@
+# SCENARIO: Auto-generated from Python Tests
+# TYPE: integration
+# GENERATED: true
+
+CONFIG[2]{key, value}:
+  base_url, ${api_url:-http://localhost:8101}
+  timeout_ms, 10000
+
+# Converted 32 assertions from pytest
+ASSERT[32]{field, operator, expected}:
+  len(ir.implementation.actions), ==, 3
+  ir.implementation.actions[0].type.value, ==, "api.expose"
+  ir.implementation.actions[1].type.value, ==, "db.create"
+  ir.implementation.actions[2].type.value, ==, "rest.call"
+  len(ir.implementation.actions), ==, 3
+  ir.implementation.actions[0].type.value, ==, "api.expose"
+  ir.implementation.actions[1].type.value, ==, "db.create"
+  ir.implementation.actions[2].type.value, ==, "rest.call"
+  config.default_provider, ==, ModelProvider.OLLAMA
+  config.default_model, ==, "llama3.2"
+  config.ollama_base_url, ==, "http://localhost:11434"
+  config.max_parameters_billions, ==, 12.0
+  config.default_provider, ==, ModelProvider.OLLAMA
+  config.default_model, ==, "llama3.2"
+  config.ollama_base_url, ==, "http://localhost:11434"
+  config.max_parameters_billions, ==, 12.0
+  len(ir.implementation.actions), ==, 3
+  ir.implementation.actions[0].type.value, ==, "api.expose"
+  ir.implementation.actions[1].type.value, ==, "db.create"
+  ir.implementation.actions[2].type.value, ==, "rest.call"
+  len(ir.implementation.actions), ==, 3
+  ir.implementation.actions[0].type.value, ==, "api.expose"
+  ir.implementation.actions[1].type.value, ==, "db.create"
+  ir.implementation.actions[2].type.value, ==, "rest.call"
+  config.default_provider, ==, ModelProvider.OLLAMA
+  config.default_model, ==, "llama3.2"
+  config.ollama_base_url, ==, "http://localhost:11434"
+  config.max_parameters_billions, ==, 12.0
+  config.default_provider, ==, ModelProvider.OLLAMA
+  config.default_model, ==, "llama3.2"
+  config.ollama_base_url, ==, "http://localhost:11434"
+  config.max_parameters_billions, ==, 12.0

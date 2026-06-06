@@ -1,0 +1,540 @@
+source: code2llm
+# generated in 0.02s
+schema: code2llm.planfile_tickets.v1
+project_root: /home/tom/github/wronai/amen
+tickets:
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: cli.main.CLI.cmd_execute (CC=36)'
+  description: 'code2llm reports `cli.main.CLI.cmd_execute` at `cli/main.py:272` with
+    cyclomatic complexity 36 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - cli/main.py
+  dedupe_key: code2llm:cc:cli/main.py:cli.main.CLI.cmd_execute
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: cli.main.CLI.interactive_mode (CC=30)'
+  description: 'code2llm reports `cli.main.CLI.interactive_mode` at `cli/main.py:415`
+    with cyclomatic complexity 30 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - cli/main.py
+  dedupe_key: code2llm:cc:cli/main.py:cli.main.CLI.interactive_mode
+- signal: code2llm_god
+  title: 'Split god module: ai_gateway/gateway.py'
+  description: 'code2llm reports `ai_gateway/gateway.py` as a large module (615 lines,
+    4 classes).
+
+
+    Split it by responsibility, keep public imports stable, and add focused tests
+    around the moved behavior.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - god-module
+  - refactor
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: code2llm:god:ai_gateway/gateway.py
+- signal: code2llm_god
+  title: 'Split god module: executor/runner.py'
+  description: 'code2llm reports `executor/runner.py` as a large module (614 lines,
+    4 classes).
+
+
+    Split it by responsibility, keep public imports stable, and add focused tests
+    around the moved behavior.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - god-module
+  - refactor
+  files:
+  - executor/runner.py
+  dedupe_key: code2llm:god:executor/runner.py
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: parser'
+  description: 'code2llm reports `Shotgun Surgery: parser` in `parser/dsl_parser.py:260`.
+
+
+    Mutation of variable ''parser'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - parser/dsl_parser.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:parser/dsl_parser.py:260:Shotgun Surgery:
+    parser'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: prompt'
+  description: 'code2llm reports `Shotgun Surgery: prompt` in `ai_gateway/gateway.py:613`.
+
+
+    Mutation of variable ''prompt'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:ai_gateway/gateway.py:613:Shotgun Surgery:
+    prompt'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: response'
+  description: 'code2llm reports `Shotgun Surgery: response` in `ai_gateway/gateway.py:613`.
+
+
+    Mutation of variable ''response'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:ai_gateway/gateway.py:613:Shotgun Surgery:
+    response'
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: ai_gateway.feedback_loop.FeedbackLoop.suggest_next_steps
+    (CC=17)'
+  description: 'code2llm reports `ai_gateway.feedback_loop.FeedbackLoop.suggest_next_steps`
+    at `ai_gateway/feedback_loop.py:212` with cyclomatic complexity 17 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - ai_gateway/feedback_loop.py
+  dedupe_key: code2llm:cc:ai_gateway/feedback_loop.py:ai_gateway.feedback_loop.FeedbackLoop.suggest_next_steps
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: cli.main.main (CC=21)'
+  description: 'code2llm reports `cli.main.main` at `cli/main.py:688` with cyclomatic
+    complexity 21 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - cli/main.py
+  dedupe_key: code2llm:cc:cli/main.py:cli.main.main
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: config.load_dotenv (CC=15)'
+  description: 'code2llm reports `config.load_dotenv` at `config.py:19` with cyclomatic
+    complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - config.py
+  dedupe_key: code2llm:cc:config.py:config.load_dotenv
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: focus, self, ir'
+  description: 'code2llm reports `Data Clump: focus, self, ir` in `ai_gateway/feedback_loop.py:89`.
+
+
+    Arguments (focus, self, ir) are used together in multiple functions: ai_gateway.feedback_loop.FeedbackLoop.analyze,
+    ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt, cli.main.CLI.cmd_ai_suggest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - ai_gateway/feedback_loop.py
+  dedupe_key: 'code2llm:smell:data_clump:ai_gateway/feedback_loop.py:89:Data Clump:
+    focus, self, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: focus, self, ir'
+  description: 'code2llm reports `Data Clump: focus, self, ir` in `ai_gateway/feedback_loop.py:241`.
+
+
+    Arguments (focus, self, ir) are used together in multiple functions: ai_gateway.feedback_loop.FeedbackLoop.analyze,
+    ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt, cli.main.CLI.cmd_ai_suggest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - ai_gateway/feedback_loop.py
+  dedupe_key: 'code2llm:smell:data_clump:ai_gateway/feedback_loop.py:241:Data Clump:
+    focus, self, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: focus, self, ir'
+  description: 'code2llm reports `Data Clump: focus, self, ir` in `cli/main.py:488`.
+
+
+    Arguments (focus, self, ir) are used together in multiple functions: ai_gateway.feedback_loop.FeedbackLoop.analyze,
+    ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt, cli.main.CLI.cmd_ai_suggest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - cli/main.py
+  dedupe_key: 'code2llm:smell:data_clump:cli/main.py:488:Data Clump: focus, self,
+    ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, result, ir'
+  description: 'code2llm reports `Data Clump: self, result, ir` in `executor/runner.py:398`.
+
+
+    Arguments (self, result, ir) are used together in multiple functions: executor.runner.Executor._restart_container,
+    executor.runner.Executor._write_artifacts, executor.runner.Executor._execute_docker,
+    executor.runner.Executor._execute_local.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:data_clump:executor/runner.py:398:Data Clump: self,
+    result, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, result, ir'
+  description: 'code2llm reports `Data Clump: self, result, ir` in `executor/runner.py:412`.
+
+
+    Arguments (self, result, ir) are used together in multiple functions: executor.runner.Executor._restart_container,
+    executor.runner.Executor._write_artifacts, executor.runner.Executor._execute_docker,
+    executor.runner.Executor._execute_local.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:data_clump:executor/runner.py:412:Data Clump: self,
+    result, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, result, ir'
+  description: 'code2llm reports `Data Clump: self, result, ir` in `executor/runner.py:470`.
+
+
+    Arguments (self, result, ir) are used together in multiple functions: executor.runner.Executor._restart_container,
+    executor.runner.Executor._write_artifacts, executor.runner.Executor._execute_docker,
+    executor.runner.Executor._execute_local.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:data_clump:executor/runner.py:470:Data Clump: self,
+    result, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, result, ir'
+  description: 'code2llm reports `Data Clump: self, result, ir` in `executor/runner.py:559`.
+
+
+    Arguments (self, result, ir) are used together in multiple functions: executor.runner.Executor._restart_container,
+    executor.runner.Executor._write_artifacts, executor.runner.Executor._execute_docker,
+    executor.runner.Executor._execute_local.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:data_clump:executor/runner.py:559:Data Clump: self,
+    result, ir'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: temperature, max_tokens, system_prompt,
+    prompt, self, model'
+  description: 'code2llm reports `Data Clump: temperature, max_tokens, system_prompt,
+    prompt, self, model` in `ai_gateway/gateway.py:322`.
+
+
+    Arguments (temperature, max_tokens, system_prompt, prompt, self, model) are used
+    together in multiple functions: ai_gateway.gateway.AIGateway.complete, ai_gateway.gateway.AIGateway.acomplete.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:data_clump:ai_gateway/gateway.py:322:Data Clump: temperature,
+    max_tokens, system_prompt, prompt, self, model'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: temperature, max_tokens, system_prompt,
+    prompt, self, model'
+  description: 'code2llm reports `Data Clump: temperature, max_tokens, system_prompt,
+    prompt, self, model` in `ai_gateway/gateway.py:392`.
+
+
+    Arguments (temperature, max_tokens, system_prompt, prompt, self, model) are used
+    together in multiple functions: ai_gateway.gateway.AIGateway.complete, ai_gateway.gateway.AIGateway.acomplete.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:data_clump:ai_gateway/gateway.py:392:Data Clump: temperature,
+    max_tokens, system_prompt, prompt, self, model'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _execute_docker'
+  description: 'code2llm reports `God Function: _execute_docker` in `executor/runner.py:470`.
+
+
+    Function ''_execute_docker'' is oversized: CC=12, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:god_function:executor/runner.py:470:God Function: _execute_docker'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _parse_action'
+  description: 'code2llm reports `God Function: _parse_action` in `parser/dsl_parser.py:177`.
+
+
+    Function ''_parse_action'' is oversized: CC=8, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - parser/dsl_parser.py
+  dedupe_key: 'code2llm:smell:god_function:parser/dsl_parser.py:177:God Function:
+    _parse_action'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _validate_endpoints'
+  description: 'code2llm reports `God Function: _validate_endpoints` in `executor/runner.py:250`.
+
+
+    Function ''_validate_endpoints'' is oversized: CC=13, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:god_function:executor/runner.py:250:God Function: _validate_endpoints'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: cmd_ai_suggest'
+  description: 'code2llm reports `God Function: cmd_ai_suggest` in `cli/main.py:488`.
+
+
+    Function ''cmd_ai_suggest'' is oversized: CC=11, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - cli/main.py
+  dedupe_key: 'code2llm:smell:god_function:cli/main.py:488:God Function: cmd_ai_suggest'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: cmd_iterate'
+  description: 'code2llm reports `God Function: cmd_iterate` in `cli/main.py:185`.
+
+
+    Function ''cmd_iterate'' is oversized: CC=12, fan-out=14, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - cli/main.py
+  dedupe_key: 'code2llm:smell:god_function:cli/main.py:185:God Function: cmd_iterate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: cmd_plan'
+  description: 'code2llm reports `God Function: cmd_plan` in `cli/main.py:147`.
+
+
+    Function ''cmd_plan'' is oversized: CC=10, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - cli/main.py
+  dedupe_key: 'code2llm:smell:god_function:cli/main.py:147:God Function: cmd_plan'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: complete'
+  description: 'code2llm reports `God Function: complete` in `ai_gateway/gateway.py:608`.
+
+
+    Function ''complete'' is oversized: CC=1, fan-out=2, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:god_function:ai_gateway/gateway.py:608:God Function:
+    complete'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: execute'
+  description: 'code2llm reports `God Function: execute` in `executor/runner.py:129`.
+
+
+    Function ''execute'' is oversized: CC=13, fan-out=10, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - executor/runner.py
+  dedupe_key: 'code2llm:smell:god_function:executor/runner.py:129:God Function: execute'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: suggest_improvements'
+  description: 'code2llm reports `God Function: suggest_improvements` in `ai_gateway/gateway.py:613`.
+
+
+    Function ''suggest_improvements'' is oversized: CC=1, fan-out=2, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - ai_gateway/gateway.py
+  dedupe_key: 'code2llm:smell:god_function:ai_gateway/gateway.py:613:God Function:
+    suggest_improvements'
+applied: []
+skipped: []

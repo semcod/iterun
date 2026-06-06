@@ -1,0 +1,202 @@
+flowchart TD
+%% generated in 0.00s
+    subgraph ai_gateway__feedback_loop
+        ai_gateway__feedback_loop__FeedbackSuggestion__to_dict["to_dict"]
+        ai_gateway__feedback_loop__FeedbackResult__to_dict["to_dict"]
+        ai_gateway__feedback_loop__FeedbackLoop____init__["__init__"]
+        ai_gateway__feedback_loop__FeedbackLoop__analyze["analyze"]
+        ai_gateway__feedback_loop__FeedbackLoop__apply_suggestions("apply_suggestions CC=10")
+        ai_gateway__feedback_loop__FeedbackLoop__iterate["iterate"]
+        ai_gateway__feedback_loop__FeedbackLoop__suggest_next_steps{{suggest_next_steps CC=17}}
+        ai_gateway__feedback_loop__FeedbackLoop___build_analysis_prompt["_build_analysis_prompt"]
+        ai_gateway__feedback_loop__FeedbackLoop___parse_suggestions("_parse_suggestions CC=8")
+        ai_gateway__feedback_loop__FeedbackLoop___extract_action["_extract_action"]
+        ai_gateway__feedback_loop__FeedbackLoop___parse_action["_parse_action"]
+        ai_gateway__feedback_loop__FeedbackLoop___process_user_feedback["_process_user_feedback"]
+        ai_gateway__feedback_loop__create_feedback_loop["create_feedback_loop"]
+        ai_gateway__feedback_loop__analyze_intent["analyze_intent"]
+    end
+    subgraph ai_gateway__gateway
+        ai_gateway__gateway__ModelConfig__to_dict["to_dict"]
+        ai_gateway__gateway__GatewayConfig____post_init__("__post_init__ CC=9")
+        ai_gateway__gateway__GatewayConfig__get_available_models["get_available_models"]
+        ai_gateway__gateway__GatewayConfig__get_model["get_model"]
+        ai_gateway__gateway__GatewayConfig__to_dict["to_dict"]
+        ai_gateway__gateway__AIGateway____init__["__init__"]
+        ai_gateway__gateway__AIGateway___setup_litellm["_setup_litellm"]
+        ai_gateway__gateway__AIGateway__complete("complete CC=10")
+        ai_gateway__gateway__AIGateway__acomplete("acomplete CC=10")
+        ai_gateway__gateway__AIGateway___mock_response["_mock_response"]
+        ai_gateway__gateway__AIGateway__suggest_improvements("suggest_improvements CC=8")
+        ai_gateway__gateway__AIGateway__generate_code_snippet("generate_code_snippet CC=10")
+        ai_gateway__gateway__AIGateway__explain_error["explain_error"]
+        ai_gateway__gateway__AIGateway__list_models["list_models"]
+        ai_gateway__gateway__AIGateway__health_check["health_check"]
+        ai_gateway__gateway__get_gateway["get_gateway"]
+        ai_gateway__gateway__complete["complete"]
+        ai_gateway__gateway__suggest_improvements["suggest_improvements"]
+    end
+    subgraph cli__main
+        cli__main__Colors__disable["disable"]
+        cli__main__CLI____init__["__init__"]
+        cli__main__CLI__print_header["print_header"]
+        cli__main__CLI__print_success["print_success"]
+        cli__main__CLI__print_error["print_error"]
+        cli__main__CLI__print_warning["print_warning"]
+        cli__main__CLI__print_info["print_info"]
+        cli__main__CLI__cmd_new["cmd_new"]
+        cli__main__CLI__cmd_load["cmd_load"]
+        cli__main__CLI__cmd_parse["cmd_parse"]
+        cli__main__CLI__cmd_plan("cmd_plan CC=10")
+        cli__main__CLI__cmd_iterate("cmd_iterate CC=12")
+        cli__main__CLI__cmd_amen["cmd_amen"]
+        cli__main__CLI__cmd_execute{{cmd_execute CC=36}}
+        cli__main__CLI__cmd_show("cmd_show CC=8")
+        cli__main__CLI__cmd_save["cmd_save"]
+        cli__main__CLI__interactive_mode{{interactive_mode CC=30}}
+        cli__main__CLI__cmd_ai_suggest("cmd_ai_suggest CC=11")
+        cli__main__CLI__cmd_ai_apply("cmd_ai_apply CC=8")
+        cli__main__CLI__cmd_ai_chat("cmd_ai_chat CC=12")
+        cli__main__CLI__cmd_models["cmd_models"]
+        cli__main__CLI__cmd_ai_health["cmd_ai_health"]
+        cli__main__CLI___show_help["_show_help"]
+        cli__main__main{{main CC=21}}
+    end
+    subgraph config
+        config__load_dotenv{{load_dotenv CC=15}}
+        config__get_env["get_env"]
+        config__get_env_bool["get_env_bool"]
+        config__get_env_int["get_env_int"]
+        config__get_env_float["get_env_float"]
+        config__get_config["get_config"]
+        config__reload_config["reload_config"]
+        config__configure["configure"]
+    end
+    subgraph executor__runner
+        executor__runner__ValidationResult____init__["__init__"]
+        executor__runner__ValidationResult__add_check["add_check"]
+        executor__runner__ValidationResult__to_dict["to_dict"]
+        executor__runner__ExecutionResult____init__["__init__"]
+        executor__runner__ExecutionResult__add_log["add_log"]
+        executor__runner__ExecutionResult__to_dict["to_dict"]
+        executor__runner__Executor____init__["__init__"]
+        executor__runner__Executor__execute("execute CC=13")
+        executor__runner__Executor___validate_and_fix("_validate_and_fix CC=8")
+        executor__runner__Executor___validate_endpoints("_validate_endpoints CC=13")
+        executor__runner__Executor___attempt_fix("_attempt_fix CC=10")
+        executor__runner__Executor___add_main_block["_add_main_block"]
+        executor__runner__Executor___restart_container["_restart_container"]
+        executor__runner__Executor___write_artifacts["_write_artifacts"]
+        executor__runner__Executor___find_available_port["_find_available_port"]
+        executor__runner__Executor___execute_docker("_execute_docker CC=12")
+        executor__runner__Executor___execute_local["_execute_local"]
+        executor__runner__Executor__get_container_logs["get_container_logs"]
+        executor__runner__Executor__cleanup["cleanup"]
+        executor__runner__execute_intent["execute_intent"]
+    end
+    subgraph ir__models
+        ir__models__Action__to_dict["to_dict"]
+        ir__models__Action__from_dict["from_dict"]
+        ir__models__Environment__to_dict["to_dict"]
+        ir__models__Environment__from_dict["from_dict"]
+        ir__models__Implementation__to_dict["to_dict"]
+        ir__models__Implementation__from_dict["from_dict"]
+        ir__models__Intent__to_dict["to_dict"]
+        ir__models__Intent__from_dict["from_dict"]
+        ir__models__IntentIR__to_dict["to_dict"]
+        ir__models__IntentIR__to_json["to_json"]
+        ir__models__IntentIR__from_dict["from_dict"]
+        ir__models__IntentIR__from_json["from_json"]
+        ir__models__IntentIR__add_iteration["add_iteration"]
+        ir__models__IntentIR__approve_amen["approve_amen"]
+    end
+    subgraph parser__dsl_parser
+        parser__dsl_parser__ParseError____init__["__init__"]
+        parser__dsl_parser__ValidationError____init__["__init__"]
+        parser__dsl_parser__DSLParser____init__["__init__"]
+        parser__dsl_parser__DSLParser__parse_file["parse_file"]
+        parser__dsl_parser__DSLParser__parse("parse CC=8")
+        parser__dsl_parser__DSLParser___parse_intent["_parse_intent"]
+        parser__dsl_parser__DSLParser___parse_environment["_parse_environment"]
+        parser__dsl_parser__DSLParser___parse_implementation["_parse_implementation"]
+        parser__dsl_parser__DSLParser___parse_action("_parse_action CC=8")
+        parser__dsl_parser__DSLParser___parse_execution["_parse_execution"]
+        parser__dsl_parser__DSLParser___validate("_validate CC=8")
+        parser__dsl_parser__parse_dsl["parse_dsl"]
+        parser__dsl_parser__parse_dsl_file["parse_dsl_file"]
+    end
+    subgraph planner__simulator
+        planner__simulator__DryRunResult____init__["__init__"]
+        planner__simulator__DryRunResult__add_log["add_log"]
+        planner__simulator__DryRunResult__to_dict["to_dict"]
+        planner__simulator__Planner____init__["__init__"]
+        planner__simulator__Planner__dry_run["dry_run"]
+        planner__simulator__Planner___generate_python_code["_generate_python_code"]
+        planner__simulator__Planner___generate_fastapi_code["_generate_fastapi_code"]
+        planner__simulator__Planner___generate_flask_code["_generate_flask_code"]
+        planner__simulator__Planner___generate_basic_python_code["_generate_basic_python_code"]
+        planner__simulator__Planner___generate_node_code["_generate_node_code"]
+        planner__simulator__Planner___generate_express_code["_generate_express_code"]
+        planner__simulator__Planner___generate_basic_node_code["_generate_basic_node_code"]
+        planner__simulator__Planner___generate_dockerfile("_generate_dockerfile CC=8")
+        planner__simulator__Planner___simulate_action("_simulate_action CC=9")
+        planner__simulator__Planner___estimate_resources["_estimate_resources"]
+        planner__simulator__plan_intent["plan_intent"]
+    end
+    subgraph web__app
+        web__app__home["home"]
+        web__app__list_intents["list_intents"]
+        web__app__parse_intent["parse_intent"]
+        web__app__get_intent["get_intent"]
+        web__app__delete_intent["delete_intent"]
+        web__app__plan["plan"]
+        web__app__iterate["iterate"]
+        web__app__approve_amen["approve_amen"]
+        web__app__execute["execute"]
+        web__app__validate_intent["validate_intent"]
+        web__app__get_container_logs["get_container_logs"]
+        web__app__get_generated_code["get_generated_code"]
+        web__app__health["health"]
+        web__app__ai_status["ai_status"]
+        web__app__list_models["list_models"]
+        web__app__ai_complete["ai_complete"]
+        web__app__ai_chat["ai_chat"]
+        web__app__ai_suggest["ai_suggest"]
+        web__app__ai_apply_suggestions["ai_apply_suggestions"]
+        web__app__generate_code["generate_code"]
+        web__app__create_app["create_app"]
+    end
+    config__reload_config --> config__load_dotenv
+    web__app__parse_intent --> parser__dsl_parser__parse_dsl
+    web__app__plan --> planner__simulator__plan_intent
+    web__app__execute --> executor__runner__execute_intent
+    web__app__validate_intent --> config__get_config
+    web__app__ai_status --> ai_gateway__gateway__get_gateway
+    web__app__list_models --> ai_gateway__gateway__get_gateway
+    web__app__ai_complete --> ai_gateway__gateway__get_gateway
+    web__app__ai_chat --> ai_gateway__gateway__get_gateway
+    web__app__ai_suggest --> ai_gateway__feedback_loop__create_feedback_loop
+    web__app__ai_apply_suggestions --> ai_gateway__feedback_loop__create_feedback_loop
+    web__app__generate_code --> ai_gateway__gateway__get_gateway
+    ai_gateway__gateway__GatewayConfig____post_init__ --> config__get_config
+    ai_gateway__gateway__complete --> ai_gateway__gateway__get_gateway
+    ai_gateway__gateway__suggest_improvements --> ai_gateway__gateway__get_gateway
+    ai_gateway__feedback_loop__FeedbackLoop____init__ --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_new --> parser__dsl_parser__parse_dsl
+    cli__main__CLI__cmd_load --> parser__dsl_parser__parse_dsl_file
+    cli__main__CLI__cmd_parse --> parser__dsl_parser__parse_dsl
+    cli__main__CLI__cmd_plan --> planner__simulator__plan_intent
+    cli__main__CLI__cmd_amen --> config__get_config
+    cli__main__CLI__cmd_execute --> executor__runner__execute_intent
+    cli__main__CLI__cmd_execute --> config__get_config
+    cli__main__CLI__cmd_ai_suggest --> ai_gateway__feedback_loop__create_feedback_loop
+    cli__main__CLI__cmd_ai_apply --> ai_gateway__feedback_loop__create_feedback_loop
+    cli__main__CLI__cmd_ai_chat --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_models --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_ai_health --> ai_gateway__gateway__get_gateway
+    executor__runner__Executor____init__ --> config__get_config
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class config__load_dotenv,ai_gateway__feedback_loop__FeedbackLoop__suggest_next_steps,cli__main__CLI__cmd_execute,cli__main__CLI__interactive_mode,cli__main__main highCC
+    class planner__simulator__Planner___generate_dockerfile,planner__simulator__Planner___simulate_action,ai_gateway__gateway__GatewayConfig____post_init__,ai_gateway__gateway__AIGateway__complete,ai_gateway__gateway__AIGateway__acomplete,ai_gateway__gateway__AIGateway__suggest_improvements,ai_gateway__gateway__AIGateway__generate_code_snippet,ai_gateway__feedback_loop__FeedbackLoop__apply_suggestions,ai_gateway__feedback_loop__FeedbackLoop___parse_suggestions,cli__main__CLI__cmd_plan,cli__main__CLI__cmd_iterate,cli__main__CLI__cmd_show,cli__main__CLI__cmd_ai_suggest,cli__main__CLI__cmd_ai_apply,cli__main__CLI__cmd_ai_chat,parser__dsl_parser__DSLParser__parse,parser__dsl_parser__DSLParser___parse_action,parser__dsl_parser__DSLParser___validate,executor__runner__Executor__execute,executor__runner__Executor___validate_and_fix,executor__runner__Executor___validate_endpoints,executor__runner__Executor___attempt_fix,executor__runner__Executor___execute_docker medCC

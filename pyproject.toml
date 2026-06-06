@@ -3,22 +3,19 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "intent-iterative"
-version = "0.1.0"
-description = "DSL-based intent execution system with iterative refinement"
+name = "iterun"
+version = "0.1.1"
+description = "DSL-based intent execution system with iterative refinement, featuring AI-powered suggestions via Ollama, safe simulation, and automatic health validation."
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = "Apache-2.0"
 authors = [
-    {name = "Softreck", email = "info@softreck.dev"}
+    {name = "Softreck", email = "tom@sapletta.com"}
 ]
 keywords = ["dsl", "intent", "automation", "docker", "devops"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
 ]
 
 dependencies = [
@@ -29,21 +26,34 @@ dependencies = [
     "jinja2>=3.1.0",
 ]
 
+[dependency-groups]
+test = [
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.26.0",
+    "anyio>=4.0.0",
+]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
     "httpx>=0.26.0",
     "anyio>=4.0.0",
+    "goal>=2.1.0",
+    "costs>=0.1.20",
+    "pfix>=0.1.60",
 ]
 
+[tool.uv]
+default-groups = ["test"]
+
 [project.scripts]
-intent-cli = "cli.main:main"
+iterun = "cli.main:main"
 
 [project.urls]
-Homepage = "https://github.com/softreck/intent-iterative"
-Documentation = "https://github.com/softreck/intent-iterative#readme"
-Repository = "https://github.com/softreck/intent-iterative"
+Homepage = "https://github.com/softreck/iterun"
+Documentation = "https://github.com/softreck/iterun#readme"
+Repository = "https://github.com/softreck/iterun"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -56,3 +66,32 @@ addopts = "-v --tb=short"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ir*", "parser*", "planner*", "executor*", "cli*", "web*"]
+
+[tool.pfix]
+# Self-healing Python configuration
+model = "openrouter/qwen/qwen3-coder-next"
+auto_apply = true
+auto_install_deps = true
+auto_restart = false
+max_retries = 3
+create_backups = false
+git_auto_commit = false
+
+[tool.pfix.runtime_todo]
+enabled = true
+todo_file = "TODO.md"
+min_severity = "low"
+deduplicate = true
+
+[tool.costs]
+# AI Cost tracking configuration
+badge = true
+update_readme = true
+readme_path = "README.md"
+default_model = "openrouter/qwen/qwen3-coder-next"
+analysis_mode = "byok"
+full_history = true
+max_commits = 500
+
+# Cost thresholds for badge colors (USD)
+badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }

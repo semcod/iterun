@@ -1,0 +1,166 @@
+# amen | 25f 5727L | python:21,shell:3,less:1 | 2026-06-06
+# stats: 47 func | 52 cls | 25 mod | CC̄=3.0 | critical:3 | cycles:0
+# alerts[5]: CC main=21; CC load_dotenv=15; CC complete=10; CC suggest_improvements=8; CC iterate=6
+# hotspots[5]: main fan=21; load_dotenv fan=11; validate_intent fan=9; iterate fan=7; ai_suggest fan=6
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[25]:
+  ai_gateway/__init__.py,35
+  ai_gateway/feedback_loop.py,385
+  ai_gateway/gateway.py,616
+  app.doql.less,231
+  cli/__init__.py,4
+  cli/main.py,764
+  config.py,165
+  executor/__init__.py,4
+  executor/runner.py,615
+  ir/__init__.py,10
+  ir/models.py,224
+  parser/__init__.py,4
+  parser/dsl_parser.py,264
+  planner/__init__.py,4
+  planner/simulator.py,349
+  project.sh,59
+  run.sh,159
+  tests/__init__.py,2
+  tests/conftest.py,59
+  tests/e2e/test_ai_gateway.py,376
+  tests/e2e/test_shell.py,373
+  tests/e2e/test_web.py,559
+  tree.sh,2
+  web/__init__.py,4
+  web/app.py,460
+D:
+  ai_gateway/__init__.py:
+  ai_gateway/feedback_loop.py:
+    e: create_feedback_loop,analyze_intent,FeedbackSuggestion,FeedbackResult,FeedbackLoop
+    FeedbackSuggestion: to_dict(0)  # A single improvement suggestion.
+    FeedbackResult: to_dict(0)  # Result of feedback loop iteration.
+    FeedbackLoop: __init__(2),analyze(2),apply_suggestions(3),iterate(4),suggest_next_steps(1),_build_analysis_prompt(2),_parse_suggestions(1),_extract_action(1),_parse_action(1),_process_user_feedback(2)  # LLM-powered feedback loop for iterative intent refinement.
+    create_feedback_loop(model)
+    analyze_intent(ir;focus)
+  ai_gateway/gateway.py:
+    e: get_gateway,complete,suggest_improvements,ModelProvider,ModelConfig,GatewayConfig,AIGateway
+    ModelProvider:  # Supported model providers.
+    ModelConfig: to_dict(0)  # Configuration for a specific model.
+    GatewayConfig: __post_init__(0),get_available_models(1),get_model(1),to_dict(0)  # AI Gateway configuration.
+    AIGateway: __init__(1),_setup_litellm(0),complete(5),acomplete(5),_mock_response(2),suggest_improvements(1),generate_code_snippet(3),explain_error(2),list_models(1),health_check(0)  # AI Gateway using LiteLLM for unified model access.
+    get_gateway(config)
+    complete(prompt)
+    suggest_improvements(ir)
+  cli/__init__.py:
+  cli/main.py:
+    e: main,Colors,CLI
+    Colors: disable(1)  # ANSI color codes for terminal output.
+    CLI: __init__(1),print_header(1),print_success(1),print_error(1),print_warning(1),print_info(1),cmd_new(2),cmd_load(1),cmd_parse(1),cmd_plan(1),cmd_iterate(2),cmd_amen(2),cmd_execute(4),cmd_show(2),cmd_save(2),interactive_mode(0),cmd_ai_suggest(2),cmd_ai_apply(1),cmd_ai_chat(2),cmd_models(1),cmd_ai_health(0),_show_help(0)  # Interactive CLI for Intent-Iterative system.
+    main()
+  config.py:
+    e: load_dotenv,get_env,get_env_bool,get_env_int,get_env_float,get_config,reload_config,configure,AppConfig
+    AppConfig:  # Main application configuration.
+    load_dotenv(env_path)
+    get_env(key;default)
+    get_env_bool(key;default)
+    get_env_int(key;default)
+    get_env_float(key;default)
+    get_config()
+    reload_config()
+    configure()
+  executor/__init__.py:
+  executor/runner.py:
+    e: execute_intent,ExecutionError,ValidationResult,ExecutionResult,Executor
+    ExecutionError:  # Raised when execution fails.
+    ValidationResult: __init__(0),add_check(4),to_dict(0)  # Result of post-execution validation.
+    ExecutionResult: __init__(0),add_log(1),to_dict(0)  # Result of intent execution.
+    Executor: __init__(1),execute(4),_validate_and_fix(3),_validate_endpoints(2),_attempt_fix(3),_add_main_block(1),_restart_container(2),_write_artifacts(2),_find_available_port(1),_execute_docker(2),_execute_local(2),get_container_logs(2),cleanup(0)  # Executes approved intents.
+    execute_intent(ir;workspace;skip_amen_check;validate;auto_fix)
+  ir/__init__.py:
+  ir/models.py:
+    e: ExecutionMode,RuntimeType,ActionType,Action,Environment,Implementation,Intent,IntentIR
+    ExecutionMode:
+    RuntimeType:
+    ActionType:
+    Action: to_dict(0),from_dict(2)  # Single action in the implementation plan.
+    Environment: to_dict(0),from_dict(2)  # Runtime environment configuration.
+    Implementation: to_dict(0),from_dict(2)  # Implementation details.
+    Intent: to_dict(0),from_dict(2)  # Main intent definition.
+    IntentIR: to_dict(0),to_json(1),from_dict(2),from_json(2),add_iteration(2),approve_amen(0)  # Complete Intermediate Representation for an intent.
+  parser/__init__.py:
+  parser/dsl_parser.py:
+    e: parse_dsl,parse_dsl_file,ParseError,ValidationError,DSLParser
+    ParseError: __init__(2)  # Raised when DSL parsing fails.
+    ValidationError: __init__(1)  # Raised when DSL validation fails.
+    DSLParser: __init__(0),parse_file(1),parse(1),_parse_intent(1),_parse_environment(1),_parse_implementation(1),_parse_action(1),_parse_execution(1),_validate(1)  # Parser for INTENT-ITERATIVE DSL format.
+    parse_dsl(content)
+    parse_dsl_file(filepath)
+  planner/__init__.py:
+  planner/simulator.py:
+    e: plan_intent,DryRunResult,Planner
+    DryRunResult: __init__(0),add_log(1),to_dict(0)  # Result of a dry-run simulation.
+    Planner: __init__(0),dry_run(1),_generate_python_code(1),_generate_fastapi_code(1),_generate_flask_code(1),_generate_basic_python_code(1),_generate_node_code(1),_generate_express_code(1),_generate_basic_node_code(1),_generate_dockerfile(1),_simulate_action(2),_estimate_resources(1)  # Plans and simulates intent execution.
+    plan_intent(ir)
+  tests/__init__.py:
+  tests/conftest.py:
+    e: project_root,sample_dsl,sample_ir
+    project_root()
+    sample_dsl()
+    sample_ir()
+  tests/e2e/test_ai_gateway.py:
+    e: run_tests,TestModelConfig,TestGatewayConfig,TestAIGateway,TestFeedbackLoop,TestFeedbackSuggestion,TestConvenienceFunctions
+    TestModelConfig: test_ollama_models_exist(0),test_model_config_properties(0),test_models_under_12b(0)  # Test model configuration.
+    TestGatewayConfig: test_default_config(0),test_config_from_env(0),test_get_model(0)  # Test gateway configuration.
+    TestAIGateway: test_gateway_creation(0),test_mock_response_when_litellm_unavailable(0),test_list_models(0),test_health_check(0),test_complete_without_litellm(0)  # Test AI Gateway functionality.
+    TestFeedbackLoop: sample_ir(0),test_feedback_loop_creation(0),test_suggest_next_steps(1),test_suggest_next_steps_with_health(1),test_build_analysis_prompt(1),test_parse_suggestions_json(0),test_parse_suggestions_raw(0),test_extract_action(0),test_feedback_result_to_dict(0)  # Test feedback loop functionality.
+    TestFeedbackSuggestion: test_suggestion_defaults(0),test_suggestion_to_dict(0)  # Test FeedbackSuggestion dataclass.
+    TestConvenienceFunctions: test_get_gateway_singleton(0),test_complete_function(0)  # Test convenience functions.
+    run_tests()
+  tests/e2e/test_shell.py:
+    e: run_tests,TestDSLParser,TestPlanner,TestCLI,TestIRModel,TestEndToEnd
+    TestDSLParser: test_parse_valid_dsl(0),test_parse_missing_intent(0),test_parse_invalid_yaml(0),test_parse_multiple_actions(0),test_parse_action_formats(0)  # Test DSL parsing functionality.
+    TestPlanner: test_dry_run_fastapi(0),test_dry_run_express(0),test_resource_estimation(0)  # Test planner/simulator functionality.
+    TestCLI: test_cli_new_intent(0),test_cli_plan(0),test_cli_iterate(0),test_cli_amen_not_approved_without_confirmation(0)  # Test CLI functionality.
+    TestIRModel: test_ir_serialization(0),test_ir_iteration_history(0),test_ir_amen_approval(0)  # Test IR model functionality.
+    TestEndToEnd: test_complete_workflow_dry_run(0),test_file_based_workflow(0)  # End-to-end workflow tests.
+    run_tests()
+  tests/e2e/test_web.py:
+    e: anyio_backend,client,run_tests,TestHealthEndpoint,TestIntentsCRUD,TestPlanningEndpoint,TestIterationEndpoint,TestAmenAndExecution,TestGeneratedCodeEndpoint,TestEndToEndWorkflow,TestHomePage
+    TestHealthEndpoint: test_health_check(1)  # Test health check endpoint.
+    TestIntentsCRUD: test_list_intents_empty(1),test_parse_valid_dsl(1),test_parse_invalid_dsl(1),test_parse_missing_intent_section(1),test_get_intent(1),test_get_nonexistent_intent(1),test_delete_intent(1)  # Test intents CRUD operations.
+    TestPlanningEndpoint: test_plan_intent(1),test_plan_express(1)  # Test dry-run planning endpoint.
+    TestIterationEndpoint: test_iterate_add_action(1),test_iterate_change_framework(1),test_multiple_iterations(1)  # Test iteration endpoint.
+    TestAmenAndExecution: test_amen_approval(1),test_execute_without_amen(1)  # Test AMEN approval and execution endpoints.
+    TestGeneratedCodeEndpoint: test_get_generated_code(1)  # Test generated code endpoint.
+    TestEndToEndWorkflow: test_complete_workflow(1)  # Complete end-to-end workflow tests.
+    TestHomePage: test_home_page_renders(1)  # Test home page rendering.
+    anyio_backend()
+    client()
+    run_tests()
+  web/__init__.py:
+  web/app.py:
+    e: home,list_intents,parse_intent,get_intent,delete_intent,plan,iterate,approve_amen,execute,validate_intent,get_container_logs,get_generated_code,health,ai_status,list_models,ai_complete,ai_chat,ai_suggest,ai_apply_suggestions,generate_code,create_app,DSLInput,IterationInput,ExecutionRequest,AICompletionRequest,AISuggestRequest,AIChatRequest
+    DSLInput:
+    IterationInput:
+    ExecutionRequest:
+    AICompletionRequest:
+    AISuggestRequest:
+    AIChatRequest:
+    home(request)
+    list_intents()
+    parse_intent(data)
+    get_intent(intent_id)
+    delete_intent(intent_id)
+    plan(intent_id)
+    iterate(intent_id;data)
+    approve_amen(intent_id)
+    execute(intent_id;data;validate;auto_fix)
+    validate_intent(intent_id)
+    get_container_logs(container_id;tail)
+    get_generated_code(intent_id)
+    health()
+    ai_status()
+    list_models(max_params)
+    ai_complete(request)
+    ai_chat(request)
+    ai_suggest(intent_id;request)
+    ai_apply_suggestions(intent_id)
+    generate_code(description;language;framework)
+    create_app()

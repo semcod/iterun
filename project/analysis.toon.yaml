@@ -1,0 +1,185 @@
+# code2llm | 27f 5595L | python:16,yaml:5,shell:3,txt:1,toml:1 | 2026-06-06
+# generated in 0.01s
+# CC̅=4.2 | critical:5/148 | dups:0 | cycles:0
+
+HEALTH[7]:
+  🔴 GOD   ai_gateway/gateway.py = 615L, 4 classes, 18m, max CC=10
+  🔴 GOD   executor/runner.py = 614L, 4 classes, 20m, max CC=13
+  🟡 CC    load_dotenv CC=15 (limit:15)
+  🟡 CC    suggest_next_steps CC=17 (limit:15)
+  🟡 CC    cmd_execute CC=36 (limit:15)
+  🟡 CC    interactive_mode CC=30 (limit:15)
+  🟡 CC    main CC=21 (limit:15)
+
+REFACTOR[3]:
+  1. split ai_gateway/gateway.py  (god module)
+  2. split executor/runner.py  (god module)
+  3. split 5 high-CC methods  (CC>15)
+
+PIPELINES[120]:
+  [1] Src [get_env]: get_env
+      PURITY: 100% pure
+  [2] Src [get_env_bool]: get_env_bool
+      PURITY: 100% pure
+  [3] Src [get_env_int]: get_env_int
+      PURITY: 100% pure
+  [4] Src [get_env_float]: get_env_float
+      PURITY: 100% pure
+  [5] Src [reload_config]: reload_config → load_dotenv
+      PURITY: 100% pure
+  [6] Src [configure]: configure
+      PURITY: 100% pure
+  [7] Src [add_log]: add_log
+      PURITY: 100% pure
+  [8] Src [dry_run]: dry_run
+      PURITY: 100% pure
+  [9] Src [_generate_python_code]: _generate_python_code
+      PURITY: 100% pure
+  [10] Src [_generate_fastapi_code]: _generate_fastapi_code
+      PURITY: 100% pure
+  [11] Src [_generate_flask_code]: _generate_flask_code
+      PURITY: 100% pure
+  [12] Src [_generate_node_code]: _generate_node_code
+      PURITY: 100% pure
+  [13] Src [_generate_express_code]: _generate_express_code
+      PURITY: 100% pure
+  [14] Src [_generate_dockerfile]: _generate_dockerfile
+      PURITY: 100% pure
+  [15] Src [_simulate_action]: _simulate_action
+      PURITY: 100% pure
+  [16] Src [_estimate_resources]: _estimate_resources
+      PURITY: 100% pure
+  [17] Src [home]: home
+      PURITY: 100% pure
+  [18] Src [list_intents]: list_intents
+      PURITY: 100% pure
+  [19] Src [parse_intent]: parse_intent → parse_dsl
+      PURITY: 100% pure
+  [20] Src [get_intent]: get_intent
+      PURITY: 100% pure
+  [21] Src [delete_intent]: delete_intent
+      PURITY: 100% pure
+  [22] Src [plan]: plan → plan_intent
+      PURITY: 100% pure
+  [23] Src [iterate]: iterate
+      PURITY: 100% pure
+  [24] Src [approve_amen]: approve_amen
+      PURITY: 100% pure
+  [25] Src [execute]: execute → execute_intent
+      PURITY: 100% pure
+  [26] Src [validate_intent]: validate_intent → get_config
+      PURITY: 100% pure
+  [27] Src [get_container_logs]: get_container_logs
+      PURITY: 100% pure
+  [28] Src [get_generated_code]: get_generated_code
+      PURITY: 100% pure
+  [29] Src [health]: health
+      PURITY: 100% pure
+  [30] Src [ai_status]: ai_status → get_gateway
+      PURITY: 100% pure
+  [31] Src [list_models]: list_models → get_gateway
+      PURITY: 100% pure
+  [32] Src [ai_complete]: ai_complete → get_gateway
+      PURITY: 100% pure
+  [33] Src [ai_chat]: ai_chat → get_gateway
+      PURITY: 100% pure
+  [34] Src [ai_suggest]: ai_suggest → create_feedback_loop
+      PURITY: 100% pure
+  [35] Src [ai_apply_suggestions]: ai_apply_suggestions → create_feedback_loop
+      PURITY: 100% pure
+  [36] Src [generate_code]: generate_code → get_gateway
+      PURITY: 100% pure
+  [37] Src [from_dict]: from_dict
+      PURITY: 100% pure
+  [38] Src [from_dict]: from_dict
+      PURITY: 100% pure
+  [39] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [40] Src [from_dict]: from_dict
+      PURITY: 100% pure
+  [41] Src [from_dict]: from_dict
+      PURITY: 100% pure
+  [42] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [43] Src [to_json]: to_json
+      PURITY: 100% pure
+  [44] Src [from_dict]: from_dict
+      PURITY: 100% pure
+  [45] Src [from_json]: from_json
+      PURITY: 100% pure
+  [46] Src [add_iteration]: add_iteration
+      PURITY: 100% pure
+  [47] Src [approve_amen]: approve_amen
+      PURITY: 100% pure
+  [48] Src [__post_init__]: __post_init__ → get_config
+      PURITY: 100% pure
+  [49] Src [get_available_models]: get_available_models
+      PURITY: 100% pure
+  [50] Src [to_dict]: to_dict
+      PURITY: 100% pure
+
+LAYERS:
+  cli/                            CC̄=7.6    ←in:0  →out:13  !! split
+  │ !! main                       763L  2C   24m  CC=36     ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  executor/                       CC̄=4.8    ←in:2  →out:1
+  │ !! runner                     614L  4C   20m  CC=13     ←2
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  ai_gateway/                     CC̄=4.6    ←in:13  →out:1
+  │ !! gateway                    615L  4C   18m  CC=10     ←3
+  │ !! feedback_loop              384L  3C   14m  CC=17     ←2
+  │ __init__                    34L  0C    0m  CC=0.0    ←0
+  │
+  parser/                         CC̄=3.5    ←in:4  →out:0
+  │ dsl_parser                 263L  3C   13m  CC=8      ←2
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  planner/                        CC̄=3.2    ←in:2  →out:0
+  │ simulator                  348L  2C   16m  CC=9      ←2
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=3.1    ←in:0  →out:0
+  │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
+  │ planfile.yaml              474L  0C    0m  CC=0.0    ←0
+  │ Makefile                   219L  0C    0m  CC=0.0    ←0
+  │ !! config                     164L  1C    8m  CC=15     ←4
+  │ run.sh                     158L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              97L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
+  │ project.sh                  59L  0C    0m  CC=0.0    ←0
+  │ pyqual.yaml                 55L  0C    0m  CC=0.0    ←0
+  │ requirements.txt            20L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+  web/                            CC̄=2.8    ←in:0  →out:11  !! split
+  │ app                        459L  6C   21m  CC=6      ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  ir/                             CC̄=1.1    ←in:0  →out:0
+  │ models                     223L  8C   14m  CC=2      ←0
+  │ __init__                     9L  0C    0m  CC=0.0    ←0
+  │
+  examples/                       CC̄=0.0    ←in:0  →out:0
+  │ user-api.intent.yaml        28L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING:
+              ai_gateway         cli         web      config      parser    executor     planner
+  ai_gateway          ──          ←6          ←7           1                                      hub
+         cli           6          ──                       2           3           1           1  !! fan-out
+         web           7                      ──           1           1           1           1  !! fan-out
+      config          ←1          ←2          ←1          ──                      ←1              hub
+      parser                      ←3          ←1                      ──                        
+    executor                      ←1          ←1           1                      ──            
+     planner                      ←1          ←1                                              ──
+  CYCLES: none
+  HUB: config/ (fan-in=5)
+  HUB: ai_gateway/ (fan-in=13)
+  SMELL: cli/ fan-out=13 → split needed
+  SMELL: web/ fan-out=11 → split needed
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

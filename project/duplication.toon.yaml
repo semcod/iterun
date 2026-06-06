@@ -1,0 +1,51 @@
+# redup/duplication | 2 groups | 16f 3891L | 2026-06-06
+
+SUMMARY:
+  files_scanned: 16
+  total_lines:   3891
+  dup_groups:    2
+  dup_fragments: 5
+  saved_lines:   11
+  scan_ms:       3724
+
+HOTSPOTS[3] (files with most duplication):
+  parser/dsl_parser.py  dup=8L  groups=1  frags=2  (0.2%)
+  planner/simulator.py  dup=7L  groups=2  frags=2  (0.2%)
+  executor/runner.py  dup=3L  groups=1  frags=1  (0.1%)
+
+DUPLICATES[2] (ranked by impact):
+  [d1ab1a804f1b435b]   STRU  parse_dsl  L=4 N=3 saved=8 sim=1.00
+      parser/dsl_parser.py:254-257  (parse_dsl)
+      parser/dsl_parser.py:260-263  (parse_dsl_file)
+      planner/simulator.py:345-348  (plan_intent)
+  [f041dec9367328ca]   EXAC  add_log  L=3 N=2 saved=3 sim=1.00
+      executor/runner.py:93-95  (add_log)
+      planner/simulator.py:26-28  (add_log)
+
+REFACTOR[2] (ranked by priority):
+  [1] ○ extract_function   → utils/parse_dsl.py
+      WHY: 3 occurrences of 4-line block across 2 files — saves 8 lines
+      FILES: parser/dsl_parser.py, planner/simulator.py
+  [2] ○ extract_function   → utils/add_log.py
+      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
+      FILES: executor/runner.py, planner/simulator.py
+
+QUICK_WINS[1] (low risk, high savings — do first):
+  [1] extract_function   saved=8L  → utils/parse_dsl.py
+      FILES: dsl_parser.py, simulator.py
+
+DEPENDENCY_RISK[2] (duplicates spanning multiple packages):
+  parse_dsl  packages=2  files=2
+      parser/dsl_parser.py
+      planner/simulator.py
+  add_log  packages=2  files=2
+      executor/runner.py
+      planner/simulator.py
+
+EFFORT_ESTIMATE (total ≈ 0.7h):
+  medium parse_dsl                           saved=8L  ~32min
+  easy   add_log                             saved=3L  ~12min
+
+METRICS-TARGET:
+  dup_groups:  2 → 0
+  saved_lines: 11 lines recoverable

@@ -10,10 +10,21 @@ import json
 from pathlib import Path
 from typing import Optional
 
-# Add parent to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+CONSTANT_5 = 5
+CONSTANT_12 = 12.0
+CONSTANT_15 = 15
+PORT_20 = 20
+CONSTANT_30 = 30
+CONSTANT_60 = 60
+CONSTANT_70 = 70
 
-from ir.models import IntentIR, ExecutionMode
+
+# Add parent to path for imports
+
+if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from ir.models import IntentIR
 from parser.dsl_parser import DSLParser, parse_dsl, parse_dsl_file, ParseError, ValidationError
 from planner.simulator import Planner, plan_intent
 from executor.runner import Executor, execute_intent
@@ -54,7 +65,7 @@ class CLI:
         self.planner = Planner()
     
     def print_header(self, text: str):
-        print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.RESET}")
+        print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*CONSTANT_60}{Colors.RESET}")
         print(f"{Colors.BOLD}{Colors.CYAN}  {text}{Colors.RESET}")
         print(f"{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.RESET}\n")
     
@@ -258,8 +269,8 @@ EXECUTION:
             self.print_warning("Execution cancelled.")
             return False
     
-    def cmd_execute(self, ir: IntentIR = None, workspace: str = None):
-        """Execute approved intent."""
+    def cmd_execute(self, ir: IntentIR = None, workspace: str = None, validate: bool = True, auto_fix: bool = True):
+        """Execute approved intent with validation."""
         ir = ir or self.current_ir
         if not ir:
             self.print_error("No intent loaded.")
@@ -284,11 +295,18 @@ EXECUTION:
         
         self.print_header(f"Executing: {ir.intent.name}")
         
-        result = execute_intent(ir, workspace, skip_amen_check=skip_amen)
+        result = execute_intent(ir, workspace, skip_amen_check=skip_amen, validate=validate, auto_fix=auto_fix)
         
         print(f"\n{Colors.BOLD}Execution Logs:{Colors.RESET}")
         for log in result.logs:
-            status = Colors.GREEN if "success" in log.lower() else Colors.RESET
+            if "✓" in log or "success" in log.lower():
+                status = Colors.GREEN
+            elif "✗" in log or "error" in log.lower() or "ERROR" in log:
+                status = Colors.RED
+            elif "⚠" in log or "warning" in log.lower():
+                status = Colors.YELLOW
+            else:
+                status = Colors.RESET
             print(f"  {status}{log}{Colors.RESET}")
         
         if result.success:
@@ -306,8 +324,50 @@ EXECUTION:
                 print(f"\n{Colors.BOLD}Generated Artifacts:{Colors.RESET}")
                 for name, path in result.artifacts.items():
                     print(f"  {name}: {path}")
+            
+            # Show validation results
+            if result.validation:
+                print(f"\n{Colors.BOLD}Validation:{Colors.RESET}")
+                if result.validation.success:
+                    print(f"  {Colors.GREEN}✓ All endpoints validated{Colors.RESET}")
+                else:
+                    print(f"  {Colors.YELLOW}⚠ Some issues detected{Colors.RESET}")
+                    for check in result.validation.checks:
+                        if check["ok"]:
+                            print(f"    {Colors.GREEN}✓{Colors.RESET} {check['endpoint']}")
+                        else:
+                            print(f"    {Colors.RED}✗{Colors.RESET} {check['endpoint']} - {check.get('error', 'Failed')}")
+            
+            if result.auto_fix_applied:
+                print(f"\n{Colors.CYAN}Auto-fix applied ({result.fix_iterations} iteration(s)){Colors.RESET}")
         else:
             self.print_error(f"Execution failed: {result.error}")
+            
+            # Show validation errors if any
+            if result.validation and result.validation.errors:
+                print(f"\n{Colors.BOLD}Validation Errors:{Colors.RESET}")
+                for error in result.validation.errors:
+                    print(f"  {Colors.RED}✗{Colors.RESET} {error}")
+            
+            # Show suggestions
+            if result.validation and result.validation.suggestions:
+                print(f"\n{Colors.BOLD}Suggestions:{Colors.RESET}")
+                for suggestion in result.validation.suggestions:
+                    print(f"  • {suggestion}")
+            
+            # Show container logs if available
+            if result.container_id:
+                try:
+                    from executor.runner import Executor
+                    executor = Executor()
+                    logs = executor.get_container_logs(result.container_id, tail=20)
+                    if logs:
+                        print(f"\n{Colors.BOLD}Container Logs:{Colors.RESET}")
+                        for line in logs.split('\n')[-10:]:
+                            if line.strip():
+                                print(f"  {line}")
+                except:
+                    pass
         
         return result
     

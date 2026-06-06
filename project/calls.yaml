@@ -1,0 +1,522 @@
+project: /home/tom/github/wronai/amen
+generated_from: code2llm call graph analysis
+stats:
+  total_nodes: 35
+  total_edges: 28
+  modules_count: 8
+nodes:
+  config.get_config:
+    name: get_config
+    module: config
+    line: 143
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 5
+  parser.dsl_parser.parse_dsl_file:
+    name: parse_dsl_file
+    module: parser.dsl_parser
+    line: 260
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  web.app.ai_status:
+    name: ai_status
+    module: web.app
+    line: 303
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  cli.main.CLI.cmd_new:
+    name: cmd_new
+    module: cli.main
+    line: 84
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  cli.main.CLI.cmd_ai_apply:
+    name: cmd_ai_apply
+    module: cli.main
+    line: 541
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 0
+  web.app.validate_intent:
+    name: validate_intent
+    module: web.app
+    line: 218
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 0
+  cli.main.CLI.cmd_ai_chat:
+    name: cmd_ai_chat
+    module: cli.main
+    line: 570
+    cyclomatic_complexity: 12
+    calls_out: 18
+    calls_in: 0
+  web.app.execute:
+    name: execute
+    module: web.app
+    line: 189
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  ai_gateway.gateway.complete:
+    name: complete
+    module: ai_gateway.gateway
+    line: 608
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  cli.main.CLI.cmd_models:
+    name: cmd_models
+    module: cli.main
+    line: 618
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  cli.main.CLI.cmd_load:
+    name: cmd_load
+    module: cli.main
+    line: 119
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  web.app.ai_chat:
+    name: ai_chat
+    module: web.app
+    line: 361
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  web.app.list_models:
+    name: list_models
+    module: web.app
+    line: 325
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  web.app.plan:
+    name: plan
+    module: web.app
+    line: 124
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  cli.main.CLI.cmd_parse:
+    name: cmd_parse
+    module: cli.main
+    line: 135
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  cli.main.CLI.cmd_ai_health:
+    name: cmd_ai_health
+    module: cli.main
+    line: 640
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 0
+  web.app.ai_suggest:
+    name: ai_suggest
+    module: web.app
+    line: 385
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 0
+  executor.runner.Executor.__init__:
+    name: __init__
+    module: executor.runner
+    line: 123
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  planner.simulator.plan_intent:
+    name: plan_intent
+    module: planner.simulator
+    line: 345
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  config.reload_config:
+    name: reload_config
+    module: config
+    line: 151
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  executor.runner.execute_intent:
+    name: execute_intent
+    module: executor.runner
+    line: 605
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  web.app.generate_code:
+    name: generate_code
+    module: web.app
+    line: 435
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  config.load_dotenv:
+    name: load_dotenv
+    module: config
+    line: 19
+    cyclomatic_complexity: 15
+    calls_out: 15
+    calls_in: 1
+  ai_gateway.feedback_loop.FeedbackLoop.__init__:
+    name: __init__
+    module: ai_gateway.feedback_loop
+    line: 85
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 0
+  web.app.ai_apply_suggestions:
+    name: ai_apply_suggestions
+    module: web.app
+    line: 412
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  ai_gateway.gateway.suggest_improvements:
+    name: suggest_improvements
+    module: ai_gateway.gateway
+    line: 613
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  web.app.ai_complete:
+    name: ai_complete
+    module: web.app
+    line: 340
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  ai_gateway.feedback_loop.create_feedback_loop:
+    name: create_feedback_loop
+    module: ai_gateway.feedback_loop
+    line: 376
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
+  cli.main.CLI.cmd_execute:
+    name: cmd_execute
+    module: cli.main
+    line: 272
+    cyclomatic_complexity: 36
+    calls_out: 37
+    calls_in: 0
+  web.app.parse_intent:
+    name: parse_intent
+    module: web.app
+    line: 92
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  parser.dsl_parser.parse_dsl:
+    name: parse_dsl
+    module: parser.dsl_parser
+    line: 254
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  cli.main.CLI.cmd_ai_suggest:
+    name: cmd_ai_suggest
+    module: cli.main
+    line: 488
+    cyclomatic_complexity: 11
+    calls_out: 21
+    calls_in: 0
+  cli.main.CLI.cmd_plan:
+    name: cmd_plan
+    module: cli.main
+    line: 147
+    cyclomatic_complexity: 10
+    calls_out: 24
+    calls_in: 0
+  ai_gateway.gateway.get_gateway:
+    name: get_gateway
+    module: ai_gateway.gateway
+    line: 600
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 12
+  ai_gateway.gateway.GatewayConfig.__post_init__:
+    name: __post_init__
+    module: ai_gateway.gateway
+    line: 235
+    cyclomatic_complexity: 9
+    calls_out: 6
+    calls_in: 0
+edges:
+- caller: config.reload_config
+  callee: config.load_dotenv
+  call_type: resolved
+- caller: web.app.parse_intent
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: web.app.plan
+  callee: planner.simulator.plan_intent
+  call_type: resolved
+- caller: web.app.execute
+  callee: executor.runner.execute_intent
+  call_type: resolved
+- caller: web.app.validate_intent
+  callee: config.get_config
+  call_type: resolved
+- caller: web.app.ai_status
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: web.app.list_models
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: web.app.ai_complete
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: web.app.ai_chat
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: web.app.ai_suggest
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: web.app.ai_apply_suggestions
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: web.app.generate_code
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: ai_gateway.gateway.GatewayConfig.__post_init__
+  callee: config.get_config
+  call_type: resolved
+- caller: ai_gateway.gateway.complete
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: ai_gateway.gateway.suggest_improvements
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: ai_gateway.feedback_loop.FeedbackLoop.__init__
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: cli.main.CLI.cmd_new
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: cli.main.CLI.cmd_load
+  callee: parser.dsl_parser.parse_dsl_file
+  call_type: resolved
+- caller: cli.main.CLI.cmd_parse
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: cli.main.CLI.cmd_plan
+  callee: planner.simulator.plan_intent
+  call_type: resolved
+- caller: cli.main.CLI.cmd_execute
+  callee: executor.runner.execute_intent
+  call_type: resolved
+- caller: cli.main.CLI.cmd_execute
+  callee: config.get_config
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_suggest
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_apply
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_chat
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: cli.main.CLI.cmd_models
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_health
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: executor.runner.Executor.__init__
+  callee: config.get_config
+  call_type: resolved
+modules:
+  ai_gateway.feedback_loop:
+  - ai_gateway.feedback_loop.FeedbackLoop.__init__
+  - ai_gateway.feedback_loop.create_feedback_loop
+  ai_gateway.gateway:
+  - ai_gateway.gateway.GatewayConfig.__post_init__
+  - ai_gateway.gateway.complete
+  - ai_gateway.gateway.get_gateway
+  - ai_gateway.gateway.suggest_improvements
+  cli.main:
+  - cli.main.CLI.cmd_ai_apply
+  - cli.main.CLI.cmd_ai_chat
+  - cli.main.CLI.cmd_ai_health
+  - cli.main.CLI.cmd_ai_suggest
+  - cli.main.CLI.cmd_execute
+  - cli.main.CLI.cmd_load
+  - cli.main.CLI.cmd_models
+  - cli.main.CLI.cmd_new
+  - cli.main.CLI.cmd_parse
+  - cli.main.CLI.cmd_plan
+  config:
+  - config.get_config
+  - config.load_dotenv
+  - config.reload_config
+  executor.runner:
+  - executor.runner.Executor.__init__
+  - executor.runner.execute_intent
+  parser.dsl_parser:
+  - parser.dsl_parser.parse_dsl
+  - parser.dsl_parser.parse_dsl_file
+  planner.simulator:
+  - planner.simulator.plan_intent
+  web.app:
+  - web.app.ai_apply_suggestions
+  - web.app.ai_chat
+  - web.app.ai_complete
+  - web.app.ai_status
+  - web.app.ai_suggest
+  - web.app.execute
+  - web.app.generate_code
+  - web.app.list_models
+  - web.app.parse_intent
+  - web.app.plan
+  - web.app.validate_intent
+entry_points:
+- ai_gateway.feedback_loop.FeedbackLoop.__init__
+- ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt
+- ai_gateway.feedback_loop.FeedbackLoop._extract_action
+- ai_gateway.feedback_loop.FeedbackLoop._parse_action
+- ai_gateway.feedback_loop.FeedbackLoop._parse_suggestions
+- ai_gateway.feedback_loop.FeedbackLoop._process_user_feedback
+- ai_gateway.feedback_loop.FeedbackLoop.analyze
+- ai_gateway.feedback_loop.FeedbackLoop.apply_suggestions
+- ai_gateway.feedback_loop.FeedbackLoop.iterate
+- ai_gateway.feedback_loop.FeedbackLoop.suggest_next_steps
+- ai_gateway.feedback_loop.FeedbackResult.to_dict
+- ai_gateway.feedback_loop.FeedbackSuggestion.to_dict
+- ai_gateway.feedback_loop.analyze_intent
+- ai_gateway.gateway.AIGateway.__init__
+- ai_gateway.gateway.AIGateway._mock_response
+- ai_gateway.gateway.AIGateway._setup_litellm
+- ai_gateway.gateway.AIGateway.acomplete
+- ai_gateway.gateway.AIGateway.complete
+- ai_gateway.gateway.AIGateway.explain_error
+- ai_gateway.gateway.AIGateway.generate_code_snippet
+- ai_gateway.gateway.AIGateway.health_check
+- ai_gateway.gateway.AIGateway.list_models
+- ai_gateway.gateway.AIGateway.suggest_improvements
+- ai_gateway.gateway.GatewayConfig.__post_init__
+- ai_gateway.gateway.GatewayConfig.get_available_models
+- ai_gateway.gateway.GatewayConfig.get_model
+- ai_gateway.gateway.GatewayConfig.to_dict
+- ai_gateway.gateway.ModelConfig.to_dict
+- ai_gateway.gateway.complete
+- ai_gateway.gateway.suggest_improvements
+- cli.main.CLI.__init__
+- cli.main.CLI._show_help
+- cli.main.CLI.cmd_ai_apply
+- cli.main.CLI.cmd_ai_chat
+- cli.main.CLI.cmd_ai_health
+- cli.main.CLI.cmd_ai_suggest
+- cli.main.CLI.cmd_amen
+- cli.main.CLI.cmd_execute
+- cli.main.CLI.cmd_iterate
+- cli.main.CLI.cmd_load
+- cli.main.CLI.cmd_models
+- cli.main.CLI.cmd_new
+- cli.main.CLI.cmd_parse
+- cli.main.CLI.cmd_plan
+- cli.main.CLI.cmd_save
+- cli.main.CLI.cmd_show
+- cli.main.CLI.interactive_mode
+- cli.main.CLI.print_error
+- cli.main.CLI.print_header
+- cli.main.CLI.print_info
+- cli.main.CLI.print_success
+- cli.main.CLI.print_warning
+- cli.main.Colors.disable
+- cli.main.main
+- config.configure
+- config.get_env
+- config.get_env_bool
+- config.get_env_float
+- config.get_env_int
+- config.reload_config
+- executor.runner.ExecutionResult.__init__
+- executor.runner.ExecutionResult.add_log
+- executor.runner.ExecutionResult.to_dict
+- executor.runner.Executor.__init__
+- executor.runner.Executor._add_main_block
+- executor.runner.Executor._attempt_fix
+- executor.runner.Executor._execute_docker
+- executor.runner.Executor._execute_local
+- executor.runner.Executor._find_available_port
+- executor.runner.Executor._restart_container
+- executor.runner.Executor._validate_and_fix
+- executor.runner.Executor._validate_endpoints
+- executor.runner.Executor._write_artifacts
+- executor.runner.Executor.cleanup
+- executor.runner.Executor.execute
+- executor.runner.Executor.get_container_logs
+- executor.runner.ValidationResult.__init__
+- executor.runner.ValidationResult.add_check
+- executor.runner.ValidationResult.to_dict
+- ir.models.Action.from_dict
+- ir.models.Action.to_dict
+- ir.models.Environment.from_dict
+- ir.models.Environment.to_dict
+- ir.models.Implementation.from_dict
+- ir.models.Implementation.to_dict
+- ir.models.Intent.from_dict
+- ir.models.Intent.to_dict
+- ir.models.IntentIR.add_iteration
+- ir.models.IntentIR.approve_amen
+- ir.models.IntentIR.from_dict
+- ir.models.IntentIR.from_json
+- ir.models.IntentIR.to_dict
+- ir.models.IntentIR.to_json
+- parser.dsl_parser.DSLParser.__init__
+- parser.dsl_parser.DSLParser._parse_action
+- parser.dsl_parser.DSLParser._parse_environment
+- parser.dsl_parser.DSLParser._parse_execution
+- parser.dsl_parser.DSLParser._parse_implementation
+- parser.dsl_parser.DSLParser._parse_intent
+- parser.dsl_parser.DSLParser._validate
+- parser.dsl_parser.DSLParser.parse
+- parser.dsl_parser.DSLParser.parse_file
+- parser.dsl_parser.ParseError.__init__
+- parser.dsl_parser.ValidationError.__init__
+- planner.simulator.DryRunResult.__init__
+- planner.simulator.DryRunResult.add_log
+- planner.simulator.DryRunResult.to_dict
+- planner.simulator.Planner.__init__
+- planner.simulator.Planner._estimate_resources
+- planner.simulator.Planner._generate_basic_node_code
+- planner.simulator.Planner._generate_basic_python_code
+- planner.simulator.Planner._generate_dockerfile
+- planner.simulator.Planner._generate_express_code
+- planner.simulator.Planner._generate_fastapi_code
+- planner.simulator.Planner._generate_flask_code
+- planner.simulator.Planner._generate_node_code
+- planner.simulator.Planner._generate_python_code
+- planner.simulator.Planner._simulate_action
+- planner.simulator.Planner.dry_run
+- web.app.ai_apply_suggestions
+- web.app.ai_chat
+- web.app.ai_complete
+- web.app.ai_status
+- web.app.ai_suggest
+- web.app.approve_amen
+- web.app.create_app
+- web.app.delete_intent
+- web.app.execute
+- web.app.generate_code
+- web.app.get_container_logs
+- web.app.get_generated_code
+- web.app.get_intent
+- web.app.health
+- web.app.home
+- web.app.iterate
+- web.app.list_intents
+- web.app.list_models
+- web.app.parse_intent
+- web.app.plan
+- web.app.validate_intent

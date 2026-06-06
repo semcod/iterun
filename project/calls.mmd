@@ -1,0 +1,81 @@
+flowchart LR
+%% generated in 0.00s
+    subgraph ai_gateway__feedback_loop
+        ai_gateway__feedback_loop__FeedbackLoop____init__["__init__"]
+        ai_gateway__feedback_loop__create_feedback_loop["create_feedback_loop"]
+    end
+    subgraph ai_gateway__gateway
+        ai_gateway__gateway__complete["complete"]
+        ai_gateway__gateway__suggest_improvements["suggest_improvements"]
+        ai_gateway__gateway__get_gateway["get_gateway"]
+        ai_gateway__gateway__GatewayConfig____post_init__["__post_init__"]
+    end
+    subgraph cli__main
+        cli__main__CLI__cmd_new["cmd_new"]
+        cli__main__CLI__cmd_ai_apply["cmd_ai_apply"]
+        cli__main__CLI__cmd_ai_chat["cmd_ai_chat"]
+        cli__main__CLI__cmd_models["cmd_models"]
+        cli__main__CLI__cmd_load["cmd_load"]
+        cli__main__CLI__cmd_parse["cmd_parse"]
+        cli__main__CLI__cmd_ai_health["cmd_ai_health"]
+        cli__main__CLI__cmd_execute["cmd_execute"]
+        cli__main__CLI__cmd_ai_suggest["cmd_ai_suggest"]
+        cli__main__CLI__cmd_plan["cmd_plan"]
+    end
+    subgraph config
+        config__get_config["get_config"]
+        config__reload_config["reload_config"]
+        config__load_dotenv["load_dotenv"]
+    end
+    subgraph executor__runner
+        executor__runner__Executor____init__["__init__"]
+        executor__runner__execute_intent["execute_intent"]
+    end
+    subgraph parser__dsl_parser
+        parser__dsl_parser__parse_dsl_file["parse_dsl_file"]
+        parser__dsl_parser__parse_dsl["parse_dsl"]
+    end
+    subgraph planner__simulator
+        planner__simulator__plan_intent["plan_intent"]
+    end
+    subgraph web__app
+        web__app__ai_status["ai_status"]
+        web__app__validate_intent["validate_intent"]
+        web__app__execute["execute"]
+        web__app__ai_chat["ai_chat"]
+        web__app__list_models["list_models"]
+        web__app__plan["plan"]
+        web__app__ai_suggest["ai_suggest"]
+        web__app__generate_code["generate_code"]
+        web__app__ai_apply_suggestions["ai_apply_suggestions"]
+        web__app__ai_complete["ai_complete"]
+        web__app__parse_intent["parse_intent"]
+    end
+    config__reload_config --> config__load_dotenv
+    web__app__parse_intent --> parser__dsl_parser__parse_dsl
+    web__app__plan --> planner__simulator__plan_intent
+    web__app__execute --> executor__runner__execute_intent
+    web__app__validate_intent --> config__get_config
+    web__app__ai_status --> ai_gateway__gateway__get_gateway
+    web__app__list_models --> ai_gateway__gateway__get_gateway
+    web__app__ai_complete --> ai_gateway__gateway__get_gateway
+    web__app__ai_chat --> ai_gateway__gateway__get_gateway
+    web__app__ai_suggest --> ai_gateway__feedback_loop__create_feedback_loop
+    web__app__ai_apply_suggestions --> ai_gateway__feedback_loop__create_feedback_loop
+    web__app__generate_code --> ai_gateway__gateway__get_gateway
+    ai_gateway__gateway__GatewayConfig____post_init__ --> config__get_config
+    ai_gateway__gateway__complete --> ai_gateway__gateway__get_gateway
+    ai_gateway__gateway__suggest_improvements --> ai_gateway__gateway__get_gateway
+    ai_gateway__feedback_loop__FeedbackLoop____init__ --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_new --> parser__dsl_parser__parse_dsl
+    cli__main__CLI__cmd_load --> parser__dsl_parser__parse_dsl_file
+    cli__main__CLI__cmd_parse --> parser__dsl_parser__parse_dsl
+    cli__main__CLI__cmd_plan --> planner__simulator__plan_intent
+    cli__main__CLI__cmd_execute --> executor__runner__execute_intent
+    cli__main__CLI__cmd_execute --> config__get_config
+    cli__main__CLI__cmd_ai_suggest --> ai_gateway__feedback_loop__create_feedback_loop
+    cli__main__CLI__cmd_ai_apply --> ai_gateway__feedback_loop__create_feedback_loop
+    cli__main__CLI__cmd_ai_chat --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_models --> ai_gateway__gateway__get_gateway
+    cli__main__CLI__cmd_ai_health --> ai_gateway__gateway__get_gateway
+    executor__runner__Executor____init__ --> config__get_config

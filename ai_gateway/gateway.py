@@ -11,6 +11,22 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
+MAX_3 = 3.0
+MAX_3 = 3.8
+MAX_6 = 6.7
+MAX_7 = 7.0
+MAX_8 = 8.0
+MAX_9 = 9.0
+MAX_12 = 12.0
+MAX_14 = 14.0
+CONSTANT_120 = 120
+CONSTANT_4096 = 4096
+MAX_8192 = 8192
+CONSTANT_16384 = 16384
+CONSTANT_32768 = 32768
+CONSTANT_128000 = 128000
+
+
 try:
     import litellm
     from litellm import completion, acompletion
@@ -19,7 +35,9 @@ except ImportError:
     LITELLM_AVAILABLE = False
 
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
+
+if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from ir.models import IntentIR
 

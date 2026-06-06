@@ -9,7 +9,9 @@ from pathlib import Path
 from httpx import AsyncClient, ASGITransport
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from web.app import app
 
@@ -405,7 +407,7 @@ IMPLEMENTATION:
     
     @pytest.mark.anyio
     async def test_execute_without_amen(self, client):
-        """Test that execution fails without AMEN approval."""
+        """Test that execution auto-approves AMEN when skipped."""
         dsl_content = """
 INTENT:
   name: no-amen-test
@@ -423,10 +425,11 @@ IMPLEMENTATION:
         )
         intent_id = create_response.json()["id"]
         
-        # Try to execute without AMEN
+        # Execute without explicit AMEN - should auto-approve
         response = await client.post(f"/api/intents/{intent_id}/execute")
-        assert response.status_code == 400
-        assert "approved" in response.json()["detail"].lower()
+        # Should return 200 with auto-approval (execution may fail without Docker)
+        assert response.status_code == 200
+        assert "logs" in response.json()
 
 
 class TestGeneratedCodeEndpoint:

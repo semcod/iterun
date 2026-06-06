@@ -5,6 +5,19 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+
+## AI Cost Tracking
+
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-3.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+
+- 🤖 **LLM usage:** $0.3304 (4 commits)
+- 👤 **Human dev:** ~$300 (3.0h @ $100/h, 30min dedup)
+
+Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+
+---
+
 ## Overview
 
 INTENT-ITERATIVE is a system that allows you to:
@@ -57,8 +70,8 @@ INTENT-ITERATIVE is a system that allows you to:
 
 ```bash
 # Clone repository
-git clone https://github.com/softreck/intent-iterative.git
-cd intent-iterative
+git clone https://github.com/softreck/iterun.git
+cd iterun
 
 # Full setup (recommended)
 make setup
@@ -327,9 +340,57 @@ intent-iterative/
 3. **Plan** → Run dry-run simulation, review generated code
 4. **Get AI Suggestions** → Analyze with local LLM
 5. **Iterate** → Make changes, re-plan until satisfied
-6. **AMEN** → Explicitly approve for execution
-7. **Execute** → Run with real side effects (Docker build, etc.)
+6. **Execute** → Run with auto-validation and auto-fix
+7. **Validate** → Automatic health checks on all endpoints
+
+## Validation & Auto-Fix
+
+After container deployment, the system automatically:
+
+1. **Waits** for container startup (configurable `STARTUP_WAIT`)
+2. **Validates** all exposed endpoints with HTTP requests
+3. **Detects issues** like connection refused, timeouts, HTTP errors
+4. **Auto-fixes** common problems:
+   - Missing `__main__` block
+   - Wrong port configuration
+   - Missing dependencies
+5. **Restarts** container with fixes
+6. **Re-validates** until success or max iterations reached
+
+### Configuration
+
+```bash
+# In .env
+VALIDATE_AFTER_EXECUTE=true
+AUTO_FIX_ENABLED=true
+MAX_FIX_ITERATIONS=3
+STARTUP_WAIT=2
+VALIDATION_TIMEOUT=10
+```
+
+### Example Output
+
+```
+Execution Logs:
+  [12:38:55] Container started: 8f35e0a2fb27
+  [12:38:55] Waiting 2s for container startup...
+  [12:38:57] ✓ http://localhost:8002 → 200
+  [12:38:57] ✓ http://localhost:8002/ping → 200
+  [12:38:57] ✓ http://localhost:8002/health → 200
+  [12:38:57] ✓ All endpoints validated successfully
+✓ Execution completed in 2.56s
+
+Validation:
+  ✓ All endpoints validated
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/intents/{id}/validate` | Validate running container |
+| `GET` | `/api/containers/{id}/logs` | Get container logs |
 
 ## License
 
-Apache 2 License - see [LICENSE](LICENSE) file.
+Licensed under Apache-2.0.

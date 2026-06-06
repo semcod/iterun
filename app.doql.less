@@ -1,0 +1,230 @@
+// LESS format — define @variables here as needed
+
+app {
+  name: intent-iterative;
+  version: 0.1.0;
+}
+
+dependencies {
+  runtime: "pyyaml>=6.0, pydantic>=2.0, fastapi>=0.109.0, uvicorn>=0.27.0, jinja2>=3.1.0";
+  dev: "pytest>=8.0.0, pytest-asyncio>=0.23.0, httpx>=0.26.0, anyio>=4.0.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+}
+
+interface[type="api"] {
+  type: rest;
+  framework: fastapi;
+}
+
+interface[type="cli"] {
+  framework: argparse;
+}
+interface[type="cli"] page[name="intent-cli"] {
+
+}
+
+workflow[name="install"] {
+  trigger: manual;
+  step-1: run cmd=$(PIP) install -r requirements.txt;
+}
+
+workflow[name="install-dev"] {
+  trigger: manual;
+  step-1: run cmd=$(PIP) install pytest pytest-asyncio httpx anyio;
+}
+
+workflow[name="install-ai"] {
+  trigger: manual;
+  step-1: run cmd=$(PIP) install litellm;
+}
+
+workflow[name="setup"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(GREEN)✓ Setup complete$(RESET)";
+}
+
+workflow[name="env"] {
+  trigger: manual;
+  step-1: run cmd=if [ ! -f .env ]; then \;
+  step-2: run cmd=cp .env.example .env; \;
+  step-3: run cmd=echo "$(GREEN)✓ Created .env from .env.example$(RESET)"; \;
+  step-4: run cmd=else \;
+  step-5: run cmd=echo "$(YELLOW)⚠ .env already exists$(RESET)"; \;
+  step-6: run cmd=fi;
+}
+
+workflow[name="run"] {
+  trigger: manual;
+  step-1: depend target=web;
+}
+
+workflow[name="web"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Starting web server on http://$(HOST):$(PORT)$(RESET)";
+  step-2: run cmd=$(PYTHON) -m web.app;
+}
+
+workflow[name="shell"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Starting interactive shell$(RESET)";
+  step-2: run cmd=$(PYTHON) -m cli.main;
+}
+
+workflow[name="plan"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m cli.main plan examples/user-api.intent.yaml;
+}
+
+workflow[name="execute"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m cli.main execute examples/user-api.intent.yaml;
+}
+
+workflow[name="run-intent"] {
+  trigger: manual;
+  step-1: run cmd=if [ -z "$(FILE)" ]; then \;
+  step-2: run cmd=echo "$(RED)ERROR: FILE not specified$(RESET)"; \;
+  step-3: run cmd=echo "Usage: make run-intent FILE=path/to/intent.yaml"; \;
+  step-4: run cmd=exit 1; \;
+  step-5: run cmd=fi;
+  step-6: run cmd=$(PYTHON) -m cli.main execute $(FILE);
+}
+
+workflow[name="test"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/ -v;
+}
+
+workflow[name="test-shell"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/e2e/test_shell.py -v;
+}
+
+workflow[name="test-web"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/e2e/test_web.py -v;
+}
+
+workflow[name="test-ai"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/e2e/test_ai_gateway.py -v;
+}
+
+workflow[name="test-cov"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/ -v --cov=. --cov-report=html --cov-report=term;
+}
+
+workflow[name="ollama-start"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Starting Ollama server...$(RESET)";
+  step-2: run cmd=ollama serve &;
+  step-3: run cmd=sleep 2;
+  step-4: run cmd=echo "$(GREEN)✓ Ollama server started$(RESET)";
+}
+
+workflow[name="ollama-pull"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Pulling model: $(DEFAULT_MODEL)$(RESET)";
+  step-2: run cmd=ollama pull $(DEFAULT_MODEL);
+  step-3: run cmd=echo "$(GREEN)✓ Model $(DEFAULT_MODEL) ready$(RESET)";
+}
+
+workflow[name="ollama-models"] {
+  trigger: manual;
+  step-1: run cmd=echo "";
+  step-2: run cmd=echo "$(CYAN)Recommended Ollama models (≤12B):$(RESET)";
+  step-3: run cmd=echo "  $(GREEN)llama3.2$(RESET)       - 3B  - Default, fast";
+  step-4: run cmd=echo "  llama3.2:1b    - 1B  - Ultra lightweight";
+  step-5: run cmd=echo "  llama3.1:8b    - 8B  - Balanced";
+  step-6: run cmd=echo "  mistral        - 7B  - Fast inference";
+  step-7: run cmd=echo "  mistral-nemo   - 12B - Best quality";
+  step-8: run cmd=echo "  gemma2         - 9B  - Google Gemma 2";
+  step-9: run cmd=echo "  phi3           - 3.8B - Microsoft Phi-3";
+  step-10: run cmd=echo "  qwen2.5        - 7B  - Alibaba Qwen";
+  step-11: run cmd=echo "  codellama      - 7B  - Code generation";
+  step-12: run cmd=echo "";
+  step-13: run cmd=echo "$(YELLOW)Install:$(RESET) ollama pull <model>";
+  step-14: run cmd=echo "";
+}
+
+workflow[name="ollama-status"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Checking Ollama status...$(RESET)";
+  step-2: run cmd=curl -s http://localhost:11434/api/tags > /dev/null 2>&1 && \;
+  step-3: run cmd=echo "$(GREEN)✓ Ollama is running$(RESET)" || \;
+  step-4: run cmd=echo "$(RED)✗ Ollama is not running$(RESET)";
+}
+
+workflow[name="lint"] {
+  trigger: manual;
+  step-1: run cmd=which ruff > /dev/null 2>&1 && ruff check . || echo "$(YELLOW)ruff not installed$(RESET)";
+}
+
+workflow[name="format"] {
+  trigger: manual;
+  step-1: run cmd=which ruff > /dev/null 2>&1 && ruff format . || echo "$(YELLOW)ruff not installed$(RESET)";
+}
+
+workflow[name="clean"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Cleaning...$(RESET)";
+  step-2: run cmd=rm -rf __pycache__ */__pycache__ */*/__pycache__;
+  step-3: run cmd=rm -rf .pytest_cache */.pytest_cache;
+  step-4: run cmd=rm -rf *.egg-info .eggs;
+  step-5: run cmd=rm -rf htmlcov .coverage;
+  step-6: run cmd=rm -rf /tmp/intent-*;
+  step-7: run cmd=echo "$(GREEN)✓ Cleaned$(RESET)";
+}
+
+workflow[name="docker-clean"] {
+  trigger: manual;
+  step-1: run cmd=echo "$(CYAN)Cleaning Docker resources...$(RESET)";
+  step-2: run cmd=-docker ps -a --filter "name=$(CONTAINER_PREFIX)-" -q | xargs -r docker rm -f;
+  step-3: run cmd=-docker images --filter "reference=$(CONTAINER_PREFIX)-*" -q | xargs -r docker rmi -f;
+  step-4: run cmd=echo "$(GREEN)✓ Docker cleaned$(RESET)";
+}
+
+workflow[name="docker-ps"] {
+  trigger: manual;
+  step-1: run cmd=docker ps --filter "name=$(CONTAINER_PREFIX)-";
+}
+
+workflow[name="docker-stop"] {
+  trigger: manual;
+  step-1: run cmd=docker ps --filter "name=$(CONTAINER_PREFIX)-" -q | xargs -r docker stop;
+  step-2: run cmd=echo "$(GREEN)✓ Containers stopped$(RESET)";
+}
+
+workflow[name="dev"] {
+  trigger: manual;
+  step-1: run cmd=uvicorn web.app:app --reload --host $(HOST) --port $(PORT);
+}
+
+workflow[name="new-intent"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m cli.main new;
+}
+
+workflow[name="show-config"] {
+  trigger: manual;
+  step-1: run cmd=echo "";
+  step-2: run cmd=echo "$(CYAN)Current Configuration:$(RESET)";
+  step-3: run cmd=echo "  HOST=$(HOST)";
+  step-4: run cmd=echo "  PORT=$(PORT)";
+  step-5: run cmd=echo "  DEFAULT_MODEL=$(DEFAULT_MODEL)";
+  step-6: run cmd=echo "  CONTAINER_PORT=$(CONTAINER_PORT)";
+  step-7: run cmd=echo "  CONTAINER_PREFIX=$(CONTAINER_PREFIX)";
+  step-8: run cmd=echo "  OLLAMA_BASE_URL=$(OLLAMA_BASE_URL)";
+  step-9: run cmd=echo "  SKIP_AMEN_CONFIRMATION=$(SKIP_AMEN_CONFIRMATION)";
+  step-10: run cmd=echo "";
+}
+
+deploy {
+  target: makefile;
+}
+
+environment[name="local"] {
+  runtime: docker-compose;
+  env_file: .env;
+  python_version: >=3.11;
+}

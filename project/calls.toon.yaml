@@ -1,0 +1,120 @@
+# code2llm call graph | /home/tom/github/wronai/amen
+# generated in 0.02s
+# nodes: 35 | edges: 28 | modules: 8
+# CC̄=4.2
+
+HUBS[20]:
+  cli.main.CLI.cmd_execute
+    CC=36  in:0  out:37  total:37
+  cli.main.CLI.cmd_plan
+    CC=10  in:0  out:24  total:24
+  cli.main.CLI.cmd_ai_suggest
+    CC=11  in:0  out:21  total:21
+  cli.main.CLI.cmd_ai_chat
+    CC=12  in:0  out:18  total:18
+  config.load_dotenv
+    CC=15  in:1  out:15  total:16
+  ai_gateway.gateway.get_gateway
+    CC=3  in:12  out:1  total:13
+  cli.main.CLI.cmd_ai_health
+    CC=4  in:0  out:12  total:12
+  cli.main.CLI.cmd_ai_apply
+    CC=8  in:0  out:10  total:10
+  web.app.validate_intent
+    CC=6  in:0  out:9  total:9
+  cli.main.CLI.cmd_models
+    CC=3  in:0  out:9  total:9
+  cli.main.CLI.cmd_load
+    CC=3  in:0  out:8  total:8
+  web.app.ai_suggest
+    CC=6  in:0  out:8  total:8
+  cli.main.CLI.cmd_new
+    CC=4  in:0  out:7  total:7
+  web.app.ai_chat
+    CC=4  in:0  out:7  total:7
+  web.app.ai_apply_suggestions
+    CC=4  in:0  out:7  total:7
+  config.get_config
+    CC=2  in:5  out:1  total:6
+  web.app.generate_code
+    CC=3  in:0  out:6  total:6
+  web.app.ai_complete
+    CC=3  in:0  out:6  total:6
+  ai_gateway.gateway.GatewayConfig.__post_init__
+    CC=9  in:0  out:6  total:6
+  web.app.ai_status
+    CC=2  in:0  out:5  total:5
+
+MODULES:
+  ai_gateway.feedback_loop  [2 funcs]
+    __init__  CC=3  out:1
+    create_feedback_loop  CC=1  out:1
+  ai_gateway.gateway  [4 funcs]
+    __post_init__  CC=9  out:6
+    complete  CC=1  out:2
+    get_gateway  CC=3  out:1
+    suggest_improvements  CC=1  out:2
+  cli.main  [10 funcs]
+    cmd_ai_apply  CC=8  out:10
+    cmd_ai_chat  CC=12  out:18
+    cmd_ai_health  CC=4  out:12
+    cmd_ai_suggest  CC=11  out:21
+    cmd_execute  CC=36  out:37
+    cmd_load  CC=3  out:8
+    cmd_models  CC=3  out:9
+    cmd_new  CC=4  out:7
+    cmd_parse  CC=2  out:4
+    cmd_plan  CC=10  out:24
+  config  [3 funcs]
+    get_config  CC=2  out:1
+    load_dotenv  CC=15  out:15
+    reload_config  CC=1  out:2
+  executor.runner  [2 funcs]
+    __init__  CC=3  out:5
+    execute_intent  CC=1  out:2
+  parser.dsl_parser  [2 funcs]
+    parse_dsl  CC=1  out:2
+    parse_dsl_file  CC=1  out:2
+  planner.simulator  [1 funcs]
+    plan_intent  CC=1  out:2
+  web.app  [11 funcs]
+    ai_apply_suggestions  CC=4  out:7
+    ai_chat  CC=4  out:7
+    ai_complete  CC=3  out:6
+    ai_status  CC=2  out:5
+    ai_suggest  CC=6  out:8
+    execute  CC=5  out:5
+    generate_code  CC=3  out:6
+    list_models  CC=2  out:4
+    parse_intent  CC=2  out:5
+    plan  CC=2  out:3
+
+EDGES:
+  config.reload_config → config.load_dotenv
+  web.app.parse_intent → parser.dsl_parser.parse_dsl
+  web.app.plan → planner.simulator.plan_intent
+  web.app.execute → executor.runner.execute_intent
+  web.app.validate_intent → config.get_config
+  web.app.ai_status → ai_gateway.gateway.get_gateway
+  web.app.list_models → ai_gateway.gateway.get_gateway
+  web.app.ai_complete → ai_gateway.gateway.get_gateway
+  web.app.ai_chat → ai_gateway.gateway.get_gateway
+  web.app.ai_suggest → ai_gateway.feedback_loop.create_feedback_loop
+  web.app.ai_apply_suggestions → ai_gateway.feedback_loop.create_feedback_loop
+  web.app.generate_code → ai_gateway.gateway.get_gateway
+  ai_gateway.gateway.GatewayConfig.__post_init__ → config.get_config
+  ai_gateway.gateway.complete → ai_gateway.gateway.get_gateway
+  ai_gateway.gateway.suggest_improvements → ai_gateway.gateway.get_gateway
+  ai_gateway.feedback_loop.FeedbackLoop.__init__ → ai_gateway.gateway.get_gateway
+  cli.main.CLI.cmd_new → parser.dsl_parser.parse_dsl
+  cli.main.CLI.cmd_load → parser.dsl_parser.parse_dsl_file
+  cli.main.CLI.cmd_parse → parser.dsl_parser.parse_dsl
+  cli.main.CLI.cmd_plan → planner.simulator.plan_intent
+  cli.main.CLI.cmd_execute → executor.runner.execute_intent
+  cli.main.CLI.cmd_execute → config.get_config
+  cli.main.CLI.cmd_ai_suggest → ai_gateway.feedback_loop.create_feedback_loop
+  cli.main.CLI.cmd_ai_apply → ai_gateway.feedback_loop.create_feedback_loop
+  cli.main.CLI.cmd_ai_chat → ai_gateway.gateway.get_gateway
+  cli.main.CLI.cmd_models → ai_gateway.gateway.get_gateway
+  cli.main.CLI.cmd_ai_health → ai_gateway.gateway.get_gateway
+  executor.runner.Executor.__init__ → config.get_config
