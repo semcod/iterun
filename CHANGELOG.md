@@ -52,6 +52,28 @@
 
 ### Docs
 - Update .testql-auto/summary.md
+
+### Test
+- Update tests/e2e/test_contract_verify.py
+- Update tests/e2e/test_pipeline_repair.py
+
+### Other
+- Update .code2llm_cache/Makefile_1780755568355196027_7781.pkl
+- Update .code2llm_cache/_common_1780755175625802172_3024.pkl
+- Update .code2llm_cache/_verify_1780755175839804589_4982.pkl
+- Update .code2llm_cache/_verify_1780755565608165512_5142.pkl
+- Update .code2llm_cache/contract_verify_1780755565163160569_7557.pkl
+- Update .code2llm_cache/expectations_1780755177469822993_3539.pkl
+- Update .code2llm_cache/pipeline_1780755183617892395_8828.pkl
+- Update .code2llm_cache/planfile_1780755557914080033_28951.pkl
+- Update .code2llm_cache/run_1780755182301877541_326.pkl
+- Update .code2llm_cache/run_1780755182368878297_1463.pkl
+- ... and 17 more files
+
+## [0.1.8] - 2026-06-06
+
+### Docs
+- Update .testql-auto/summary.md
 - Update CHANGELOG.md
 - Update README.md
 - Update SUMD.md
