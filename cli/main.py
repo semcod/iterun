@@ -746,11 +746,12 @@ Examples:
   %(prog)s execute myintent.yaml     # Plan, approve and execute
   %(prog)s generate "REST API" -o out/  # LLM → iterun.yaml
   %(prog)s schema                    # JSON Schema for intent DSL
+  %(prog)s registry -o generated/    # Refresh service/artifact registry
         """
     )
     
     parser.add_argument('command', nargs='?', default='shell',
-                        choices=['shell', 'new', 'plan', 'execute', 'parse', 'generate', 'validate', 'schema'],
+                        choices=['shell', 'new', 'plan', 'execute', 'parse', 'generate', 'validate', 'schema', 'registry'],
                         help='Command to run')
     parser.add_argument('file', nargs='?', help='DSL file path or intent name')
     parser.add_argument('--no-color', action='store_true', help='Disable colored output')
@@ -766,9 +767,18 @@ Examples:
     parser.add_argument('--execute', action='store_true', help='Execute after generate (generate command)')
     parser.add_argument('--verify', action='store_true', help='TestQL contract verify after execute; retry on failure')
     parser.add_argument('--max-verify-iterations', type=int, default=3, help='Regenerate+redeploy attempts when --verify fails')
+    parser.add_argument('--runtime', choices=['docker', 'pactown'], default=None,
+                        help='Execution runtime (default: ITERUN_RUNTIME or docker)')
     
     args = parser.parse_args()
-    
+
+    if args.runtime:
+        import os
+        from config import reload_config
+
+        os.environ["ITERUN_RUNTIME"] = args.runtime
+        reload_config()
+
     cli = CLI(no_color=args.no_color, quiet=args.quiet)
     
     if args.command == 'shell':
@@ -808,7 +818,19 @@ Examples:
             sys.exit(1)
         ir = cli.cmd_load(args.file)
         if ir:
-            cli.cmd_plan(ir)
+            ws = Path(args.workspace) if args.workspace else None
+            skip_plan = (
+                args.quiet
+                and ws
+                and (
+                    (ws / "docker-compose.yaml").is_file()
+                    or (ws / "Dockerfile").is_file()
+                )
+            )
+            if not skip_plan:
+                plan_result = cli.cmd_plan(ir)
+                if args.output_dir and plan_result:
+                    write_plan_artifacts(ir, plan_result, args.output_dir)
             cli.cmd_iterun(ir, force=True)
             result = cli.cmd_execute(ir, args.workspace)
             if args.quiet and result and result.success and not args.json:
@@ -900,6 +922,10 @@ Examples:
                     cli.print_success(f"Contract verified at {url} (round {n})")
             else:
                 cli.print_error(result.error or "Generation failed")
+                if result.execution and not args.verify:
+                    cli.print_info(
+                        "Tip: add --verify to regenerate iterun.yaml with LLM when contracts fail"
+                    )
                 if result.generate and result.generate.attempts:
                     last = result.generate.attempts[-1]
                     for err in last.errors[:5]:
@@ -929,6 +955,39 @@ Examples:
             else:
                 cli.print_error(gen_result.error or "Generation failed")
                 sys.exit(1)
+
+    elif args.command == 'registry':
+        from integrations.bridges.pipeline import refresh_registry
+        from registry.catalog import discover_glob
+
+        if args.file == "list":
+            pattern = args.workspace or "examples/*/generated"
+            items = discover_glob(pattern)
+            if args.json:
+                print(json.dumps({"registries": items}, indent=2))
+            else:
+                for item in items:
+                    print(
+                        f"{item['name']:20} {item['phase']:10} "
+                        f"svc={item['services']} art={item['artifacts']} "
+                        f"{item['workspace']}"
+                    )
+        else:
+            workspace = args.output_dir or args.workspace or args.file or "generated"
+            result = refresh_registry(workspace, include_docker=not args.quiet)
+            if args.json:
+                print(json.dumps(result, indent=2))
+            elif args.quiet:
+                print(f"OK registry -> {result['written']['registry']}")
+            else:
+                m = result["manifest"]
+                cli.print_success(f"Registry: {result['written']['registry']}")
+                cli.print_info(
+                    f"{m['metadata']['name']} — "
+                    f"{len(m['spec']['services'])} services, "
+                    f"{len(m['spec']['artifacts'])} artifacts, "
+                    f"phase={m['status']['phase']}"
+                )
 
 
 if __name__ == "__main__":

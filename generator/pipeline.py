@@ -10,7 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from config import PACKAGE_FILENAME
-from executor.runner import Executor, execute_intent, stop_containers_for_intent
+from executor.runner import Executor, execute_intent
+from integrations.runtime_stop import stop_runtime_for_intent
 from generator.contract_verify import verify_contract
 from generator.intract_manifest import write_intract_manifest
 from generator.intent_generator import GenerateResult, IntentGenerator
@@ -74,6 +75,12 @@ def _write_plan_artifacts(
 
     write_intract_manifest(yaml_path, workspace / "intract.yaml", prompt=prompt)
     write_testql_scenario(yaml_path, workspace / "service.testql.toon.yaml")
+    try:
+        from integrations.markpact_pack import pack_workspace
+
+        pack_workspace(workspace, ir, pack_services=bool(ir.stack and ir.stack.services))
+    except Exception:
+        pass
 
 
 def _expectations_summary(workspace: Path) -> str | None:
@@ -129,6 +136,12 @@ def _finalize(
         logs = _container_logs(workspace, container_id)
         write_session_artifacts(workspace, out, container_logs=logs)
         out.workspace = str(workspace)
+        try:
+            from integrations.bridges.pipeline import refresh_registry_from_pipeline
+
+            refresh_registry_from_pipeline(workspace, out)
+        except Exception:
+            pass
     return out
 
 
@@ -188,7 +201,7 @@ def run_pipeline(
             return _finalize(out, workspace)
 
         if verify_round > 1:
-            stop_containers_for_intent(ir.intent.name)
+            stop_runtime_for_intent(ir.intent.name, workspace)
 
         ir.approve_iterun()
         exec_result = execute_intent(
@@ -217,9 +230,14 @@ def run_pipeline(
             continue
 
         if not verify:
-            out.success = exec_result.success
-            if not exec_result.success:
-                out.error = exec_result.error
+            validation = exec_result.validation
+            if validation and not validation.success:
+                out.success = False
+                out.error = "; ".join(validation.errors[:5]) or "Endpoint validation failed"
+            else:
+                out.success = exec_result.success
+                if not exec_result.success:
+                    out.error = exec_result.error
             return _finalize(out, workspace, container_id=last_container_id)
 
         if not workspace or not yaml_path:

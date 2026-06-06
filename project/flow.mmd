@@ -1,45 +1,51 @@
 flowchart TD
-%% generated in 0.00s
+%% generated in 0.01s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph CLI
         cli____getattr__["__getattr__"]
-        cli__main__write_plan_artifacts["write_plan_artifacts"]
-        cli__main__Colors__disable["disable"]
-        cli__main__CLI__print_header["print_header"]
-        cli__main__CLI__print_success["print_success"]
-        cli__main__CLI__print_error["print_error"]
-        cli__main__CLI__print_warning["print_warning"]
-        cli__main__CLI__print_info["print_info"]
-        cli__main__CLI__cmd_new["cmd_new"]
-        cli__main__CLI__cmd_load["cmd_load"]
-        cli__main__CLI__cmd_parse["cmd_parse"]
-        cli__main__CLI__cmd_plan["cmd_plan"]
-        cli__main__CLI__cmd_iterate["cmd_iterate"]
-        cli__main__CLI__cmd_iterun["cmd_iterun"]
-        cli__main__CLI__cmd_execute["cmd_execute"]
-        ...["+17 more"]
+        sdk__client__IterunClient__health["health"]
+        sdk__client__IterunClient__interfaces["interfaces"]
+        sdk__client__IterunClient__schema["schema"]
+        sdk__client__IterunClient__validate["validate"]
+        sdk__client__IterunClient__generate["generate"]
+        sdk__client__IterunClient__run_pipeline["run_pipeline"]
+        sdk__client__IterunClient__generate_and_run["generate_and_run"]
+        sdk__client__IterunClient__plan_yaml["plan_yaml"]
+        sdk__client__IterunClient__registry_get["registry_get"]
+        sdk__client__IterunClient__registry_refresh["registry_refresh"]
+        sdk__client__IterunClient__registry_list["registry_list"]
+        sdk__client__IterunClient__parse["parse"]
+        sdk__client__IterunClient___post_json["_post_json"]
+        sdk__client__IterunClient___remote_generate["_remote_generate"]
+        ...["+25 more"]
     end
 
     subgraph Core
-        config__load_dotenv{{load_dotenv CC=15}}
-        config__get_env["get_env"]
-        config__get_env_bool["get_env_bool"]
-        config__get_env_int["get_env_int"]
-        config__get_env_float["get_env_float"]
-        config__reload_config["reload_config"]
-        config__configure["configure"]
         generator__expectations__check_expectations{{check_expectations CC=23}}
-        generator__intent_generator__GenerateAttempt__to_dict["to_dict"]
-        generator__intent_generator__GenerateResult__to_dict["to_dict"]
-        generator__intent_generator__IntentGenerator__generate["generate"]
-        generator__pipeline__PipelineResult__to_dict["to_dict"]
-        generator__pipeline__run_pipeline{{run_pipeline CC=30}}
-        generator__intract_manifest___safe_id["_safe_id"]
-        generator__intract_manifest__build_intract_manifest["build_intract_manifest"]
-        ...["+113 more"]
+        generator__testql_scenario__build_testql_scenario["build_testql_scenario"]
+        generator__testql_scenario__write_testql_scenario["write_testql_scenario"]
+        ai_gateway__gateway__ModelConfig__to_dict["to_dict"]
+        ai_gateway__gateway__GatewayConfig____post_init__["__post_init__"]
+        ai_gateway__gateway__GatewayConfig__resolve_model["resolve_model"]
+        ai_gateway__gateway__GatewayConfig__litellm_model_id["litellm_model_id"]
+        ai_gateway__gateway__GatewayConfig__get_available_models["get_available_models"]
+        ai_gateway__gateway__GatewayConfig__get_model["get_model"]
+        ai_gateway__gateway__GatewayConfig__to_dict["to_dict"]
+        ai_gateway__gateway__AIGateway___setup_litellm["_setup_litellm"]
+        ai_gateway__gateway__AIGateway__complete["complete"]
+        ai_gateway__gateway__AIGateway__acomplete["acomplete"]
+        ai_gateway__gateway__AIGateway___mock_response["_mock_response"]
+        ai_gateway__gateway__AIGateway__suggest_improvements["suggest_improvements"]
+        ...["+153 more"]
     end
 
-    class config__get_env,config__get_env_bool,config__get_env_int,config__get_env_float,config__reload_config,config__configure,generator__intent_generator__GenerateAttempt__to_dict,generator__intent_generator__GenerateResult__to_dict,generator__intent_generator__IntentGenerator__generate,generator__pipeline__PipelineResult__to_dict entry
+    subgraph Exporters
+        integrations__adapters__opentelemetry__OpenTelemetryExporter__export["export"]
+        integrations__adapters__base__RegistryExporter__export["export"]
+        integrations__adapters__backstage__BackstageExporter__export["export"]
+    end
+
+    class ai_gateway__gateway__ModelConfig__to_dict,ai_gateway__gateway__GatewayConfig____post_init__,ai_gateway__gateway__GatewayConfig__resolve_model,ai_gateway__gateway__GatewayConfig__litellm_model_id,ai_gateway__gateway__GatewayConfig__get_available_models,ai_gateway__gateway__GatewayConfig__get_model,ai_gateway__gateway__GatewayConfig__to_dict,ai_gateway__gateway__AIGateway___setup_litellm,ai_gateway__gateway__AIGateway__complete,ai_gateway__gateway__AIGateway__acomplete entry

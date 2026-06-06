@@ -122,6 +122,9 @@ class AppConfig:
     anthropic_api_key: Optional[str] = field(default_factory=lambda: get_env("ANTHROPIC_API_KEY"))
     openrouter_api_key: Optional[str] = field(default_factory=lambda: get_env("OPENROUTER_API_KEY"))
     
+    # Execution runtime: docker (default) | pactown (markpact sandboxes)
+    runtime: str = field(default_factory=lambda: get_env("ITERUN_RUNTIME", "docker"))
+
     # Execution
     docker_enabled: bool = field(default_factory=lambda: get_env_bool("DOCKER_ENABLED", True))
     workspace_dir: str = field(default_factory=lambda: get_env("WORKSPACE_DIR", "/tmp/iterun"))

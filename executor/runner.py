@@ -12,6 +12,7 @@ import socket
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from datetime import datetime
+from urllib.parse import urlparse
 
 import sys
 
@@ -43,6 +44,28 @@ except ImportError:
 class ExecutionError(Exception):
     """Raised when execution fails."""
     pass
+
+
+def _filter_validation_endpoints(endpoints: List[str]) -> List[str]:
+    """Drop bare base URLs when explicit routes exist on the same host (404 on / is OK)."""
+    by_host: dict[str, list[str]] = {}
+    for endpoint in endpoints:
+        parsed = urlparse(endpoint)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        path = parsed.path or "/"
+        by_host.setdefault(base, []).append(path)
+
+    filtered: list[str] = []
+    for endpoint in endpoints:
+        parsed = urlparse(endpoint)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        path = parsed.path or "/"
+        if path in ("/", ""):
+            explicit = [p for p in by_host.get(base, []) if p not in ("/", "")]
+            if explicit:
+                continue
+        filtered.append(endpoint)
+    return filtered
 
 
 class ValidationResult:
@@ -167,6 +190,16 @@ class Executor:
         
         result.add_log(f"Starting execution for: {ir.intent.name}")
         result.add_log(f"Workspace: {self.workspace}")
+
+        if self.config.runtime == "pactown":
+            from integrations.pactown_runtime import execute_pactown
+
+            return execute_pactown(
+                ir,
+                self.workspace,
+                validate=validate,
+                startup_wait=self.config.startup_wait,
+            )
         
         try:
             # Write generated files
@@ -189,8 +222,11 @@ class Executor:
                 self._validate_and_fix(ir, result, auto_fix)
             
             if not result.error:
-                result.success = True
-                result.add_log("Execution completed successfully")
+                if result.validation and not result.validation.success:
+                    result.add_log("Execution deployed but endpoint validation failed")
+                else:
+                    result.success = True
+                    result.add_log("Execution completed successfully")
         
         except Exception as e:
             result.error = str(e)
@@ -208,8 +244,9 @@ class Executor:
             result.add_log(f"Waiting {self.STARTUP_WAIT}s for container startup...")
             time.sleep(self.STARTUP_WAIT)
             
-            # Run validation
-            validation = self._validate_endpoints(result.endpoints, result)
+            # Run validation (skip bare root URL when /ping, /users, etc. are declared)
+            endpoints = _filter_validation_endpoints(result.endpoints)
+            validation = self._validate_endpoints(endpoints, result)
             result.validation = validation
             
             if validation.success:
@@ -582,11 +619,21 @@ app.listen({port}, '0.0.0.0', () => {{
         
         # Run container
         container_port = self.config.container_port
+        from registry.labels import build_service_labels
+
         run_cmd = [
             "docker", "run", "-d",
             "--name", container_name,
             "-p", f"{host_port}:{container_port}",
         ]
+        for key, value in build_service_labels(
+            ir.intent.name,
+            ir.intent.name,
+            intent_id=ir.id,
+            framework=ir.implementation.framework,
+            language=ir.implementation.language,
+        ).items():
+            run_cmd.extend(["--label", f"{key}={value}"])
         
         # Add environment variables
         for key, value in ir.environment.env_vars.items():
@@ -657,14 +704,33 @@ app.listen({port}, '0.0.0.0', () => {{
         result.endpoints.append(f"http://localhost:{port}")
     
     def get_container_logs(self, container_id: str, tail: int = 50) -> str:
-        """Get logs from a container."""
+        """Get logs from a container or docker compose project (STACK)."""
+        compose_file = self.workspace / "docker-compose.yaml"
+        is_compose_project = (
+            compose_file.is_file()
+            and container_id
+            and (len(container_id) != 12 or not all(c in "0123456789abcdef" for c in container_id.lower()))
+        )
         try:
-            result = subprocess.run(
-                ["docker", "logs", "--tail", str(tail), container_id],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            if is_compose_project:
+                result = subprocess.run(
+                    [
+                        "docker", "compose",
+                        "-f", str(compose_file),
+                        "-p", container_id,
+                        "logs", "--tail", str(tail),
+                    ],
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                )
+            else:
+                result = subprocess.run(
+                    ["docker", "logs", "--tail", str(tail), container_id],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
             return result.stdout + result.stderr
         except Exception as e:
             return f"Error getting logs: {e}"

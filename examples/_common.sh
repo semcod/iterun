@@ -35,6 +35,49 @@ _example_use_source_pkg() {
     fi
 }
 
+# Po docker compose: faktyczne porty (host_port może być przesunięty, np. 18080→18081).
+_example_stack_project() {
+    "$PYTHON" - <<'PY' "$INTENT"
+import sys, yaml
+d = yaml.safe_load(open(sys.argv[1], encoding="utf-8")) or {}
+print(d.get("INTENT", {}).get("name", "stack"))
+PY
+}
+
+_example_compose_port() {
+    local service="$1"
+    local project
+    project="intent-$(_example_stack_project)"
+    docker compose -f "$GENERATED/docker-compose.yaml" -p "$project" port "$service" 8000 2>/dev/null \
+        | sed -n 's/.*:\([0-9]*\)$/\1/p' | head -1
+}
+
+_example_stack_urls_file() {
+    local project
+    project="intent-$(_example_stack_project)"
+    local urls=()
+    local svc port url
+    for svc in $(docker compose -f "$GENERATED/docker-compose.yaml" -p "$project" ps --services 2>/dev/null); do
+        port="$(_example_compose_port "$svc")"
+        if [ -n "$port" ]; then
+            url="http://localhost:${port}"
+            urls+=("\"${svc}\": \"${url}\"")
+        fi
+    done
+    if [ "${#urls[@]}" -gt 0 ]; then
+        printf '{%s}\n' "$(IFS=,; echo "${urls[*]}")" > "$GENERATED/stack.urls.json"
+    fi
+}
+
+_example_echo_stack_urls() {
+    [ -f "$GENERATED/docker-compose.yaml" ] || return 0
+    _example_stack_urls_file
+    if [ -f "$GENERATED/stack.urls.json" ]; then
+        echo "Stack URLs (saved to generated/stack.urls.json):"
+        "$PYTHON" -m json.tool "$GENERATED/stack.urls.json"
+    fi
+}
+
 _example_show_verify_rounds() {
     if [ -f "$GENERATED/verify.rounds.json" ]; then
         "$PYTHON" - <<'PY' "$GENERATED/verify.rounds.json" "$GENERATED/session.json"
@@ -74,8 +117,12 @@ _example_generate() {
         fi
     fi
     local max_verify="${ITERUN_MAX_VERIFY_ITERATIONS:-3}"
+    local runtime_flag=""
+    if [ -n "${ITERUN_RUNTIME:-}" ]; then
+        runtime_flag="--runtime $ITERUN_RUNTIME"
+    fi
     # shellcheck disable=SC2086
-    $CLI generate "$PROMPT" --output-dir "$GENERATED" $extra_flags --quiet \
+    $CLI generate "$PROMPT" --output-dir "$GENERATED" $extra_flags $runtime_flag --quiet \
         --max-iterations 5 --max-verify-iterations "$max_verify"
     ITERUN_PKG="$GENERATED/iterun.yaml"
     INTENT="$ITERUN_PKG"

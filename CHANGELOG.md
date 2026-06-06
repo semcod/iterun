@@ -48,6 +48,40 @@
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-06-06
+
+### Docs
+- Update README.md
+- Update docs/API.md
+- Update docs/REGISTRY.md
+- Update docs/RUNTIME.md
+- Update examples/01-user-api/README.md
+- Update examples/02-ping-smoke/README.md
+- Update examples/03-flask-api/README.md
+- Update examples/04-express-api/README.md
+- Update examples/05-ir-show/README.md
+- Update examples/06-iterate-workflow/README.md
+- ... and 17 more files
+
+### Test
+- Update tests/e2e/test_executor_validation.py
+- Update tests/test_interfaces.py
+- Update tests/test_pactown_config.py
+- Update tests/test_registry.py
+
+### Other
+- Update .gitignore
+- Update cli/main.py
+- Update config.py
+- Update examples/17-stack-shop-gateway/iterun.yaml
+- Update examples/17-stack-shop-gateway/run-generate.sh
+- Update examples/17-stack-shop-gateway/run.sh
+- Update examples/18-stack-blog/run.sh
+- Update examples/19-stack-api-cache/run.sh
+- Update examples/_common.sh
+- Update executor/runner.py
+- ... and 46 more files
+
 ## [0.1.8] - 2026-06-06
 
 ### Docs

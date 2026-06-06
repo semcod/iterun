@@ -68,8 +68,20 @@ class GenerateAndRunRequest(BaseModel):
     prompt: str
     output_dir: Optional[str] = None
     execute: bool = False
+    verify: bool = False
     max_iterations: int = 5
+    max_verify_iterations: int = 3
     model: Optional[str] = None
+
+
+class PlanYAMLRequest(BaseModel):
+    content: str
+    output_dir: Optional[str] = None
+
+
+class RegistryRefreshRequest(BaseModel):
+    workspace: str = "generated"
+    include_docker: bool = True
 
 
 class ValidateYAMLRequest(BaseModel):
@@ -77,6 +89,50 @@ class ValidateYAMLRequest(BaseModel):
 
 
 # API Endpoints
+
+_service = None
+
+
+def _get_service():
+    global _service
+    if _service is None:
+        from interfaces.service import IterunService
+        _service = IterunService()
+    return _service
+
+
+@app.get("/api/health")
+async def health():
+    """Liveness probe for REST clients and orchestrators."""
+    return {"status": "ok", "service": "iterun"}
+
+
+@app.get("/api/interfaces")
+async def list_interfaces():
+    """Describe available integration surfaces (REST, CLI, SDK, MCP)."""
+    return _get_service().interfaces_info()
+
+
+@app.get("/api/registry")
+async def get_registry(workspace: str = "generated"):
+    """Service & artifact registry for a workspace (iterun.registry.json)."""
+    return _get_service().registry_get(workspace)
+
+
+@app.post("/api/registry/refresh")
+async def refresh_registry_api(data: RegistryRefreshRequest):
+    """Rescan workspace, write iterun.registry.json + Backstage + OTel exports."""
+    return _get_service().registry_refresh(
+        data.workspace,
+        include_docker=data.include_docker,
+    )
+
+
+@app.get("/api/registry/list")
+async def list_registries(pattern: str = "examples/*/generated"):
+    """List registry summaries across workspace glob."""
+    return {"registries": _get_service().registry_list(pattern)}
+
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -109,47 +165,62 @@ async def list_intents():
 @app.get("/api/schema")
 async def get_schema():
     """JSON Schema for ITERUN intent DSL (LLM generation)."""
-    from dsl.schema import get_json_schema
-    return get_json_schema()
+    return _get_service().schema()
 
 
 @app.post("/api/intents/validate-yaml")
 async def validate_yaml(data: ValidateYAMLRequest):
     """Validate YAML against schema + DSL parser."""
-    from dsl.schema import validate_yaml_document
-    doc, errors = validate_yaml_document(data.content)
-    return {
-        "valid": not errors,
-        "errors": errors,
-        "document": doc.model_dump() if doc else None,
-    }
+    return _get_service().validate_yaml(data.content)
 
 
 @app.post("/api/intents/generate")
 async def generate_intent_api(data: GenerateRequest):
     """Generate intent YAML from natural language (LiteLLM + retry loop)."""
-    from generator.intent_generator import IntentGenerator
-    gen = IntentGenerator(max_iterations=data.max_iterations, model=data.model)
-    result = gen.generate(data.prompt)
+    result = _get_service().generate(
+        data.prompt,
+        model=data.model,
+        max_iterations=data.max_iterations,
+    )
     if result.success and result.ir:
         intents_store[result.ir.id] = result.ir
     return result.to_dict()
 
 
-@app.post("/api/intents/generate-and-run")
-async def generate_and_run_api(data: GenerateAndRunRequest):
-    """Generate → plan → optional execute."""
-    from generator.pipeline import run_pipeline
-    result = run_pipeline(
+@app.post("/api/pipeline/run")
+async def run_pipeline_api(data: GenerateAndRunRequest):
+    """Full pipeline: generate → plan → optional execute → optional verify."""
+    result = _get_service().run_pipeline(
         data.prompt,
         output_dir=data.output_dir,
         execute=data.execute,
+        verify=data.verify,
         max_iterations=data.max_iterations,
+        max_verify_iterations=data.max_verify_iterations,
         model=data.model,
     )
     if result.generate and result.generate.ir:
         intents_store[result.generate.ir.id] = result.generate.ir
     return result.to_dict()
+
+
+@app.post("/api/intents/generate-and-run")
+async def generate_and_run_api(data: GenerateAndRunRequest):
+    """Alias for POST /api/pipeline/run (backward compatible)."""
+    return await run_pipeline_api(data)
+
+
+@app.post("/api/intents/plan-yaml")
+async def plan_yaml_api(data: PlanYAMLRequest):
+    """Parse YAML and dry-run plan (single service or STACK)."""
+    try:
+        result = _get_service().plan_yaml(data.content, output_dir=data.output_dir)
+        ir_dict = result.get("intent")
+        if ir_dict and ir_dict.get("id"):
+            intents_store[ir_dict["id"]] = parse_dsl(data.content)
+        return result
+    except (ParseError, ValidationError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/api/intents/parse")
@@ -198,8 +269,11 @@ async def plan(intent_id: str):
         "logs": result.logs,
         "generated_code": result.generated_code,
         "dockerfile": result.dockerfile,
+        "compose_yaml": result.compose_yaml,
+        "service_artifacts": result.service_artifacts,
+        "is_stack": bool(ir.stack and ir.stack.services),
         "warnings": result.warnings,
-        "estimated_resources": result.estimated_resources
+        "estimated_resources": result.estimated_resources,
     }
 
 

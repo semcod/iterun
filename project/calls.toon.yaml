@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/wronai/iterun
-# generated in 0.04s
-# nodes: 93 | edges: 84 | modules: 22
-# CC̄=4.2
+# generated in 0.06s
+# nodes: 143 | edges: 131 | modules: 36
+# CC̄=4.6
 
 HUBS[20]:
-  generator.pipeline.run_pipeline
-    CC=30  in:3  out:36  total:39
+  registry.discover.discover_workspace
+    CC=44  in:2  out:75  total:77
+  integrations.pactown_runtime.execute_pactown
+    CC=21  in:1  out:50  total:51
   cli.main.CLI.cmd_execute
     CC=37  in:0  out:37  total:37
+  generator.pipeline.run_pipeline
+    CC=33  in:0  out:37  total:37
   generator.contract_verify.verify_contract
     CC=16  in:1  out:32  total:33
+  registry.discover._discover_artifacts
+    CC=12  in:1  out:28  total:29
   examples._scripts.verify_expectations.verify
     CC=23  in:1  out:27  total:28
   generator.expectations.check_expectations
     CC=23  in:1  out:26  total:27
+  planner.stack_artifacts.write_stack_artifacts
+    CC=9  in:3  out:22  total:25
   cli.main.CLI.cmd_plan
     CC=11  in:0  out:24  total:24
+  executor.runner.Executor.execute
+    CC=18  in:0  out:22  total:22
+  planner.stack_planner.plan_stack
+    CC=18  in:1  out:21  total:22
   generator.intent_generator.IntentGenerator.generate
     CC=11  in:0  out:21  total:21
   cli.main.CLI.cmd_ai_suggest
     CC=11  in:0  out:21  total:21
-  examples._scripts.intent_to_openapi.intent_to_openapi
-    CC=8  in:1  out:17  total:18
   cli.main.CLI.cmd_ai_chat
     CC=12  in:0  out:18  total:18
+  examples._scripts.intent_to_openapi.intent_to_openapi
+    CC=8  in:1  out:17  total:18
+  executor.runner.Executor._validate_and_fix
+    CC=8  in:0  out:17  total:17
   generator.session.write_session_artifacts
     CC=5  in:1  out:16  total:17
-  config.load_dotenv
-    CC=15  in:1  out:15  total:16
-  generator.pipeline._expectations_summary
-    CC=8  in:1  out:13  total:14
-  ai_gateway.gateway.get_gateway
-    CC=3  in:13  out:1  total:14
-  generator.intract_manifest.parse_api_actions
-    CC=6  in:5  out:9  total:14
-  examples._scripts.annotate_intract.annotate_express
-    CC=6  in:1  out:13  total:14
-  examples._scripts.annotate_intract._actions
-    CC=7  in:2  out:11  total:13
-  cli.main.CLI.cmd_ai_health
-    CC=4  in:0  out:12  total:12
-  examples._scripts.annotate_intract.annotate_python
-    CC=5  in:1  out:11  total:12
-  planner.simulator._endpoint_to_func_name
-    CC=5  in:2  out:10  total:12
+  integrations.adapters.docker.DockerAdapter.enrich
+    CC=16  in:0  out:16  total:16
+  integrations.bridges.pipeline.refresh_registry
+    CC=5  in:3  out:13  total:16
 
 MODULES:
   ai_gateway.feedback_loop  [2 funcs]
@@ -54,7 +54,7 @@ MODULES:
     complete  CC=1  out:2
     get_gateway  CC=3  out:1
     suggest_improvements  CC=1  out:2
-  cli.main  [10 funcs]
+  cli.main  [11 funcs]
     cmd_ai_apply  CC=8  out:10
     cmd_ai_chat  CC=12  out:18
     cmd_ai_health  CC=4  out:12
@@ -72,7 +72,7 @@ MODULES:
   dsl.schema  [3 funcs]
     get_json_schema  CC=1  out:1
     get_system_prompt  CC=1  out:2
-    validate_yaml_document  CC=7  out:7
+    validate_yaml_document  CC=10  out:8
   examples._scripts.annotate_intract  [6 funcs]
     _actions  CC=7  out:11
     _comment  CC=1  out:1
@@ -93,8 +93,13 @@ MODULES:
     _parse_actions  CC=6  out:9
     main  CC=3  out:9
     verify  CC=23  out:27
-  executor.runner  [3 funcs]
+  examples._verify  [1 funcs]
+    write_intract_manifest  CC=0  out:0
+  executor.runner  [6 funcs]
     __init__  CC=3  out:5
+    _validate_and_fix  CC=8  out:17
+    execute  CC=18  out:22
+    _filter_validation_endpoints  CC=9  out:6
     execute_intent  CC=1  out:2
     stop_containers_for_intent  CC=5  out:6
   generator.contract_verify  [6 funcs]
@@ -112,20 +117,21 @@ MODULES:
     generate  CC=11  out:21
     _build_user_prompt  CC=4  out:1
     extract_yaml_from_llm  CC=6  out:11
-  generator.intract_manifest  [6 funcs]
+  generator.intract_manifest  [7 funcs]
+    _parse_action_strings  CC=4  out:7
     _safe_id  CC=1  out:3
     _slug  CC=2  out:4
     build_intract_manifest  CC=6  out:11
     intent_to_intract_dict  CC=2  out:4
-    parse_api_actions  CC=6  out:9
+    parse_api_actions  CC=9  out:11
     write_intract_manifest  CC=1  out:5
   generator.pipeline  [6 funcs]
     _build_repair_prompt  CC=4  out:3
     _container_logs  CC=4  out:3
     _expectations_summary  CC=8  out:13
-    _finalize  CC=2  out:3
-    _write_plan_artifacts  CC=4  out:8
-    run_pipeline  CC=30  out:36
+    _finalize  CC=3  out:4
+    _write_plan_artifacts  CC=8  out:11
+    run_pipeline  CC=33  out:37
   generator.session  [1 funcs]
     write_session_artifacts  CC=5  out:16
   generator.testql_scenario  [4 funcs]
@@ -133,6 +139,37 @@ MODULES:
     _startup_wait_ms  CC=7  out:3
     build_testql_scenario  CC=7  out:10
     write_testql_scenario  CC=2  out:7
+  integrations.adapters.docker  [2 funcs]
+    enrich  CC=16  out:16
+    _running_iterun_containers  CC=11  out:8
+  integrations.adapters.filesystem  [1 funcs]
+    collect  CC=1  out:1
+  integrations.bridges.pipeline  [2 funcs]
+    refresh_registry  CC=5  out:13
+    refresh_registry_from_pipeline  CC=2  out:2
+  integrations.markpact_pack  [2 funcs]
+    _run_command_for_ir  CC=8  out:0
+    pack_workspace  CC=18  out:12
+  integrations.pactown_config  [3 funcs]
+    _health_path  CC=8  out:0
+    build_pactown_config  CC=12  out:6
+    write_pactown_config  CC=1  out:4
+  integrations.pactown_runtime  [3 funcs]
+    _validate_urls  CC=6  out:10
+    execute_pactown  CC=21  out:50
+    stop_pactown_for_intent  CC=5  out:6
+  integrations.runtime_stop  [1 funcs]
+    stop_runtime_for_intent  CC=3  out:4
+  interfaces.service  [9 funcs]
+    execute_ir  CC=3  out:4
+    parse  CC=1  out:1
+    plan_ir  CC=1  out:1
+    plan_yaml  CC=3  out:6
+    registry_list  CC=1  out:1
+    registry_refresh  CC=1  out:1
+    schema  CC=1  out:1
+    validate_yaml  CC=4  out:3
+    _write_plan_output  CC=7  out:14
   parser.dsl_parser  [2 funcs]
     parse_dsl  CC=1  out:2
     parse_dsl_file  CC=1  out:2
@@ -140,49 +177,49 @@ MODULES:
     _generate_fastapi_code  CC=5  out:7
     _generate_flask_code  CC=5  out:5
     _endpoint_to_func_name  CC=5  out:10
-    plan_intent  CC=1  out:2
-  sdk.client  [4 funcs]
-    generate_and_run  CC=3  out:2
-    parse  CC=1  out:1
-    schema  CC=1  out:1
-    validate  CC=2  out:2
-  web.app  [14 funcs]
+    plan_intent  CC=3  out:3
+  planner.stack_artifacts  [1 funcs]
+    write_stack_artifacts  CC=9  out:22
+  planner.stack_planner  [4 funcs]
+    _build_compose  CC=9  out:4
+    _gateway_proxy_code  CC=10  out:12
+    _resolve_upstream  CC=12  out:2
+    plan_stack  CC=18  out:21
+  registry.catalog  [2 funcs]
+    discover  CC=1  out:1
+    discover_glob  CC=7  out:11
+  registry.discover  [6 funcs]
+    _discover_artifacts  CC=12  out:28
+    _intent_from_workspace  CC=8  out:7
+    _load_session  CC=3  out:3
+    _load_stack_urls  CC=3  out:3
+    _phase_from_session  CC=7  out:5
+    discover_workspace  CC=44  out:75
+  registry.labels  [1 funcs]
+    build_service_labels  CC=4  out:0
+  sdk.client  [3 funcs]
+    parse  CC=3  out:6
+    schema  CC=2  out:5
+    validate  CC=5  out:4
+  web.app  [22 funcs]
+    _get_service  CC=2  out:1
     ai_apply_suggestions  CC=4  out:7
     ai_chat  CC=4  out:7
     ai_complete  CC=3  out:6
     ai_status  CC=2  out:5
     ai_suggest  CC=6  out:8
     execute  CC=5  out:5
-    generate_and_run_api  CC=3  out:3
+    generate_and_run_api  CC=1  out:2
     generate_code  CC=3  out:6
-    get_schema  CC=1  out:2
-    list_models  CC=2  out:4
+    generate_intent_api  CC=3  out:4
 
 EDGES:
-  config.reload_config → config.load_dotenv
   generator.expectations.check_expectations → generator.intract_manifest.parse_api_actions
   generator.expectations.load_and_check_expectations → generator.expectations.check_expectations
-  generator.intent_generator.IntentGenerator.__init__ → dsl.schema.get_system_prompt
-  generator.intent_generator.IntentGenerator.__init__ → ai_gateway.gateway.get_gateway
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator._build_user_prompt
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator.extract_yaml_from_llm
-  generator.intent_generator.IntentGenerator.generate → dsl.schema.validate_yaml_document
   generator.testql_scenario.build_testql_scenario → generator.intract_manifest.parse_api_actions
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._startup_wait_ms
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._probe_path
   generator.testql_scenario.write_testql_scenario → generator.testql_scenario.build_testql_scenario
-  generator.pipeline._write_plan_artifacts → generator.intract_manifest.write_intract_manifest
-  generator.pipeline._write_plan_artifacts → generator.testql_scenario.write_testql_scenario
-  generator.pipeline._build_repair_prompt → generator.pipeline._expectations_summary
-  generator.pipeline._finalize → generator.pipeline._container_logs
-  generator.pipeline._finalize → generator.session.write_session_artifacts
-  generator.pipeline.run_pipeline → generator.pipeline._finalize
-  generator.pipeline.run_pipeline → planner.simulator.plan_intent
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
-  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
-  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._load_yaml
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._parse_actions
   examples._scripts.verify_expectations.main → examples._scripts.verify_expectations.verify
@@ -192,20 +229,38 @@ EDGES:
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_python
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_express
   examples._scripts.intent_to_testql.main → generator.testql_scenario.write_testql_scenario
-  examples._scripts.intent_to_intract.main → generator.intract_manifest.write_intract_manifest
+  examples._scripts.intent_to_intract.main → examples._verify.write_intract_manifest
   examples._scripts.intent_to_openapi.intent_to_openapi → examples._scripts.intent_to_openapi._slug
   examples._scripts.intent_to_openapi.main → examples._scripts.intent_to_openapi.intent_to_openapi
+  ai_gateway.gateway.GatewayConfig.__post_init__ → config.get_config
+  ai_gateway.gateway.complete → ai_gateway.gateway.get_gateway
+  ai_gateway.gateway.suggest_improvements → ai_gateway.gateway.get_gateway
+  ai_gateway.feedback_loop.FeedbackLoop.__init__ → ai_gateway.gateway.get_gateway
+  generator.intract_manifest.parse_api_actions → generator.intract_manifest._parse_action_strings
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
+  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
+  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   planner.simulator.Planner._generate_fastapi_code → planner.simulator._endpoint_to_func_name
   planner.simulator.Planner._generate_flask_code → planner.simulator._endpoint_to_func_name
-  web.app.get_schema → dsl.schema.get_json_schema
-  web.app.validate_yaml → dsl.schema.validate_yaml_document
-  web.app.generate_and_run_api → generator.pipeline.run_pipeline
-  web.app.parse_intent → parser.dsl_parser.parse_dsl
-  web.app.plan → planner.simulator.plan_intent
-  web.app.execute → executor.runner.execute_intent
-  web.app.validate_intent → config.get_config
-  web.app.ai_status → ai_gateway.gateway.get_gateway
-  web.app.list_models → ai_gateway.gateway.get_gateway
-  web.app.ai_complete → ai_gateway.gateway.get_gateway
-  web.app.ai_chat → ai_gateway.gateway.get_gateway
-  web.app.ai_suggest → ai_gateway.feedback_loop.create_feedback_loop
+  planner.simulator.plan_intent → planner.stack_planner.plan_stack
+  registry.catalog.RegistryCatalog.discover → registry.discover.discover_workspace
+  planner.stack_planner._gateway_proxy_code → planner.stack_planner._resolve_upstream
+  planner.stack_planner._build_compose → registry.labels.build_service_labels
+  planner.stack_planner.plan_stack → planner.stack_planner._build_compose
+  interfaces.service._write_plan_output → planner.stack_artifacts.write_stack_artifacts
+  interfaces.service.IterunService.schema → dsl.schema.get_json_schema
+  interfaces.service.IterunService.validate_yaml → dsl.schema.validate_yaml_document
+  interfaces.service.IterunService.parse → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_ir → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_yaml → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → interfaces.service._write_plan_output
+  interfaces.service.IterunService.execute_ir → executor.runner.execute_intent
+  interfaces.service.IterunService.registry_refresh → integrations.bridges.pipeline.refresh_registry
+  interfaces.service.IterunService.registry_list → registry.catalog.discover_glob
+  executor.runner.Executor.__init__ → config.get_config
+  executor.runner.Executor.execute → integrations.pactown_runtime.execute_pactown
+  executor.runner.Executor._validate_and_fix → executor.runner._filter_validation_endpoints
+  executor.runner.stop_containers_for_intent → config.get_config

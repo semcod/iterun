@@ -11,7 +11,13 @@ $CLI plan "$ITERUN_PKG" --output-dir "$GENERATED" --quiet
 
 if [ "${ITERUN_EXECUTE:-1}" = "1" ] && command -v docker >/dev/null 2>&1; then
     $CLI execute "$ITERUN_PKG" --workspace "$GENERATED" --quiet
-    echo "OK stack running — gateway http://localhost:18080"
+    _example_echo_stack_urls
+    gw_port="$(_example_compose_port api-gateway)"
+    if [ -n "$gw_port" ]; then
+        echo "OK stack running — gateway http://localhost:${gw_port}/ping"
+    else
+        echo "OK stack running — see: docker compose -f generated/docker-compose.yaml -p intent-shop-stack ps"
+    fi
 else
     echo "OK stack planned in $GENERATED (set ITERUN_EXECUTE=1 for docker compose)"
 fi

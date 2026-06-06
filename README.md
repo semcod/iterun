@@ -8,11 +8,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.8-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.98-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-4.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.9-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.9826 (12 commits)
-- 👤 **Human dev:** ~$462 (4.6h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $2.3314 (14 commits)
+- 👤 **Human dev:** ~$504 (5.0h @ $100/h, 30min dedup)
 
 Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -269,23 +269,36 @@ EXECUTION:
 
 ## API Reference
 
-### REST Endpoints
+Pełna dokumentacja: **[docs/API.md](docs/API.md)** — REST, SDK, MCP, STACK.  
+Rejestr usług/artefaktów: **[docs/REGISTRY.md](docs/REGISTRY.md)** — Backstage, OCI, OTel.  
+Runtime markpact+pactown: **[docs/RUNTIME.md](docs/RUNTIME.md)** — odchudzone uruchamianie.
+
+### Integration surfaces
+
+| Surface | Entry |
+|---------|-------|
+| REST | `uvicorn web.app:app` → `/api/*`, OpenAPI `/docs` |
+| CLI | `iterun generate`, `iterun plan`, … |
+| SDK | `IterunClient()` — local lub `base_url="http://…"` |
+| MCP | `iterun-mcp` — narzędzia dla agentów LLM |
+
+### REST Endpoints (skrót)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| `GET` | `/api/health` | Liveness |
+| `GET` | `/api/interfaces` | Lista powierzchni API |
+| `GET` | `/api/schema` | JSON Schema for DSL |
+| `POST` | `/api/intents/validate-yaml` | Validate YAML (`is_stack`) |
+| `POST` | `/api/intents/plan-yaml` | Plan z YAML (STACK → compose) |
+| `POST` | `/api/pipeline/run` | generate → plan → execute? → verify? |
+| `POST` | `/api/intents/generate` | LLM → YAML |
+| `POST` | `/api/intents/generate-and-run` | Alias `/api/pipeline/run` |
 | `GET` | `/api/intents` | List all intents |
 | `POST` | `/api/intents/parse` | Parse DSL and create intent |
 | `GET` | `/api/intents/{id}` | Get intent by ID |
-| `DELETE` | `/api/intents/{id}` | Delete intent |
-| `POST` | `/api/intents/{id}/plan` | Run dry-run |
-| `POST` | `/api/intents/{id}/iterate` | Apply changes |
-| `POST` | `/api/intents/{id}/iterun` | Approve for execution |
+| `POST` | `/api/intents/{id}/plan` | Dry-run (`compose_yaml` dla STACK) |
 | `POST` | `/api/intents/{id}/execute` | Execute approved intent |
-| `GET` | `/api/intents/{id}/code` | Get generated code |
-| `GET` | `/api/schema` | JSON Schema for DSL |
-| `POST` | `/api/intents/generate` | LLM → YAML |
-| `POST` | `/api/intents/generate-and-run` | Generate + plan (+ optional execute) |
-| `POST` | `/api/intents/validate-yaml` | Validate YAML document |
 
 ### AI Gateway Endpoints
 
@@ -316,9 +329,10 @@ result = run_pipeline(
 print(result.yaml_path)       # generated/iterun.yaml
 print(result.verification)    # testql + HTTP result
 
-# Or SDK
+# Or SDK (local or remote REST)
 client = IterunClient()
-out = client.generate_and_run("Create a ping API", output_dir="generated", execute=True)
+out = client.run_pipeline("Create a ping API", output_dir="generated", execute=True, verify=True)
+# remote = IterunClient(base_url="http://localhost:8000")
 
 # Manual DSL
 ir = parse_dsl(open("generated/iterun.yaml").read())
@@ -381,7 +395,7 @@ iterun/
 ├── cli/                # `iterun` CLI
 ├── web/                # FastAPI web UI
 ├── sdk/                # Python SDK client
-├── mcp/                # MCP server (optional)
+├── iterun_mcp/         # MCP server (optional; not `mcp/` — conflicts with PyPI mcp)
 ├── examples/           # prompt.txt + run.sh → generated/
 ├── docs/               # DSL spec, docs index
 ├── tests/e2e/

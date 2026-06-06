@@ -146,6 +146,16 @@ def _build_compose(parent: IntentIR, artifacts: dict[str, dict[str, Any]]) -> st
         if svc.env_vars:
             spec["environment"] = svc.env_vars
 
+        from registry.labels import build_service_labels
+
+        spec["labels"] = build_service_labels(
+            parent.intent.name,
+            svc.name,
+            intent_id=parent.id,
+            framework=svc.framework,
+            language=svc.language,
+        )
+
         compose_services[svc.name] = spec
 
     doc = {

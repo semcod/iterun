@@ -1,6 +1,16 @@
 # Przykłady ITERUN
 
-> **Repo:** `~/github/wronai/iterun` (nie `koru`). Aktywuj venv iterun: `source venv/bin/activate`.
+> **Repo:** `~/github/wronai/iterun` (nie `koru`).
+
+```bash
+cd ~/github/wronai/iterun
+source venv/bin/activate      # nie: source ~/github/semcod/koru/.venv/bin/activate
+pip install -e ".[ai]"        # komenda `iterun` + LiteLLM
+pip install -e ".[runtime]"   # opcjonalnie: markpact + pactown
+pip install -e ../markpact -e ../pactown   # z lokalnych repo wronai
+```
+
+`Command 'iterun' not found` → zły venv lub brak `pip install -e .`. Użyj: `python -m cli …` z katalogu repo.
 
 Każdy przykład: **prompt.txt** + **run.sh** + katalog **`generated/`** (cała sesja, gitignored).
 
@@ -61,6 +71,9 @@ Wszystko z jednego uruchomienia trafia do **`--output-dir`** (domyślnie `genera
 | **`openapi.yaml`** | OpenAPI + `x-intract` (E2E, przed `intract validate`) |
 | **`app.py` / `app.js`** | Wygenerowany kod usługi |
 | **`Dockerfile`** | Obraz Docker |
+| **`stack.markpact.md`** | Cały workspace w jednym pliku markpact |
+| **`pactown.yaml`** | Konfiguracja uruchomienia pactown |
+| **`iterun.registry.json`** | Rejestr usług i artefaktów |
 
 ### Co jest w `session.json`?
 
@@ -174,11 +187,37 @@ iterun generate "$(cat prompt.txt)" -o generated/ --execute --verify --json
 # pełny log: generated/session.json
 ```
 
-## Zmienne
+## Operacje — logi, status, parametry
+
+**Ściągawka:** [OPERATIONS.md](OPERATIONS.md) (pełna lista flag CLI, `jq`, Docker, TestQL).
+
+Każdy katalog `examples/NN-*/README.md` ma sekcję **Operacje** z komendami pod dany przykład (intent, porty, curl).
+
+```bash
+# verbose (bez --quiet)
+iterun generate "$(cat prompt.txt)" -o generated/ --run --execute --verify
+
+# status po runie
+jq '{success, error}' examples/01-user-api/generated/session.json
+URL=$(jq -r '.execution.endpoints[0]' examples/01-user-api/generated/session.json)
+curl -s "$URL/ping"
+
+# logi na żywo
+docker logs -f $(docker ps -q --filter name=intent-user-api | head -1)
+```
+
+## Zmienne (`run.sh`)
 
 | Zmienna | Opis |
 |---------|------|
 | `ITERUN_PROMPT` | Nadpisz `prompt.txt` |
 | `ITERUN_EXECUTE=1` | Docker execute (01, 07, 08) |
+| `ITERUN_RUNTIME=pactown` | Uruchomienie przez pactown zamiast docker |
+| `--runtime pactown` | To samo (flaga CLI) |
+| `iterun registry -o generated/` | Rejestr po deploy |
 | `ITERUN_VERIFY=1` | TestQL po execute (domyślnie w E2E) |
 | `ITERUN_SKIP_CLEAN=1` | Nie czyść `generated/` przed runem |
+| `ITERUN_MAX_VERIFY_ITERATIONS` | Rundy naprawcze (resilience, dom. 5) |
+| `ITERUN_SKIP_INTRACT=1` | Pomiń intract w E2E |
+
+Szczegóły: [OPERATIONS.md](OPERATIONS.md).

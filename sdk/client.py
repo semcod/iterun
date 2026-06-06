@@ -1,5 +1,5 @@
 """
-ITERUN Python SDK — generate, validate, plan, execute intents.
+ITERUN Python SDK — local in-process or remote REST client.
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ import httpx
 from dsl.schema import get_json_schema, validate_yaml_document
 from generator.intent_generator import GenerateResult, IntentGenerator
 from generator.pipeline import PipelineResult, run_pipeline
+from interfaces.service import IterunService
 from parser.dsl_parser import parse_dsl
 
 
@@ -29,24 +30,75 @@ class IterunClient:
         self.model = model
         self.max_iterations = max_iterations
         self.timeout = timeout
-        self._generator = IntentGenerator(model=model, max_iterations=max_iterations)
+        self._service = IterunService(model=model, max_iterations=max_iterations)
+
+    def health(self) -> dict[str, Any]:
+        if self.base_url:
+            with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+                r = client.get("/api/health")
+                r.raise_for_status()
+                return r.json()
+        return {"status": "ok", "service": "iterun", "mode": "local"}
+
+    def interfaces(self) -> dict[str, Any]:
+        if self.base_url:
+            with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+                r = client.get("/api/interfaces")
+                r.raise_for_status()
+                return r.json()
+        return self._service.interfaces_info()
 
     def schema(self) -> dict[str, Any]:
+        if self.base_url:
+            with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+                r = client.get("/api/schema")
+                r.raise_for_status()
+                return r.json()
         return get_json_schema()
 
     def validate(self, yaml_content: str) -> dict[str, Any]:
+        if self.base_url:
+            return self._post_json("/api/intents/validate-yaml", {"content": yaml_content})
         doc, errors = validate_yaml_document(yaml_content)
         return {
             "valid": not errors,
             "errors": errors,
             "document": doc.model_dump() if doc else None,
+            "is_stack": bool(doc and doc.STACK and doc.STACK.services),
         }
 
     def generate(self, prompt: str, *, model: str | None = None) -> GenerateResult:
         if self.base_url:
             return self._remote_generate(prompt, model=model)
-        gen = IntentGenerator(model=model or self.model, max_iterations=self.max_iterations)
-        return gen.generate(prompt)
+        return self._service.generate(prompt, model=model)
+
+    def run_pipeline(
+        self,
+        prompt: str,
+        *,
+        output_dir: str | Path | None = None,
+        execute: bool = False,
+        verify: bool = False,
+        max_verify_iterations: int = 3,
+        model: str | None = None,
+    ) -> PipelineResult:
+        if self.base_url:
+            return self._remote_pipeline(
+                prompt,
+                output_dir,
+                execute,
+                verify,
+                max_verify_iterations,
+                model,
+            )
+        return self._service.run_pipeline(
+            prompt,
+            output_dir=output_dir,
+            execute=execute,
+            verify=verify,
+            max_verify_iterations=max_verify_iterations,
+            model=model,
+        )
 
     def generate_and_run(
         self,
@@ -54,33 +106,86 @@ class IterunClient:
         *,
         output_dir: str | Path | None = None,
         execute: bool = False,
+        verify: bool = False,
         model: str | None = None,
     ) -> PipelineResult:
-        if self.base_url:
-            return self._remote_pipeline(prompt, output_dir, execute, model)
-        return run_pipeline(
+        """Alias for run_pipeline (backward compatible)."""
+        return self.run_pipeline(
             prompt,
             output_dir=output_dir,
             execute=execute,
-            max_iterations=self.max_iterations,
-            model=model or self.model,
+            verify=verify,
+            model=model,
         )
 
-    def parse(self, yaml_content: str):
-        return parse_dsl(yaml_content)
-
-    def _remote_generate(self, prompt: str, *, model: str | None = None) -> GenerateResult:
-        with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
-            r = client.post(
-                "/api/intents/generate",
-                json={
-                    "prompt": prompt,
-                    "model": model or self.model,
-                    "max_iterations": self.max_iterations,
+    def plan_yaml(
+        self,
+        yaml_content: str,
+        *,
+        output_dir: str | Path | None = None,
+    ) -> dict[str, Any]:
+        if self.base_url:
+            return self._post_json(
+                "/api/intents/plan-yaml",
+                {
+                    "content": yaml_content,
+                    "output_dir": str(output_dir) if output_dir else None,
                 },
             )
+        return self._service.plan_yaml(yaml_content, output_dir=output_dir)
+
+    def registry_get(self, workspace: str | Path = "generated") -> dict[str, Any]:
+        if self.base_url:
+            with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+                r = client.get("/api/registry", params={"workspace": str(workspace)})
+                r.raise_for_status()
+                return r.json()
+        return self._service.registry_get(workspace)
+
+    def registry_refresh(
+        self,
+        workspace: str | Path = "generated",
+        *,
+        include_docker: bool = True,
+    ) -> dict[str, Any]:
+        if self.base_url:
+            return self._post_json(
+                "/api/registry/refresh",
+                {"workspace": str(workspace), "include_docker": include_docker},
+            )
+        return self._service.registry_refresh(workspace, include_docker=include_docker)
+
+    def registry_list(self, pattern: str = "examples/*/generated") -> list[dict[str, Any]]:
+        if self.base_url:
+            with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+                r = client.get("/api/registry/list", params={"pattern": pattern})
+                r.raise_for_status()
+                return r.json().get("registries", [])
+        return self._service.registry_list(pattern)
+
+    def parse(self, yaml_content: str):
+        if self.base_url:
+            data = self._post_json("/api/intents/parse", {"content": yaml_content})
+            if not data.get("success"):
+                raise ValueError(data.get("detail", "parse failed"))
+            return parse_dsl(yaml_content)
+        return parse_dsl(yaml_content)
+
+    def _post_json(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+        with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
+            r = client.post(path, json=payload)
             r.raise_for_status()
-            data = r.json()
+            return r.json()
+
+    def _remote_generate(self, prompt: str, *, model: str | None = None) -> GenerateResult:
+        data = self._post_json(
+            "/api/intents/generate",
+            {
+                "prompt": prompt,
+                "model": model or self.model,
+                "max_iterations": self.max_iterations,
+            },
+        )
         return GenerateResult(
             success=data["success"],
             prompt=prompt,
@@ -95,21 +200,22 @@ class IterunClient:
         prompt: str,
         output_dir: str | Path | None,
         execute: bool,
+        verify: bool,
+        max_verify_iterations: int,
         model: str | None,
     ) -> PipelineResult:
-        with httpx.Client(base_url=self.base_url, timeout=self.timeout) as client:
-            r = client.post(
-                "/api/intents/generate-and-run",
-                json={
-                    "prompt": prompt,
-                    "output_dir": str(output_dir) if output_dir else None,
-                    "execute": execute,
-                    "model": model or self.model,
-                    "max_iterations": self.max_iterations,
-                },
-            )
-            r.raise_for_status()
-            data = r.json()
+        data = self._post_json(
+            "/api/pipeline/run",
+            {
+                "prompt": prompt,
+                "output_dir": str(output_dir) if output_dir else None,
+                "execute": execute,
+                "verify": verify,
+                "max_verify_iterations": max_verify_iterations,
+                "model": model or self.model,
+                "max_iterations": self.max_iterations,
+            },
+        )
         return PipelineResult(
             success=data["success"],
             prompt=prompt,
