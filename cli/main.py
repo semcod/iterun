@@ -26,8 +26,34 @@ if __name__ == "__main__":
 
 from ir.models import IntentIR
 from parser.dsl_parser import DSLParser, parse_dsl, parse_dsl_file, ParseError, ValidationError
-from planner.simulator import Planner, plan_intent
+from planner.simulator import Planner, plan_intent, DryRunResult
 from executor.runner import Executor, execute_intent
+
+
+def write_plan_artifacts(ir: IntentIR, result: DryRunResult, output_dir: str | Path) -> dict[str, str]:
+    """Write plan output (JSON, app code, Dockerfile) into output_dir."""
+    out = Path(output_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    written: dict[str, str] = {}
+
+    plan_payload = {"intent": ir.to_dict(), "plan": result.to_dict()}
+    plan_file = out / "plan.result.json"
+    plan_file.write_text(json.dumps(plan_payload, indent=2), encoding="utf-8")
+    written["plan.result.json"] = str(plan_file)
+
+    if result.generated_code:
+        lang = ir.implementation.language
+        app_name = "app.py" if lang == "python" else "app.js" if lang == "node" else "app.txt"
+        app_file = out / app_name
+        app_file.write_text(result.generated_code, encoding="utf-8")
+        written[app_name] = str(app_file)
+
+    if result.dockerfile:
+        dockerfile = out / "Dockerfile"
+        dockerfile.write_text(result.dockerfile, encoding="utf-8")
+        written["Dockerfile"] = str(dockerfile)
+
+    return written
 
 # AI Gateway imports (optional)
 try:
@@ -57,28 +83,37 @@ class Colors:
 class CLI:
     """Interactive CLI for iterun system."""
     
-    def __init__(self, no_color: bool = False):
-        if no_color:
+    def __init__(self, no_color: bool = False, quiet: bool = False):
+        if no_color or quiet:
             Colors.disable()
+        self.quiet = quiet
         self.current_ir: Optional[IntentIR] = None
         self.parser = DSLParser()
         self.planner = Planner()
     
     def print_header(self, text: str):
+        if self.quiet:
+            return
         print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*CONSTANT_60}{Colors.RESET}")
         print(f"{Colors.BOLD}{Colors.CYAN}  {text}{Colors.RESET}")
         print(f"{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.RESET}\n")
     
     def print_success(self, text: str):
+        if self.quiet:
+            return
         print(f"{Colors.GREEN}✓ {text}{Colors.RESET}")
     
     def print_error(self, text: str):
         print(f"{Colors.RED}✗ {text}{Colors.RESET}")
     
     def print_warning(self, text: str):
+        if self.quiet:
+            return
         print(f"{Colors.YELLOW}⚠ {text}{Colors.RESET}")
     
     def print_info(self, text: str):
+        if self.quiet:
+            return
         print(f"{Colors.BLUE}ℹ {text}{Colors.RESET}")
     
     def cmd_new(self, name: str = "my-intent", goal: str = ""):
@@ -154,6 +189,9 @@ EXECUTION:
         self.print_header(f"Planning: {ir.intent.name}")
         
         result = plan_intent(ir)
+        
+        if self.quiet:
+            return result
         
         print(f"\n{Colors.BOLD}Dry-run Logs:{Colors.RESET}")
         for log in result.logs:
@@ -296,6 +334,9 @@ EXECUTION:
         self.print_header(f"Executing: {ir.intent.name}")
         
         result = execute_intent(ir, workspace, skip_amen_check=skip_amen, validate=validate, auto_fix=auto_fix)
+        
+        if self.quiet:
+            return result
         
         print(f"\n{Colors.BOLD}Execution Logs:{Colors.RESET}")
         for log in result.logs:
@@ -696,21 +737,30 @@ Examples:
   %(prog)s plan myintent.yaml        # Run dry-run on file
   %(prog)s new my-api                # Create new intent
   %(prog)s execute myintent.yaml     # Plan, approve and execute
+  %(prog)s generate "REST API" -o out/  # LLM → intent.yaml
+  %(prog)s schema                    # JSON Schema for intent DSL
         """
     )
     
     parser.add_argument('command', nargs='?', default='shell',
-                        choices=['shell', 'new', 'plan', 'execute', 'parse'],
+                        choices=['shell', 'new', 'plan', 'execute', 'parse', 'generate', 'validate', 'schema'],
                         help='Command to run')
     parser.add_argument('file', nargs='?', help='DSL file path or intent name')
     parser.add_argument('--no-color', action='store_true', help='Disable colored output')
     parser.add_argument('--json', action='store_true', help='Output in JSON format')
     parser.add_argument('--goal', '-g', help='Goal for new intent')
     parser.add_argument('--workspace', '-w', help='Workspace directory for execution')
+    parser.add_argument('--output-dir', '-o', help='Directory for generated plan artifacts')
+    parser.add_argument('--quiet', '-q', action='store_true', help='Minimal output (for scripts)')
+    parser.add_argument('--prompt', '-p', help='Natural language prompt (generate command)')
+    parser.add_argument('--max-iterations', type=int, default=5, help='LLM validate-retry limit')
+    parser.add_argument('--model', '-m', help='LiteLLM model name')
+    parser.add_argument('--run', action='store_true', help='Plan after generate (generate command)')
+    parser.add_argument('--execute', action='store_true', help='Execute after generate (generate command)')
     
     args = parser.parse_args()
     
-    cli = CLI(no_color=args.no_color)
+    cli = CLI(no_color=args.no_color, quiet=args.quiet)
     
     if args.command == 'shell':
         cli.interactive_mode()
@@ -728,8 +778,20 @@ Examples:
         ir = cli.cmd_load(args.file)
         if ir:
             result = cli.cmd_plan(ir)
+            written = None
+            if args.output_dir:
+                written = write_plan_artifacts(ir, result, args.output_dir)
+                if not args.json and not args.quiet:
+                    cli.print_info(f"Artifacts written to {args.output_dir}")
+                    for name, path in written.items():
+                        print(f"  {name}: {path}")
+            if args.quiet and not args.json and written:
+                print(f"OK {ir.intent.name} -> {args.output_dir}")
             if args.json:
-                print(json.dumps(result.to_dict(), indent=2))
+                payload = result.to_dict()
+                if written:
+                    payload["artifacts"] = written
+                print(json.dumps(payload, indent=2))
     
     elif args.command == 'execute':
         if not args.file:
@@ -738,9 +800,11 @@ Examples:
         ir = cli.cmd_load(args.file)
         if ir:
             cli.cmd_plan(ir)
-            # Auto-approve and execute (respects SKIP_AMEN_CONFIRMATION from config)
             cli.cmd_amen(ir, force=True)
             result = cli.cmd_execute(ir, args.workspace)
+            if args.quiet and result and result.success and not args.json:
+                workspace = args.workspace or "."
+                print(f"OK {ir.intent.name} executed -> {workspace}")
             if args.json and result:
                 print(json.dumps(result.to_dict(), indent=2))
     
@@ -753,10 +817,94 @@ Examples:
             ir = cli.cmd_parse(content)
         
         if ir:
+            if args.output_dir:
+                out = Path(args.output_dir)
+                out.mkdir(parents=True, exist_ok=True)
+                ir_file = out / "ir.json"
+                ir_file.write_text(ir.to_json(), encoding="utf-8")
+                if args.quiet and not args.json:
+                    print(f"OK {ir.intent.name} -> {ir_file}")
+                elif not args.json:
+                    cli.print_info(f"IR written to {ir_file}")
             if args.json:
                 print(ir.to_json())
-            else:
+            elif not args.quiet:
                 cli.cmd_show(ir)
+
+    elif args.command == 'schema':
+        from dsl.schema import get_json_schema
+        print(json.dumps(get_json_schema(), indent=2))
+
+    elif args.command == 'validate':
+        path = args.file
+        if not path:
+            cli.print_error("Usage: iterun validate <file.yaml>")
+            sys.exit(1)
+        from dsl.schema import validate_yaml_document
+        content = Path(path).read_text(encoding="utf-8")
+        doc, errors = validate_yaml_document(content)
+        if args.json:
+            print(json.dumps({"valid": not errors, "errors": errors}, indent=2))
+        elif errors:
+            for err in errors:
+                cli.print_error(err)
+            sys.exit(1)
+        else:
+            cli.print_success(f"Valid: {doc.INTENT.name if doc else path}")
+
+    elif args.command == 'generate':
+        prompt = args.prompt or args.file
+        if not prompt:
+            cli.print_error('Usage: iterun generate "Create a REST API..." [-o dir] [--run] [--execute]')
+            sys.exit(1)
+        try:
+            from generator.pipeline import run_pipeline
+        except ImportError as e:
+            cli.print_error(f"Generator unavailable: {e}")
+            sys.exit(1)
+
+        output_dir = args.output_dir or args.workspace or "generated"
+        if args.execute or args.run:
+            result = run_pipeline(
+                prompt,
+                output_dir=output_dir,
+                execute=args.execute,
+                max_iterations=args.max_iterations,
+                model=args.model,
+            )
+            if args.json:
+                print(json.dumps(result.to_dict(), indent=2))
+            elif args.quiet and result.success:
+                print(f"OK {result.yaml_path or output_dir}")
+            elif result.success:
+                cli.print_success(f"Generated: {result.yaml_path}")
+                if result.execution:
+                    cli.print_info("Service executed (see execution logs in JSON with --json)")
+            else:
+                cli.print_error(result.error or "Generation failed")
+                if result.generate and result.generate.attempts:
+                    last = result.generate.attempts[-1]
+                    for err in last.errors[:5]:
+                        cli.print_error(err)
+                sys.exit(1)
+        else:
+            from generator.intent_generator import IntentGenerator
+            gen = IntentGenerator(max_iterations=args.max_iterations, model=args.model)
+            gen_result = gen.generate(prompt)
+            if gen_result.success and gen_result.yaml_content:
+                out = Path(output_dir)
+                out.mkdir(parents=True, exist_ok=True)
+                yaml_path = out / "intent.yaml"
+                yaml_path.write_text(gen_result.yaml_content, encoding="utf-8")
+                if args.json:
+                    print(json.dumps(gen_result.to_dict(), indent=2))
+                elif args.quiet:
+                    print(f"OK {yaml_path}")
+                else:
+                    cli.print_success(f"Generated ({gen_result.iterations} iter): {yaml_path}")
+            else:
+                cli.print_error(gen_result.error or "Generation failed")
+                sys.exit(1)
 
 
 if __name__ == "__main__":

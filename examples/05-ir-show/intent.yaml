@@ -1,0 +1,20 @@
+INTENT:
+  name: ir-show
+  goal: Demonstrate IntentIR parsing and serialization
+
+ENVIRONMENT:
+  runtime: docker
+  base_image: python:3.12-slim
+
+IMPLEMENTATION:
+  language: python
+  framework: fastapi
+  actions:
+    - api.expose GET /ping
+    - db.create users
+    - db.add_column users email string
+    - shell.exec echo hello
+    - file.create config.json
+
+EXECUTION:
+  mode: dry-run

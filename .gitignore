@@ -232,6 +232,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Generated example artifacts
+examples/*/generated/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

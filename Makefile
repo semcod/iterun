@@ -93,11 +93,14 @@ shell: ## Start interactive shell
 	@echo "$(CYAN)Starting interactive shell$(RESET)"
 	$(PYTHON) -m cli.main
 
-plan: ## Run dry-run on examples/user-api.intent.yaml
-	$(PYTHON) -m cli.main plan examples/user-api.intent.yaml
+plan: ## Run dry-run on examples/01-user-api/intent.yaml
+	$(PYTHON) -m cli.main plan examples/01-user-api/intent.yaml
 
-execute: ## Execute examples/user-api.intent.yaml
-	$(PYTHON) -m cli.main execute examples/user-api.intent.yaml
+execute: ## Execute examples/01-user-api/intent.yaml
+	$(PYTHON) -m cli.main execute examples/01-user-api/intent.yaml
+
+examples: ## Run all examples (dry-run)
+	./examples/run-all.sh
 
 # Run with custom intent file: make run-intent FILE=path/to/intent.yaml
 run-intent: ## Run specific intent file (FILE=path/to/intent.yaml)

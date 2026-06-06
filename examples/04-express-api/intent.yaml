@@ -1,0 +1,21 @@
+INTENT:
+  name: express-api
+  goal: Node.js Express API with JSON endpoints
+
+ENVIRONMENT:
+  runtime: docker
+  base_image: node:20-slim
+  ports:
+    - 8000
+
+IMPLEMENTATION:
+  language: node
+  framework: express
+  actions:
+    - api.expose GET /
+    - api.expose GET /api/health
+    - api.expose POST /api/items
+    - api.expose GET /api/items
+
+EXECUTION:
+  mode: dry-run

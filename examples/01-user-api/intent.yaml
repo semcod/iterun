@@ -1,6 +1,3 @@
-# Legacy alias — canonical intent: examples/01-user-api/intent.yaml
-# Kept for backward compatibility with docs and older scripts.
-
 INTENT:
   name: user-api
   goal: Create a REST API for user management

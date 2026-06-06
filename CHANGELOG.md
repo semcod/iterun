@@ -2,6 +2,37 @@
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-06-06
+
+### Docs
+- Update README.md
+- Update docs/INTENT_DSL_SPEC.md
+- Update examples/01-user-api/README.md
+- Update examples/02-ping-smoke/README.md
+- Update examples/03-flask-api/README.md
+- Update examples/04-express-api/README.md
+- Update examples/05-ir-show/README.md
+- Update examples/06-iterate-workflow/README.md
+- Update examples/07-execution-smoke/README.md
+- Update examples/08-llm-generate/README.md
+- ... and 1 more files
+
+### Test
+- Update tests/e2e/test_intent_generator.py
+
+### Other
+- Update .gitignore
+- Update Makefile
+- Update cli/__init__.py
+- Update cli/__main__.py
+- Update cli/main.py
+- Update dsl/__init__.py
+- Update dsl/schema.py
+- Update examples/01-user-api/intent.yaml
+- Update examples/01-user-api/run.sh
+- Update examples/02-ping-smoke/intent.yaml
+- ... and 25 more files
+
 ## [0.1.3] - 2026-06-06
 
 ### Docs

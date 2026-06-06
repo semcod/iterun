@@ -58,6 +58,24 @@ class ExecutionRequest(BaseModel):
     workspace: Optional[str] = None
 
 
+class GenerateRequest(BaseModel):
+    prompt: str
+    max_iterations: int = 5
+    model: Optional[str] = None
+
+
+class GenerateAndRunRequest(BaseModel):
+    prompt: str
+    output_dir: Optional[str] = None
+    execute: bool = False
+    max_iterations: int = 5
+    model: Optional[str] = None
+
+
+class ValidateYAMLRequest(BaseModel):
+    content: str
+
+
 # API Endpoints
 
 @app.get("/", response_class=HTMLResponse)
@@ -86,6 +104,52 @@ async def list_intents():
             for ir in intents_store.values()
         ]
     }
+
+
+@app.get("/api/schema")
+async def get_schema():
+    """JSON Schema for ITERUN intent DSL (LLM generation)."""
+    from dsl.schema import get_json_schema
+    return get_json_schema()
+
+
+@app.post("/api/intents/validate-yaml")
+async def validate_yaml(data: ValidateYAMLRequest):
+    """Validate YAML against schema + DSL parser."""
+    from dsl.schema import validate_yaml_document
+    doc, errors = validate_yaml_document(data.content)
+    return {
+        "valid": not errors,
+        "errors": errors,
+        "document": doc.model_dump() if doc else None,
+    }
+
+
+@app.post("/api/intents/generate")
+async def generate_intent_api(data: GenerateRequest):
+    """Generate intent YAML from natural language (LiteLLM + retry loop)."""
+    from generator.intent_generator import IntentGenerator
+    gen = IntentGenerator(max_iterations=data.max_iterations, model=data.model)
+    result = gen.generate(data.prompt)
+    if result.success and result.ir:
+        intents_store[result.ir.id] = result.ir
+    return result.to_dict()
+
+
+@app.post("/api/intents/generate-and-run")
+async def generate_and_run_api(data: GenerateAndRunRequest):
+    """Generate → plan → optional execute."""
+    from generator.pipeline import run_pipeline
+    result = run_pipeline(
+        data.prompt,
+        output_dir=data.output_dir,
+        execute=data.execute,
+        max_iterations=data.max_iterations,
+        model=data.model,
+    )
+    if result.generate and result.generate.ir:
+        intents_store[result.generate.ir.id] = result.generate.ir
+    return result.to_dict()
 
 
 @app.post("/api/intents/parse")

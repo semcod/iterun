@@ -1,0 +1,18 @@
+INTENT:
+  name: iterate-demo
+  goal: Demonstrate iterative refinement workflow
+
+ENVIRONMENT:
+  runtime: docker
+  base_image: python:3.12-slim
+  ports:
+    - 8000
+
+IMPLEMENTATION:
+  language: python
+  framework: fastapi
+  actions:
+    - api.expose GET /ping
+
+EXECUTION:
+  mode: dry-run

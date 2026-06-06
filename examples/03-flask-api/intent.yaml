@@ -1,0 +1,20 @@
+INTENT:
+  name: flask-api
+  goal: Simple Flask REST API with status endpoints
+
+ENVIRONMENT:
+  runtime: docker
+  base_image: python:3.12-slim
+  ports:
+    - 8000
+
+IMPLEMENTATION:
+  language: python
+  framework: flask
+  actions:
+    - api.expose GET /
+    - api.expose GET /status
+    - api.expose GET /api/v1/info
+
+EXECUTION:
+  mode: dry-run
