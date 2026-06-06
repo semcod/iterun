@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "iterun"
-version = "0.1.1"
+version = "0.1.2"
 description = "DSL-based intent execution system with iterative refinement, featuring AI-powered suggestions via Ollama, safe simulation, and automatic health validation."
 readme = "README.md"
 requires-python = ">=3.11"
