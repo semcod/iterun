@@ -1,6 +1,71 @@
 # Changelog
 
+## [0.1.10] - 2026-06-06
+
+### Fixed
+- Fix ai-boilerplate issues (ticket-0e16010e)
+- Fix duplicate-imports issues (ticket-0c07b2b0)
+- Fix string-concat issues (ticket-cfee50f1)
+- Fix unused-imports issues (ticket-6278136c)
+- Fix magic-numbers issues (ticket-149a1fc0)
+- Fix duplicate-imports issues (ticket-5efcabc3)
+- Fix unused-imports issues (ticket-1ca7844d)
+- Fix magic-numbers issues (ticket-144fd557)
+- Fix unused-imports issues (ticket-57734f46)
+- Fix magic-numbers issues (ticket-b21aa0ba)
+- Fix string-concat issues (ticket-87e12bd5)
+- Fix unused-imports issues (ticket-7662f1ea)
+- Fix magic-numbers issues (ticket-92002fbe)
+- Fix unused-imports issues (ticket-cf5f965a)
+- Fix string-concat issues (ticket-59fa2f75)
+- Fix unused-imports issues (ticket-6e572529)
+- Fix magic-numbers issues (ticket-fa8065fc)
+- Fix unused-imports issues (ticket-d9daae22)
+- Fix unused-imports issues (ticket-d4251da0)
+- Fix smart-return-type issues (ticket-768de0b2)
+- Fix unused-imports issues (ticket-9d48e886)
+- Fix ai-boilerplate issues (ticket-55b88512)
+- Fix smart-return-type issues (ticket-6e5cc9f1)
+- Fix unused-imports issues (ticket-562cd9a2)
+- Fix magic-numbers issues (ticket-3fa837c6)
+- Fix smart-return-type issues (ticket-3649a11e)
+- Fix smart-return-type issues (ticket-0dad7005)
+- Fix string-concat issues (ticket-edb2e6df)
+- Fix unused-imports issues (ticket-35e0bec7)
+- Fix smart-return-type issues (ticket-3fe6ecd0)
+- Fix smart-return-type issues (ticket-29196399)
+
 ## [Unreleased]
+
+## [0.1.7] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update examples/13-resilience-vague/README.md
+- Update examples/14-resilience-inventory/README.md
+- Update examples/15-resilience-nested-paths/README.md
+- Update examples/16-resilience-framework-trap/README.md
+- Update examples/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/e2e/test_expectations.py
+
+### Other
+- Update app.doql.less
+- Update examples/13-resilience-vague/expectations.yaml
+- Update examples/13-resilience-vague/prompt.txt
+- Update examples/13-resilience-vague/run.sh
+- Update examples/14-resilience-inventory/expectations.yaml
+- Update examples/14-resilience-inventory/prompt.txt
+- Update examples/14-resilience-inventory/run.sh
+- Update examples/15-resilience-nested-paths/expectations.yaml
+- Update examples/15-resilience-nested-paths/prompt.txt
+- Update examples/15-resilience-nested-paths/run.sh
+- ... and 24 more files
 
 ## [0.1.6] - 2026-06-06
 

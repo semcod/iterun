@@ -1,46 +1,58 @@
-# code2llm/evolution | 148 func | 9f | 2026-06-06
+# code2llm/evolution | 204 func | 19f | 2026-06-06
 # generated in 0.00s
 
-NEXT[7] (ranked by impact):
+NEXT[10] (ranked by impact):
   [1] !! SPLIT           cli/main.py
-      WHY: 763L, 2 classes, max CC=36
-      EFFORT: ~4h  IMPACT: 27468
+      WHY: 928L, 2 classes, max CC=72
+      EFFORT: ~4h  IMPACT: 66816
 
-  [2] !! SPLIT           executor/runner.py
-      WHY: 614L, 4 classes, max CC=13
-      EFFORT: ~4h  IMPACT: 7982
+  [2] !! SPLIT           ai_gateway/gateway.py
+      WHY: 644L, 4 classes, max CC=15
+      EFFORT: ~4h  IMPACT: 9660
 
-  [3] !! SPLIT           ai_gateway/gateway.py
-      WHY: 615L, 4 classes, max CC=10
-      EFFORT: ~4h  IMPACT: 6150
+  [3] !! SPLIT-FUNC      main  CC=72  fan=39
+      WHY: CC=72 exceeds 15
+      EFFORT: ~1h  IMPACT: 2808
 
-  [4] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
+  [4] !! SPLIT-FUNC      run_pipeline  CC=30  fan=23
       WHY: CC=30 exceeds 15
       EFFORT: ~1h  IMPACT: 690
 
-  [5] !! SPLIT-FUNC      CLI.cmd_execute  CC=36  fan=15
-      WHY: CC=36 exceeds 15
-      EFFORT: ~1h  IMPACT: 540
+  [5] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
+      WHY: CC=30 exceeds 15
+      EFFORT: ~1h  IMPACT: 690
 
-  [6] !  SPLIT-FUNC      main  CC=21  fan=21
-      WHY: CC=21 exceeds 15
-      EFFORT: ~1h  IMPACT: 441
+  [6] !! SPLIT-FUNC      CLI.cmd_execute  CC=37  fan=15
+      WHY: CC=37 exceeds 15
+      EFFORT: ~1h  IMPACT: 555
 
-  [7] !  SPLIT-FUNC      load_dotenv  CC=15  fan=14
+  [7] !  SPLIT-FUNC      verify_contract  CC=16  fan=26
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 416
+
+  [8] !  SPLIT-FUNC      check_expectations  CC=20  fan=11
+      WHY: CC=20 exceeds 15
+      EFFORT: ~1h  IMPACT: 220
+
+  [9] !  SPLIT-FUNC      load_dotenv  CC=15  fan=14
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 210
 
+  [10] !! SPLIT           planfile.yaml
+      WHY: 643L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
 
 RISKS[3]:
-  ⚠ Splitting cli/main.py may break 24 import paths
-  ⚠ Splitting ai_gateway/gateway.py may break 18 import paths
-  ⚠ Splitting executor/runner.py may break 20 import paths
+  ⚠ Splitting cli/main.py may break 25 import paths
+  ⚠ Splitting ai_gateway/gateway.py may break 20 import paths
+  ⚠ Splitting planfile.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.2 → ≤2.9
-  max-CC:      36 → ≤18
-  god-modules: 4 → 0
-  high-CC(≥15): 5 → ≤2
+  CC̄:          4.5 → ≤3.1
+  max-CC:      72 → ≤20
+  god-modules: 6 → 0
+  high-CC(≥15): 9 → ≤4
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -68,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  (first run — no previous data)
+  prev CC̄=4.2 → now CC̄=4.5

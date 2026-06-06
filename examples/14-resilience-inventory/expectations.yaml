@@ -1,0 +1,26 @@
+framework: fastapi
+endpoints:
+  - method: GET
+    path: /ping
+    status: 200
+  - method: GET
+    path: /health
+    status: 200
+  - method: GET
+    path: /products
+    status: 200
+  - method: POST
+    path: /products
+    status: 200
+  - method: GET
+    path: /products/{id}
+    status: 200
+  - method: GET
+    path: /categories
+    status: 200
+  - method: GET
+    path: /suppliers
+    status: 200
+  - method: POST
+    path: /suppliers
+    status: 200

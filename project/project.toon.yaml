@@ -1,54 +1,52 @@
-# iterun | 148 func | 9f | 5595L | python | 2026-06-06
+# iterun | 235 func | 26f | 8624L | python | 2026-06-06
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.2  critical=17 (limit:10)  dup=0  cycles=0
+  CC̄=4.2  critical=22 (limit:10)  dup=0  cycles=0
 
 ALERTS[20]:
-  !!! cc_exceeded      CLI.cmd_execute = 36 (limit:15)
+  !!! cc_exceeded      main = 72 (limit:15)
+  !!! high_fan_out     main = 39 (limit:10)
+  !!! cc_exceeded      CLI.cmd_execute = 37 (limit:15)
+  !!! cc_exceeded      run_pipeline = 30 (limit:15)
   !!! cc_exceeded      CLI.interactive_mode = 30 (limit:15)
+  !!! high_fan_out     verify_contract = 26 (limit:10)
+  !!! high_fan_out     run_pipeline = 23 (limit:10)
   !!! high_fan_out     CLI.interactive_mode = 23 (limit:10)
-  !!! high_fan_out     main = 21 (limit:10)
-  !!  cc_exceeded      main = 21 (limit:15)
-  !!  high_fan_out     CLI.cmd_execute = 15 (limit:10)
-  !   cc_exceeded      FeedbackLoop.suggest_next_steps = 17 (limit:15)
-  !   cc_exceeded      load_dotenv = 15 (limit:15)
-  !   high_fan_out     load_dotenv = 14 (limit:10)
-  !   high_fan_out     CLI.cmd_iterate = 14 (limit:10)
+  !!  cc_exceeded      verify = 23 (limit:15)
+  !!  cc_exceeded      check_expectations = 20 (limit:15)
 
-MODULES[27] (top by size):
-  M[cli/main.py] 763L C:2 F:24 CC↑36 D:0 (python)
-  M[ai_gateway/gateway.py] 615L C:4 F:18 CC↑10 D:3 (python)
-  M[executor/runner.py] 614L C:4 F:20 CC↑13 D:2 (python)
-  M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[planfile.yaml] 474L C:0 F:0 CC↑0 D:0 (yaml)
-  M[web/app.py] 459L C:6 F:21 CC↑6 D:0 (python)
+MODULES[94] (top by size):
+  M[cli/main.py] 928L C:2 F:25 CC↑72 D:0 (python)
+  M[ai_gateway/gateway.py] 644L C:4 F:20 CC↑15 D:4 (python)
+  M[planfile.yaml] 643L C:0 F:0 CC↑0 D:0 (yaml)
+  M[executor/runner.py] 614L C:4 F:20 CC↑13 D:3 (python)
+  M[web/app.py] 523L C:9 F:25 CC↑6 D:0 (python)
+  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
   M[ai_gateway/feedback_loop.py] 384L C:3 F:14 CC↑17 D:2 (python)
-  M[planner/simulator.py] 348L C:2 F:16 CC↑9 D:2 (python)
-  M[parser/dsl_parser.py] 263L C:3 F:13 CC↑8 D:2 (python)
+  M[planner/simulator.py] 374L C:2 F:17 CC↑9 D:3 (python)
+  M[parser/dsl_parser.py] 263L C:3 F:13 CC↑8 D:5 (python)
+  M[generator/intent_generator.py] 232L C:3 F:7 CC↑11 D:0 (python)
   M[ir/models.py] 223L C:8 F:14 CC↑2 D:0 (python)
-  M[Makefile] 219L C:0 F:0 CC↑0 D:0 ()
-  M[config.py] 164L C:1 F:8 CC↑15 D:4 (python)
-  M[run.sh] 158L C:0 F:0 CC↑0 D:0 (shell)
-  M[pyproject.toml] 97L C:0 F:0 CC↑0 D:0 (toml)
-  M[prefact.yaml] 82L C:0 F:0 CC↑0 D:0 (yaml)
-  LANGS: python:16/yaml:5/shell:3/other:1/toml:1/txt:1
+  M[Makefile] 222L C:0 F:0 CC↑0 D:0 ()
+  M[generator/pipeline.py] 220L C:1 F:5 CC↑30 D:3 (python)
+  M[generator/contract_verify.py] 201L C:1 F:8 CC↑16 D:1 (python)
+  M[config.py] 168L C:1 F:8 CC↑15 D:4 (python)
+  LANGS: python:36/shell:24/txt:17/yaml:15/other:1/toml:1
 
 HOTSPOTS[10]:
+  ★ main fan=39  // Main entry point.
+  ★ verify_contract fan=26  // Orchestrates 26 calls
+  ★ run_pipeline fan=23  // Orchestrates 23 calls
   ★ CLI.interactive_mode fan=23  // Run interactive shell.
-  ★ main fan=21  // Main entry point.
-  ★ CLI.cmd_execute fan=15  // Execute approved intent with validation.
-  ★ load_dotenv fan=14  // Load environment variables from .env file.
+  ★ IntentGenerator.generate fan=15  // Orchestrates 15 calls
 
-Delegates to getv.EnvStore when avai
-  ★ CLI.cmd_iterate fan=14  // Apply iterative changes to current intent.
-
-REFACTOR[12]:
-  [1] H/L Split CLI.cmd_execute (CC=36)
-  [2] H/L Split CLI.interactive_mode (CC=30)
-  [3] H/H Split god module cli/main.py (763L, 2 classes)
-  [4] H/H Split god module executor/runner.py (614L, 4 classes)
-  [5] H/H Split god module ai_gateway/gateway.py (615L, 4 classes)
+REFACTOR[15]:
+  [1] H/L Split run_pipeline (CC=30)
+  [2] H/L Split CLI.cmd_execute (CC=37)
+  [3] H/L Split CLI.interactive_mode (CC=30)
+  [4] H/L Split main (CC=72)
+  [5] H/H Split god module cli/main.py (928L, 2 classes)
 
 EVOLUTION:
-  2026-06-06 CC̄=4.2 crit=17 5595L // Automated analysis
+  2026-06-06 CC̄=4.2 crit=22 8624L // Automated analysis

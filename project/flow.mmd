@@ -5,41 +5,41 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph CLI
+        cli____getattr__["__getattr__"]
+        sdk__client__IterunClient__schema["schema"]
+        sdk__client__IterunClient__validate["validate"]
+        sdk__client__IterunClient__generate["generate"]
+        sdk__client__IterunClient__generate_and_run["generate_and_run"]
+        sdk__client__IterunClient__parse["parse"]
+        sdk__client__IterunClient___remote_generate["_remote_generate"]
+        sdk__client__IterunClient___remote_pipeline["_remote_pipeline"]
+        cli__main__write_plan_artifacts["write_plan_artifacts"]
         cli__main__Colors__disable["disable"]
         cli__main__CLI__print_header["print_header"]
         cli__main__CLI__print_success["print_success"]
         cli__main__CLI__print_error["print_error"]
         cli__main__CLI__print_warning["print_warning"]
         cli__main__CLI__print_info["print_info"]
-        cli__main__CLI__cmd_new["cmd_new"]
-        cli__main__CLI__cmd_load["cmd_load"]
-        cli__main__CLI__cmd_parse["cmd_parse"]
-        cli__main__CLI__cmd_plan["cmd_plan"]
-        cli__main__CLI__cmd_iterate["cmd_iterate"]
-        cli__main__CLI__cmd_iterun["cmd_iterun"]
-        cli__main__CLI__cmd_execute["cmd_execute"]
-        cli__main__CLI__cmd_show["cmd_show"]
-        cli__main__CLI__cmd_save["cmd_save"]
-        ...["+8 more"]
+        ...["+17 more"]
     end
 
     subgraph Core
-        config__load_dotenv{{load_dotenv CC=15}}
-        config__get_env["get_env"]
-        config__get_env_bool["get_env_bool"]
-        config__get_env_int["get_env_int"]
-        config__get_env_float["get_env_float"]
-        config__reload_config["reload_config"]
-        config__configure["configure"]
-        planner__simulator__DryRunResult__add_log["add_log"]
-        planner__simulator__DryRunResult__to_dict["to_dict"]
-        planner__simulator__Planner__dry_run["dry_run"]
-        planner__simulator__Planner___generate_python_code["_generate_python_code"]
-        planner__simulator__Planner___generate_fastapi_code["_generate_fastapi_code"]
-        planner__simulator__Planner___generate_flask_code["_generate_flask_code"]
-        planner__simulator__Planner___generate_basic_python_code["_generate_basic_python_code"]
-        planner__simulator__Planner___generate_node_code["_generate_node_code"]
-        ...["+92 more"]
+        generator__intract_manifest___safe_id["_safe_id"]
+        generator__intract_manifest__build_intract_manifest["build_intract_manifest"]
+        generator__intract_manifest__intent_to_intract_dict["intent_to_intract_dict"]
+        generator__intract_manifest__write_intract_manifest["write_intract_manifest"]
+        generator__contract_verify__VerifyResult__to_dict["to_dict"]
+        generator__contract_verify__write_contract_artifacts["write_contract_artifacts"]
+        generator__contract_verify__verify_contract{{verify_contract CC=16}}
+        generator__expectations__check_expectations{{check_expectations CC=20}}
+        executor__runner__ValidationResult__add_check["add_check"]
+        executor__runner__ValidationResult__to_dict["to_dict"]
+        executor__runner__ExecutionResult__add_log["add_log"]
+        executor__runner__ExecutionResult__to_dict["to_dict"]
+        executor__runner__Executor__execute["execute"]
+        executor__runner__Executor___validate_and_fix["_validate_and_fix"]
+        executor__runner__Executor___validate_endpoints["_validate_endpoints"]
+        ...["+113 more"]
     end
 
-    class config__get_env,config__get_env_bool,config__get_env_int,config__get_env_float,config__reload_config,config__configure,planner__simulator__DryRunResult__add_log,planner__simulator__DryRunResult__to_dict,planner__simulator__Planner__dry_run,planner__simulator__Planner___generate_python_code entry
+    class cli____getattr__,generator__contract_verify__VerifyResult__to_dict,executor__runner__ValidationResult__add_check,executor__runner__ValidationResult__to_dict,executor__runner__ExecutionResult__add_log,executor__runner__ExecutionResult__to_dict,executor__runner__Executor__execute,executor__runner__Executor___validate_and_fix,executor__runner__Executor___validate_endpoints,executor__runner__Executor___attempt_fix entry

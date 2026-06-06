@@ -1,17 +1,115 @@
 project: /home/tom/github/wronai/iterun
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 35
-  total_edges: 28
-  modules_count: 8
+  total_nodes: 85
+  total_edges: 77
+  modules_count: 22
 nodes:
-  config.get_config:
-    name: get_config
-    module: config
-    line: 143
-    cyclomatic_complexity: 2
+  examples._scripts.annotate_intract.annotate_python:
+    name: annotate_python
+    module: examples._scripts.annotate_intract
+    line: 43
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  planner.simulator.plan_intent:
+    name: plan_intent
+    module: planner.simulator
+    line: 371
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  generator.session.write_session_artifacts:
+    name: write_session_artifacts
+    module: generator.session
+    line: 14
+    cyclomatic_complexity: 5
+    calls_out: 16
+    calls_in: 1
+  generator.testql_scenario._probe_path:
+    name: _probe_path
+    module: generator.testql_scenario
+    line: 14
+    cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 5
+    calls_in: 1
+  examples._scripts.intent_to_openapi.intent_to_openapi:
+    name: intent_to_openapi
+    module: examples._scripts.intent_to_openapi
+    line: 18
+    cyclomatic_complexity: 8
+    calls_out: 17
+    calls_in: 1
+  examples._scripts.annotate_intract.annotate_express:
+    name: annotate_express
+    module: examples._scripts.annotate_intract
+    line: 61
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 1
+  generator.intract_manifest._safe_id:
+    name: _safe_id
+    module: generator.intract_manifest
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  examples._scripts.intent_to_intract.main:
+    name: main
+    module: examples._scripts.intent_to_intract
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  generator.intract_manifest._slug:
+    name: _slug
+    module: generator.intract_manifest
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  ai_gateway.gateway.complete:
+    name: complete
+    module: ai_gateway.gateway
+    line: 637
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  cli.main.CLI.cmd_parse:
+    name: cmd_parse
+    module: cli.main
+    line: 170
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  sdk.client.IterunClient.schema:
+    name: schema
+    module: sdk.client
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  ai_gateway.gateway.GatewayConfig.__post_init__:
+    name: __post_init__
+    module: ai_gateway.gateway
+    line: 236
+    cyclomatic_complexity: 15
+    calls_out: 8
+    calls_in: 0
+  config.reload_config:
+    name: reload_config
+    module: config
+    line: 155
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  dsl.schema.get_json_schema:
+    name: get_json_schema
+    module: dsl.schema
+    line: 107
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 4
   parser.dsl_parser.parse_dsl_file:
     name: parse_dsl_file
     module: parser.dsl_parser
@@ -19,110 +117,299 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  web.app.ai_status:
-    name: ai_status
-    module: web.app
-    line: 303
+  examples._scripts.annotate_intract._slug:
+    name: _slug
+    module: examples._scripts.annotate_intract
+    line: 13
     cyclomatic_complexity: 2
-    calls_out: 5
+    calls_out: 4
+    calls_in: 1
+  web.app.get_schema:
+    name: get_schema
+    module: web.app
+    line: 110
+    cyclomatic_complexity: 1
+    calls_out: 2
     calls_in: 0
-  cli.main.CLI.cmd_new:
-    name: cmd_new
-    module: cli.main
-    line: 84
+  web.app.ai_apply_suggestions:
+    name: ai_apply_suggestions
+    module: web.app
+    line: 476
     cyclomatic_complexity: 4
     calls_out: 7
-    calls_in: 0
-  cli.main.CLI.cmd_ai_apply:
-    name: cmd_ai_apply
-    module: cli.main
-    line: 541
-    cyclomatic_complexity: 8
-    calls_out: 10
     calls_in: 0
   web.app.validate_intent:
     name: validate_intent
     module: web.app
-    line: 218
+    line: 282
     cyclomatic_complexity: 6
     calls_out: 9
     calls_in: 0
-  cli.main.CLI.cmd_ai_chat:
-    name: cmd_ai_chat
-    module: cli.main
-    line: 570
-    cyclomatic_complexity: 12
-    calls_out: 18
-    calls_in: 0
-  web.app.execute:
-    name: execute
-    module: web.app
-    line: 189
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 0
-  ai_gateway.gateway.complete:
-    name: complete
-    module: ai_gateway.gateway
-    line: 608
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  cli.main.CLI.cmd_models:
-    name: cmd_models
-    module: cli.main
-    line: 618
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  cli.main.CLI.cmd_load:
-    name: cmd_load
-    module: cli.main
-    line: 119
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  web.app.ai_chat:
-    name: ai_chat
-    module: web.app
-    line: 361
-    cyclomatic_complexity: 4
+  generator.testql_scenario.write_testql_scenario:
+    name: write_testql_scenario
+    module: generator.testql_scenario
+    line: 58
+    cyclomatic_complexity: 2
     calls_out: 7
+    calls_in: 4
+  cli.main.CLI.cmd_ai_suggest:
+    name: cmd_ai_suggest
+    module: cli.main
+    line: 529
+    cyclomatic_complexity: 11
+    calls_out: 21
     calls_in: 0
   web.app.list_models:
     name: list_models
     module: web.app
-    line: 325
+    line: 389
     cyclomatic_complexity: 2
     calls_out: 4
+    calls_in: 0
+  generator.expectations.load_and_check_expectations:
+    name: load_and_check_expectations
+    module: generator.expectations
+    line: 78
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 1
+  generator.intent_generator._build_user_prompt:
+    name: _build_user_prompt
+    module: generator.intent_generator
+    line: 129
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  web.app.generate_code:
+    name: generate_code
+    module: web.app
+    line: 499
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  examples._scripts.annotate_intract._comment:
+    name: _comment
+    module: examples._scripts.annotate_intract
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  sdk.client.IterunClient.validate:
+    name: validate
+    module: sdk.client
+    line: 37
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  cli.main.CLI.cmd_load:
+    name: cmd_load
+    module: cli.main
+    line: 154
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  cli.main.CLI.cmd_execute:
+    name: cmd_execute
+    module: cli.main
+    line: 310
+    cyclomatic_complexity: 37
+    calls_out: 37
+    calls_in: 0
+  generator.testql_scenario.build_testql_scenario:
+    name: build_testql_scenario
+    module: generator.testql_scenario
+    line: 18
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 1
+  generator.intent_generator.IntentGenerator.generate:
+    name: generate
+    module: generator.intent_generator
+    line: 168
+    cyclomatic_complexity: 11
+    calls_out: 21
+    calls_in: 0
+  examples._scripts.annotate_intract.main:
+    name: main
+    module: examples._scripts.annotate_intract
+    line: 81
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  parser.dsl_parser.parse_dsl:
+    name: parse_dsl
+    module: parser.dsl_parser
+    line: 254
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 6
+  web.app.parse_intent:
+    name: parse_intent
+    module: web.app
+    line: 156
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  examples._scripts.intent_to_openapi.main:
+    name: main
+    module: examples._scripts.intent_to_openapi
+    line: 63
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 0
+  generator.pipeline._container_logs:
+    name: _container_logs
+    module: generator.pipeline
+    line: 74
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  dsl.schema.validate_yaml_document:
+    name: validate_yaml_document
+    module: dsl.schema
+    line: 116
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 4
+  generator.intract_manifest.intent_to_intract_dict:
+    name: intent_to_intract_dict
+    module: generator.intract_manifest
+    line: 87
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  examples._scripts.annotate_intract._actions:
+    name: _actions
+    module: examples._scripts.annotate_intract
+    line: 18
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 2
+  generator.contract_verify.write_contract_artifacts:
+    name: write_contract_artifacts
+    module: generator.contract_verify
+    line: 130
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  planner.simulator.Planner._generate_fastapi_code:
+    name: _generate_fastapi_code
+    module: planner.simulator
+    line: 130
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 0
+  cli.main.CLI.cmd_models:
+    name: cmd_models
+    module: cli.main
+    line: 659
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  generator.intract_manifest.write_intract_manifest:
+    name: write_intract_manifest
+    module: generator.intract_manifest
+    line: 96
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 4
+  cli.main.CLI.cmd_ai_chat:
+    name: cmd_ai_chat
+    module: cli.main
+    line: 611
+    cyclomatic_complexity: 12
+    calls_out: 18
+    calls_in: 0
+  web.app.ai_complete:
+    name: ai_complete
+    module: web.app
+    line: 404
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  ai_gateway.gateway.suggest_improvements:
+    name: suggest_improvements
+    module: ai_gateway.gateway
+    line: 642
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  generator.intent_generator.IntentGenerator.__init__:
+    name: __init__
+    module: generator.intent_generator
+    line: 155
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  examples._scripts.verify_expectations._parse_actions:
+    name: _parse_actions
+    module: examples._scripts.verify_expectations
+    line: 22
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 1
+  web.app.generate_and_run_api:
+    name: generate_and_run_api
+    module: web.app
+    line: 140
+    cyclomatic_complexity: 3
+    calls_out: 3
     calls_in: 0
   web.app.plan:
     name: plan
     module: web.app
-    line: 124
+    line: 188
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 0
-  cli.main.CLI.cmd_parse:
-    name: cmd_parse
-    module: cli.main
-    line: 135
+  generator.pipeline.run_pipeline:
+    name: run_pipeline
+    module: generator.pipeline
+    line: 96
+    cyclomatic_complexity: 30
+    calls_out: 35
+    calls_in: 3
+  executor.runner.execute_intent:
+    name: execute_intent
+    module: executor.runner
+    line: 605
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  planner.simulator._endpoint_to_func_name:
+    name: _endpoint_to_func_name
+    module: planner.simulator
+    line: 17
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 2
+  generator.pipeline._finalize:
+    name: _finalize
+    module: generator.pipeline
+    line: 83
     cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  cli.main.CLI.cmd_ai_health:
-    name: cmd_ai_health
-    module: cli.main
-    line: 640
+    calls_out: 3
+    calls_in: 8
+  generator.expectations.check_expectations:
+    name: check_expectations
+    module: generator.expectations
+    line: 33
+    cyclomatic_complexity: 20
+    calls_out: 23
+    calls_in: 1
+  generator.pipeline._write_plan_artifacts:
+    name: _write_plan_artifacts
+    module: generator.pipeline
+    line: 51
     cyclomatic_complexity: 4
-    calls_out: 12
-    calls_in: 0
-  web.app.ai_suggest:
-    name: ai_suggest
-    module: web.app
-    line: 385
-    cyclomatic_complexity: 6
     calls_out: 8
+    calls_in: 1
+  cli.main.CLI.cmd_plan:
+    name: cmd_plan
+    module: cli.main
+    line: 182
+    cyclomatic_complexity: 11
+    calls_out: 24
     calls_in: 0
   executor.runner.Executor.__init__:
     name: __init__
@@ -131,34 +418,118 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 0
-  planner.simulator.plan_intent:
-    name: plan_intent
-    module: planner.simulator
-    line: 345
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
-  config.reload_config:
-    name: reload_config
-    module: config
-    line: 151
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  executor.runner.execute_intent:
-    name: execute_intent
-    module: executor.runner
-    line: 605
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 2
-  web.app.generate_code:
-    name: generate_code
-    module: web.app
-    line: 435
+  ai_gateway.gateway.get_gateway:
+    name: get_gateway
+    module: ai_gateway.gateway
+    line: 629
     cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 13
+  web.app.ai_status:
+    name: ai_status
+    module: web.app
+    line: 367
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  sdk.client.IterunClient.parse:
+    name: parse
+    module: sdk.client
+    line: 69
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  planner.simulator.Planner._generate_flask_code:
+    name: _generate_flask_code
+    module: planner.simulator
+    line: 170
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  examples._scripts.intent_to_testql.main:
+    name: main
+    module: examples._scripts.intent_to_testql
+    line: 16
+    cyclomatic_complexity: 1
     calls_out: 6
     calls_in: 0
+  generator.intent_generator.extract_yaml_from_llm:
+    name: extract_yaml_from_llm
+    module: generator.intent_generator
+    line: 79
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  cli.main.CLI.cmd_ai_apply:
+    name: cmd_ai_apply
+    module: cli.main
+    line: 582
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 0
+  examples._scripts.verify_expectations._load_yaml:
+    name: _load_yaml
+    module: examples._scripts.verify_expectations
+    line: 18
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  sdk.client.IterunClient.generate_and_run:
+    name: generate_and_run
+    module: sdk.client
+    line: 51
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 0
+  web.app.validate_yaml:
+    name: validate_yaml
+    module: web.app
+    line: 117
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  examples._scripts.intent_to_openapi._slug:
+    name: _slug
+    module: examples._scripts.intent_to_openapi
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  examples._scripts.verify_expectations.verify:
+    name: verify
+    module: examples._scripts.verify_expectations
+    line: 51
+    cyclomatic_complexity: 23
+    calls_out: 27
+    calls_in: 1
+  config.get_config:
+    name: get_config
+    module: config
+    line: 147
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 5
+  web.app.execute:
+    name: execute
+    module: web.app
+    line: 253
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  web.app.ai_suggest:
+    name: ai_suggest
+    module: web.app
+    line: 449
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 0
+  generator.intract_manifest.parse_api_actions:
+    name: parse_api_actions
+    module: generator.intract_manifest
+    line: 21
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 4
   config.load_dotenv:
     name: load_dotenv
     module: config
@@ -173,27 +544,55 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 1
     calls_in: 0
-  web.app.ai_apply_suggestions:
-    name: ai_apply_suggestions
-    module: web.app
-    line: 412
+  dsl.schema.get_system_prompt:
+    name: get_system_prompt
+    module: dsl.schema
+    line: 146
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  cli.main.CLI.cmd_new:
+    name: cmd_new
+    module: cli.main
+    line: 119
     cyclomatic_complexity: 4
     calls_out: 7
     calls_in: 0
-  ai_gateway.gateway.suggest_improvements:
-    name: suggest_improvements
-    module: ai_gateway.gateway
-    line: 613
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  web.app.ai_complete:
-    name: ai_complete
+  web.app.ai_chat:
+    name: ai_chat
     module: web.app
-    line: 340
-    cyclomatic_complexity: 3
-    calls_out: 6
+    line: 425
+    cyclomatic_complexity: 4
+    calls_out: 7
     calls_in: 0
+  generator.contract_verify.verify_contract:
+    name: verify_contract
+    module: generator.contract_verify
+    line: 146
+    cyclomatic_complexity: 16
+    calls_out: 32
+    calls_in: 1
+  cli.main.CLI.cmd_ai_health:
+    name: cmd_ai_health
+    module: cli.main
+    line: 681
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 0
+  examples._scripts.verify_expectations.main:
+    name: main
+    module: examples._scripts.verify_expectations
+    line: 111
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  generator.intract_manifest.build_intract_manifest:
+    name: build_intract_manifest
+    module: generator.intract_manifest
+    line: 37
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
   ai_gateway.feedback_loop.create_feedback_loop:
     name: create_feedback_loop
     module: ai_gateway.feedback_loop
@@ -201,58 +600,195 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 4
-  cli.main.CLI.cmd_execute:
-    name: cmd_execute
-    module: cli.main
-    line: 272
-    cyclomatic_complexity: 36
-    calls_out: 37
-    calls_in: 0
-  web.app.parse_intent:
-    name: parse_intent
-    module: web.app
-    line: 92
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 0
-  parser.dsl_parser.parse_dsl:
-    name: parse_dsl
-    module: parser.dsl_parser
-    line: 254
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  cli.main.CLI.cmd_ai_suggest:
-    name: cmd_ai_suggest
-    module: cli.main
-    line: 488
-    cyclomatic_complexity: 11
-    calls_out: 21
-    calls_in: 0
-  cli.main.CLI.cmd_plan:
-    name: cmd_plan
-    module: cli.main
-    line: 147
-    cyclomatic_complexity: 10
-    calls_out: 24
-    calls_in: 0
-  ai_gateway.gateway.get_gateway:
-    name: get_gateway
-    module: ai_gateway.gateway
-    line: 600
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 12
-  ai_gateway.gateway.GatewayConfig.__post_init__:
-    name: __post_init__
-    module: ai_gateway.gateway
-    line: 235
-    cyclomatic_complexity: 9
-    calls_out: 6
-    calls_in: 0
 edges:
+- caller: examples._scripts.verify_expectations.verify
+  callee: examples._scripts.verify_expectations._load_yaml
+  call_type: resolved
+- caller: examples._scripts.verify_expectations.verify
+  callee: examples._scripts.verify_expectations._parse_actions
+  call_type: resolved
+- caller: examples._scripts.verify_expectations.main
+  callee: examples._scripts.verify_expectations.verify
+  call_type: resolved
+- caller: generator.intract_manifest.build_intract_manifest
+  callee: generator.intract_manifest._safe_id
+  call_type: resolved
+- caller: generator.intract_manifest.build_intract_manifest
+  callee: generator.intract_manifest.parse_api_actions
+  call_type: resolved
+- caller: generator.intract_manifest.build_intract_manifest
+  callee: generator.intract_manifest._slug
+  call_type: resolved
+- caller: generator.intract_manifest.intent_to_intract_dict
+  callee: generator.intract_manifest.build_intract_manifest
+  call_type: resolved
+- caller: generator.intract_manifest.write_intract_manifest
+  callee: generator.intract_manifest.intent_to_intract_dict
+  call_type: resolved
+- caller: examples._scripts.intent_to_openapi.intent_to_openapi
+  callee: examples._scripts.intent_to_openapi._slug
+  call_type: resolved
+- caller: examples._scripts.intent_to_openapi.main
+  callee: examples._scripts.intent_to_openapi.intent_to_openapi
+  call_type: resolved
+- caller: generator.testql_scenario.build_testql_scenario
+  callee: generator.intract_manifest.parse_api_actions
+  call_type: resolved
+- caller: generator.testql_scenario.build_testql_scenario
+  callee: generator.testql_scenario._probe_path
+  call_type: resolved
+- caller: generator.testql_scenario.write_testql_scenario
+  callee: generator.testql_scenario.build_testql_scenario
+  call_type: resolved
+- caller: examples._scripts.intent_to_testql.main
+  callee: generator.testql_scenario.write_testql_scenario
+  call_type: resolved
+- caller: generator.contract_verify.write_contract_artifacts
+  callee: generator.intract_manifest.write_intract_manifest
+  call_type: resolved
+- caller: generator.contract_verify.write_contract_artifacts
+  callee: generator.testql_scenario.write_testql_scenario
+  call_type: resolved
+- caller: generator.contract_verify.verify_contract
+  callee: generator.contract_verify.write_contract_artifacts
+  call_type: resolved
+- caller: generator.contract_verify.verify_contract
+  callee: generator.intract_manifest.parse_api_actions
+  call_type: resolved
+- caller: generator.contract_verify.verify_contract
+  callee: generator.expectations.load_and_check_expectations
+  call_type: resolved
+- caller: generator.expectations.check_expectations
+  callee: generator.intract_manifest.parse_api_actions
+  call_type: resolved
+- caller: generator.expectations.load_and_check_expectations
+  callee: generator.expectations.check_expectations
+  call_type: resolved
+- caller: executor.runner.Executor.__init__
+  callee: config.get_config
+  call_type: resolved
+- caller: sdk.client.IterunClient.schema
+  callee: dsl.schema.get_json_schema
+  call_type: resolved
+- caller: sdk.client.IterunClient.validate
+  callee: dsl.schema.validate_yaml_document
+  call_type: resolved
+- caller: sdk.client.IterunClient.generate_and_run
+  callee: generator.pipeline.run_pipeline
+  call_type: resolved
+- caller: sdk.client.IterunClient.parse
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: examples._scripts.annotate_intract._comment
+  callee: examples._scripts.annotate_intract._slug
+  call_type: resolved
+- caller: examples._scripts.annotate_intract.annotate_python
+  callee: examples._scripts.annotate_intract._actions
+  call_type: resolved
+- caller: examples._scripts.annotate_intract.annotate_express
+  callee: examples._scripts.annotate_intract._actions
+  call_type: resolved
+- caller: examples._scripts.annotate_intract.main
+  callee: examples._scripts.annotate_intract.annotate_python
+  call_type: resolved
+- caller: examples._scripts.annotate_intract.main
+  callee: examples._scripts.annotate_intract.annotate_express
+  call_type: resolved
+- caller: planner.simulator.Planner._generate_fastapi_code
+  callee: planner.simulator._endpoint_to_func_name
+  call_type: resolved
+- caller: planner.simulator.Planner._generate_flask_code
+  callee: planner.simulator._endpoint_to_func_name
+  call_type: resolved
+- caller: examples._scripts.intent_to_intract.main
+  callee: generator.intract_manifest.write_intract_manifest
+  call_type: resolved
+- caller: ai_gateway.feedback_loop.FeedbackLoop.__init__
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
 - caller: config.reload_config
   callee: config.load_dotenv
+  call_type: resolved
+- caller: generator.pipeline._write_plan_artifacts
+  callee: generator.intract_manifest.write_intract_manifest
+  call_type: resolved
+- caller: generator.pipeline._write_plan_artifacts
+  callee: generator.testql_scenario.write_testql_scenario
+  call_type: resolved
+- caller: generator.pipeline._finalize
+  callee: generator.pipeline._container_logs
+  call_type: resolved
+- caller: generator.pipeline._finalize
+  callee: generator.session.write_session_artifacts
+  call_type: resolved
+- caller: generator.pipeline.run_pipeline
+  callee: generator.pipeline._finalize
+  call_type: resolved
+- caller: generator.pipeline.run_pipeline
+  callee: planner.simulator.plan_intent
+  call_type: resolved
+- caller: generator.intent_generator.IntentGenerator.__init__
+  callee: dsl.schema.get_system_prompt
+  call_type: resolved
+- caller: generator.intent_generator.IntentGenerator.__init__
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: generator.intent_generator.IntentGenerator.generate
+  callee: generator.intent_generator._build_user_prompt
+  call_type: resolved
+- caller: generator.intent_generator.IntentGenerator.generate
+  callee: generator.intent_generator.extract_yaml_from_llm
+  call_type: resolved
+- caller: generator.intent_generator.IntentGenerator.generate
+  callee: dsl.schema.validate_yaml_document
+  call_type: resolved
+- caller: cli.main.CLI.cmd_new
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: cli.main.CLI.cmd_load
+  callee: parser.dsl_parser.parse_dsl_file
+  call_type: resolved
+- caller: cli.main.CLI.cmd_parse
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: cli.main.CLI.cmd_plan
+  callee: planner.simulator.plan_intent
+  call_type: resolved
+- caller: cli.main.CLI.cmd_execute
+  callee: executor.runner.execute_intent
+  call_type: resolved
+- caller: cli.main.CLI.cmd_execute
+  callee: config.get_config
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_suggest
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_apply
+  callee: ai_gateway.feedback_loop.create_feedback_loop
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_chat
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: cli.main.CLI.cmd_models
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: cli.main.CLI.cmd_ai_health
+  callee: ai_gateway.gateway.get_gateway
+  call_type: resolved
+- caller: dsl.schema.validate_yaml_document
+  callee: parser.dsl_parser.parse_dsl
+  call_type: resolved
+- caller: dsl.schema.get_system_prompt
+  callee: dsl.schema.get_json_schema
+  call_type: resolved
+- caller: web.app.get_schema
+  callee: dsl.schema.get_json_schema
+  call_type: resolved
+- caller: web.app.validate_yaml
+  callee: dsl.schema.validate_yaml_document
+  call_type: resolved
+- caller: web.app.generate_and_run_api
+  callee: generator.pipeline.run_pipeline
   call_type: resolved
 - caller: web.app.parse_intent
   callee: parser.dsl_parser.parse_dsl
@@ -296,45 +832,6 @@ edges:
 - caller: ai_gateway.gateway.suggest_improvements
   callee: ai_gateway.gateway.get_gateway
   call_type: resolved
-- caller: ai_gateway.feedback_loop.FeedbackLoop.__init__
-  callee: ai_gateway.gateway.get_gateway
-  call_type: resolved
-- caller: cli.main.CLI.cmd_new
-  callee: parser.dsl_parser.parse_dsl
-  call_type: resolved
-- caller: cli.main.CLI.cmd_load
-  callee: parser.dsl_parser.parse_dsl_file
-  call_type: resolved
-- caller: cli.main.CLI.cmd_parse
-  callee: parser.dsl_parser.parse_dsl
-  call_type: resolved
-- caller: cli.main.CLI.cmd_plan
-  callee: planner.simulator.plan_intent
-  call_type: resolved
-- caller: cli.main.CLI.cmd_execute
-  callee: executor.runner.execute_intent
-  call_type: resolved
-- caller: cli.main.CLI.cmd_execute
-  callee: config.get_config
-  call_type: resolved
-- caller: cli.main.CLI.cmd_ai_suggest
-  callee: ai_gateway.feedback_loop.create_feedback_loop
-  call_type: resolved
-- caller: cli.main.CLI.cmd_ai_apply
-  callee: ai_gateway.feedback_loop.create_feedback_loop
-  call_type: resolved
-- caller: cli.main.CLI.cmd_ai_chat
-  callee: ai_gateway.gateway.get_gateway
-  call_type: resolved
-- caller: cli.main.CLI.cmd_models
-  callee: ai_gateway.gateway.get_gateway
-  call_type: resolved
-- caller: cli.main.CLI.cmd_ai_health
-  callee: ai_gateway.gateway.get_gateway
-  call_type: resolved
-- caller: executor.runner.Executor.__init__
-  callee: config.get_config
-  call_type: resolved
 modules:
   ai_gateway.feedback_loop:
   - ai_gateway.feedback_loop.FeedbackLoop.__init__
@@ -359,14 +856,75 @@ modules:
   - config.get_config
   - config.load_dotenv
   - config.reload_config
+  dsl.schema:
+  - dsl.schema.get_json_schema
+  - dsl.schema.get_system_prompt
+  - dsl.schema.validate_yaml_document
+  examples._scripts.annotate_intract:
+  - examples._scripts.annotate_intract._actions
+  - examples._scripts.annotate_intract._comment
+  - examples._scripts.annotate_intract._slug
+  - examples._scripts.annotate_intract.annotate_express
+  - examples._scripts.annotate_intract.annotate_python
+  - examples._scripts.annotate_intract.main
+  examples._scripts.intent_to_intract:
+  - examples._scripts.intent_to_intract.main
+  examples._scripts.intent_to_openapi:
+  - examples._scripts.intent_to_openapi._slug
+  - examples._scripts.intent_to_openapi.intent_to_openapi
+  - examples._scripts.intent_to_openapi.main
+  examples._scripts.intent_to_testql:
+  - examples._scripts.intent_to_testql.main
+  examples._scripts.verify_expectations:
+  - examples._scripts.verify_expectations._load_yaml
+  - examples._scripts.verify_expectations._parse_actions
+  - examples._scripts.verify_expectations.main
+  - examples._scripts.verify_expectations.verify
   executor.runner:
   - executor.runner.Executor.__init__
   - executor.runner.execute_intent
+  generator.contract_verify:
+  - generator.contract_verify.verify_contract
+  - generator.contract_verify.write_contract_artifacts
+  generator.expectations:
+  - generator.expectations.check_expectations
+  - generator.expectations.load_and_check_expectations
+  generator.intent_generator:
+  - generator.intent_generator.IntentGenerator.__init__
+  - generator.intent_generator.IntentGenerator.generate
+  - generator.intent_generator._build_user_prompt
+  - generator.intent_generator.extract_yaml_from_llm
+  generator.intract_manifest:
+  - generator.intract_manifest._safe_id
+  - generator.intract_manifest._slug
+  - generator.intract_manifest.build_intract_manifest
+  - generator.intract_manifest.intent_to_intract_dict
+  - generator.intract_manifest.parse_api_actions
+  - generator.intract_manifest.write_intract_manifest
+  generator.pipeline:
+  - generator.pipeline._container_logs
+  - generator.pipeline._finalize
+  - generator.pipeline._write_plan_artifacts
+  - generator.pipeline.run_pipeline
+  generator.session:
+  - generator.session.write_session_artifacts
+  generator.testql_scenario:
+  - generator.testql_scenario._probe_path
+  - generator.testql_scenario.build_testql_scenario
+  - generator.testql_scenario.write_testql_scenario
   parser.dsl_parser:
   - parser.dsl_parser.parse_dsl
   - parser.dsl_parser.parse_dsl_file
   planner.simulator:
+  - planner.simulator.Planner._generate_fastapi_code
+  - planner.simulator.Planner._generate_flask_code
+  - planner.simulator._endpoint_to_func_name
   - planner.simulator.plan_intent
+  sdk.client:
+  - sdk.client.IterunClient.generate_and_run
+  - sdk.client.IterunClient.parse
+  - sdk.client.IterunClient.schema
+  - sdk.client.IterunClient.validate
   web.app:
   - web.app.ai_apply_suggestions
   - web.app.ai_chat
@@ -374,11 +932,14 @@ modules:
   - web.app.ai_status
   - web.app.ai_suggest
   - web.app.execute
+  - web.app.generate_and_run_api
   - web.app.generate_code
+  - web.app.get_schema
   - web.app.list_models
   - web.app.parse_intent
   - web.app.plan
   - web.app.validate_intent
+  - web.app.validate_yaml
 entry_points:
 - ai_gateway.feedback_loop.FeedbackLoop.__init__
 - ai_gateway.feedback_loop.FeedbackLoop._build_analysis_prompt
@@ -406,19 +967,22 @@ entry_points:
 - ai_gateway.gateway.GatewayConfig.__post_init__
 - ai_gateway.gateway.GatewayConfig.get_available_models
 - ai_gateway.gateway.GatewayConfig.get_model
+- ai_gateway.gateway.GatewayConfig.litellm_model_id
+- ai_gateway.gateway.GatewayConfig.resolve_model
 - ai_gateway.gateway.GatewayConfig.to_dict
 - ai_gateway.gateway.ModelConfig.to_dict
 - ai_gateway.gateway.complete
 - ai_gateway.gateway.suggest_improvements
+- cli.__getattr__
 - cli.main.CLI.__init__
 - cli.main.CLI._show_help
 - cli.main.CLI.cmd_ai_apply
 - cli.main.CLI.cmd_ai_chat
 - cli.main.CLI.cmd_ai_health
 - cli.main.CLI.cmd_ai_suggest
-- cli.main.CLI.cmd_iterun
 - cli.main.CLI.cmd_execute
 - cli.main.CLI.cmd_iterate
+- cli.main.CLI.cmd_iterun
 - cli.main.CLI.cmd_load
 - cli.main.CLI.cmd_models
 - cli.main.CLI.cmd_new
@@ -440,6 +1004,28 @@ entry_points:
 - config.get_env_float
 - config.get_env_int
 - config.reload_config
+- dsl.schema.IntentSection.name_kebab
+- dsl.schema.document_to_yaml
+- examples._common._example_copy_expectations
+- examples._common._example_generate
+- examples._common._example_generate_dir
+- examples._common._example_read_prompt
+- examples._common._example_setup
+- examples._common._example_show_verify_rounds
+- examples._scripts.annotate_intract.main
+- examples._scripts.intent_to_intract.main
+- examples._scripts.intent_to_openapi.main
+- examples._scripts.intent_to_testql.main
+- examples._scripts.verify_expectations.main
+- examples._verify._example_annotate_intract
+- examples._verify._example_discover_url
+- examples._verify._example_e2e_verify
+- examples._verify._example_emit_openapi
+- examples._verify._example_intent_name
+- examples._verify._example_require_tools
+- examples._verify._example_run_intract
+- examples._verify._example_run_testql
+- examples._verify._example_verify_expectations
 - executor.runner.ExecutionResult.__init__
 - executor.runner.ExecutionResult.add_log
 - executor.runner.ExecutionResult.to_dict
@@ -459,6 +1045,12 @@ entry_points:
 - executor.runner.ValidationResult.__init__
 - executor.runner.ValidationResult.add_check
 - executor.runner.ValidationResult.to_dict
+- generator.contract_verify.VerifyResult.to_dict
+- generator.intent_generator.GenerateAttempt.to_dict
+- generator.intent_generator.GenerateResult.to_dict
+- generator.intent_generator.IntentGenerator.__init__
+- generator.intent_generator.IntentGenerator.generate
+- generator.pipeline.PipelineResult.to_dict
 - ir.models.Action.from_dict
 - ir.models.Action.to_dict
 - ir.models.Environment.from_dict
@@ -499,6 +1091,14 @@ entry_points:
 - planner.simulator.Planner._generate_python_code
 - planner.simulator.Planner._simulate_action
 - planner.simulator.Planner.dry_run
+- sdk.client.IterunClient.__init__
+- sdk.client.IterunClient._remote_generate
+- sdk.client.IterunClient._remote_pipeline
+- sdk.client.IterunClient.generate
+- sdk.client.IterunClient.generate_and_run
+- sdk.client.IterunClient.parse
+- sdk.client.IterunClient.schema
+- sdk.client.IterunClient.validate
 - web.app.ai_apply_suggestions
 - web.app.ai_chat
 - web.app.ai_complete
@@ -508,10 +1108,13 @@ entry_points:
 - web.app.create_app
 - web.app.delete_intent
 - web.app.execute
+- web.app.generate_and_run_api
 - web.app.generate_code
+- web.app.generate_intent_api
 - web.app.get_container_logs
 - web.app.get_generated_code
 - web.app.get_intent
+- web.app.get_schema
 - web.app.health
 - web.app.home
 - web.app.iterate
@@ -520,3 +1123,4 @@ entry_points:
 - web.app.parse_intent
 - web.app.plan
 - web.app.validate_intent
+- web.app.validate_yaml

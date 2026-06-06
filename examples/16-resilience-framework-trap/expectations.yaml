@@ -1,0 +1,24 @@
+name: items-api
+framework: fastapi
+endpoints:
+  - method: GET
+    path: /live
+    status: 200
+  - method: GET
+    path: /ready
+    status: 200
+  - method: GET
+    path: /api/v1/items
+    status: 200
+  - method: POST
+    path: /api/v1/items
+    status: 200
+  - method: GET
+    path: /api/v1/items/{sku}
+    status: 200
+  - method: PUT
+    path: /api/v1/items/{sku}
+    status: 200
+  - method: DELETE
+    path: /api/v1/items/{sku}
+    status: 200

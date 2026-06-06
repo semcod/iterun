@@ -19,6 +19,28 @@ _example_setup() {
     fi
 }
 
+_example_copy_expectations() {
+    if [ -f "$EXAMPLE_DIR/expectations.yaml" ]; then
+        cp "$EXAMPLE_DIR/expectations.yaml" "$GENERATED/expectations.yaml"
+    fi
+}
+
+_example_show_verify_rounds() {
+    if [ -f "$GENERATED/verify.rounds.json" ]; then
+        "$PYTHON" - <<'PY' "$GENERATED/verify.rounds.json" "$GENERATED/session.json"
+import json, sys
+rounds = json.load(open(sys.argv[1], encoding="utf-8"))
+session = json.load(open(sys.argv[2], encoding="utf-8")) if len(sys.argv) > 2 else {}
+print(f"verify rounds: {len(rounds)} / success after round {session.get('verify_iterations', '?')}")
+for r in rounds:
+    status = "OK" if r.get("success") else "FAIL"
+    phase = r.get("phase", "verify")
+    errs = r.get("errors", [])
+    print(f"  round {r.get('round')} [{phase}] {status}" + (f" — {errs[0][:80]}" if errs else ""))
+PY
+    fi
+}
+
 _example_read_prompt() {
     if [ -n "${ITERUN_PROMPT:-}" ]; then
         PROMPT="$ITERUN_PROMPT"

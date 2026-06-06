@@ -38,6 +38,8 @@ Wszystko z jednego uruchomienia trafia do **`--output-dir`** (domyślnie `genera
 | **`execution.json`** | Wynik execute: `logs`, `endpoints`, `container_id`, walidacja HTTP |
 | **`container.log`** | Ostatnie ~200 linii `docker logs` kontenera usługi |
 | **`verify.result.json`** | TestQL + sondy HTTP (`--verify`) |
+| **`verify.rounds.json`** | Historia każdej rundy naprawczej (błędy, faza) |
+| **`expectations.yaml`** | Kontrakt promptu (kopiowany z example, opcjonalnie) |
 | **`intract.yaml`** | Kontrakt Intract (`require: implement.*`) |
 | **`service.testql.toon.yaml`** | Scenariusz TestQL wygenerowany z endpointów |
 | **`openapi.yaml`** | OpenAPI + `x-intract` (E2E, przed `intract validate`) |
@@ -87,6 +89,22 @@ prompt.txt
   → verify (testql)
   → session.json + execution.json + container.log
 ```
+
+## Resilience (skrajne prompty → naprawa usługi)
+
+| Katalog | Pułapka |
+|---------|---------|
+| [13-resilience-vague](13-resilience-vague/) | Mglisty prompt vs pełne expectations |
+| [14-resilience-inventory](14-resilience-inventory/) | Wiele encji / endpointów |
+| [15-resilience-nested-paths](15-resilience-nested-paths/) | Zagnieżdżone `{id}` w ścieżkach |
+| [16-resilience-framework-trap](16-resilience-framework-trap/) | Flask vs FastAPI w promptcie |
+
+```bash
+./examples/run-resilience.sh
+jq . generated/verify.rounds.json    # historia rund naprawczych
+```
+
+`expectations.yaml` jest **surowszy niż prompt** — wymusza `--verify` retry (domyślnie 5 rund).
 
 ## Szybki start
 

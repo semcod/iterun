@@ -1,51 +1,116 @@
-# redup/duplication | 2 groups | 16f 3891L | 2026-06-06
+# redup/duplication | 5 groups | 41f 6022L | 2026-06-06
 
 SUMMARY:
-  files_scanned: 16
-  total_lines:   3891
-  dup_groups:    2
-  dup_fragments: 5
-  saved_lines:   11
-  scan_ms:       3724
+  files_scanned: 41
+  total_lines:   6022
+  dup_groups:    5
+  dup_fragments: 32
+  saved_lines:   94
+  scan_ms:       2271
 
-HOTSPOTS[3] (files with most duplication):
-  parser/dsl_parser.py  dup=8L  groups=1  frags=2  (0.2%)
-  planner/simulator.py  dup=7L  groups=2  frags=2  (0.2%)
-  executor/runner.py  dup=3L  groups=1  frags=1  (0.1%)
+HOTSPOTS[7] (files with most duplication):
+  examples/01-user-api/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
+  generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
+  generator/intract_manifest.py  dup=17L  groups=2  frags=2  (0.3%)
+  examples/_scripts/verify_expectations.py  dup=14L  groups=1  frags=1  (0.2%)
+  parser/dsl_parser.py  dup=8L  groups=1  frags=2  (0.1%)
+  planner/simulator.py  dup=7L  groups=2  frags=2  (0.1%)
+  examples/02-ping-smoke/generated/app.py  dup=6L  groups=1  frags=2  (0.1%)
 
-DUPLICATES[2] (ranked by impact):
+DUPLICATES[5] (ranked by impact):
+  [032a6ddde45774c9] ! STRU  ping  L=3 N=22 saved=63 sim=1.00
+      examples/01-user-api/generated/app.py:9-11  (ping)
+      examples/01-user-api/generated/app.py:14-16  (health)
+      examples/01-user-api/generated/app.py:19-21  (users)
+      examples/01-user-api/generated/app.py:24-26  (users_post)
+      examples/01-user-api/generated/app.py:29-31  (users_by_id)
+      examples/01-user-api/generated/app.py:34-36  (users_by_id_put)
+      examples/01-user-api/generated/app.py:39-41  (users_by_id_delete)
+      examples/02-ping-smoke/generated/app.py:9-11  (ping)
+      examples/02-ping-smoke/generated/app.py:14-16  (health)
+      examples/05-ir-show/generated/app.py:9-11  (ping)
+      examples/06-iterate-workflow/generated/app.py:9-11  (ping)
+      examples/07-execution-smoke/generated/app.py:9-11  (ping)
+      examples/07-execution-smoke/generated/app.py:14-16  (health)
+      examples/09-e2e-ping-verify/generated/app.py:10-12  (ping)
+      examples/09-e2e-ping-verify/generated/app.py:16-18  (health)
+      generated/app.py:9-11  (ping)
+      generated/app.py:14-16  (health)
+      generated/app.py:19-21  (users)
+      generated/app.py:24-26  (users_post)
+      generated/app.py:29-31  (users_by_id)
+      generated/app.py:34-36  (users_by_id_put)
+      generated/app.py:39-41  (users_by_id_delete)
+  [ef2fcfb176592b6f]   STRU  _parse_actions  L=14 N=2 saved=14 sim=1.00
+      examples/_scripts/verify_expectations.py:22-35  (_parse_actions)
+      generator/intract_manifest.py:21-34  (parse_api_actions)
   [d1ab1a804f1b435b]   STRU  parse_dsl  L=4 N=3 saved=8 sim=1.00
       parser/dsl_parser.py:254-257  (parse_dsl)
       parser/dsl_parser.py:260-263  (parse_dsl_file)
-      planner/simulator.py:345-348  (plan_intent)
+      planner/simulator.py:371-374  (plan_intent)
+  [ad19acd787fb5e4b]   EXAC  _slug  L=3 N=3 saved=6 sim=1.00
+      examples/_scripts/annotate_intract.py:13-15  (_slug)
+      examples/_scripts/intent_to_openapi.py:13-15  (_slug)
+      generator/intract_manifest.py:12-14  (_slug)
   [f041dec9367328ca]   EXAC  add_log  L=3 N=2 saved=3 sim=1.00
       executor/runner.py:93-95  (add_log)
-      planner/simulator.py:26-28  (add_log)
+      planner/simulator.py:51-53  (add_log)
 
-REFACTOR[2] (ranked by priority):
-  [1] ○ extract_function   → utils/parse_dsl.py
+REFACTOR[5] (ranked by priority):
+  [1] ○ extract_function   → utils/ping.py
+      WHY: 22 occurrences of 3-line block across 7 files — saves 63 lines
+      FILES: examples/01-user-api/generated/app.py, examples/02-ping-smoke/generated/app.py, examples/05-ir-show/generated/app.py, examples/06-iterate-workflow/generated/app.py, examples/07-execution-smoke/generated/app.py +2 more
+  [2] ○ extract_function   → utils/_parse_actions.py
+      WHY: 2 occurrences of 14-line block across 2 files — saves 14 lines
+      FILES: examples/_scripts/verify_expectations.py, generator/intract_manifest.py
+  [3] ○ extract_function   → utils/parse_dsl.py
       WHY: 3 occurrences of 4-line block across 2 files — saves 8 lines
       FILES: parser/dsl_parser.py, planner/simulator.py
-  [2] ○ extract_function   → utils/add_log.py
+  [4] ○ extract_function   → utils/_slug.py
+      WHY: 3 occurrences of 3-line block across 3 files — saves 6 lines
+      FILES: examples/_scripts/annotate_intract.py, examples/_scripts/intent_to_openapi.py, generator/intract_manifest.py
+  [5] ○ extract_function   → utils/add_log.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: executor/runner.py, planner/simulator.py
 
-QUICK_WINS[1] (low risk, high savings — do first):
-  [1] extract_function   saved=8L  → utils/parse_dsl.py
+QUICK_WINS[4] (low risk, high savings — do first):
+  [1] extract_function   saved=63L  → utils/ping.py
+      FILES: app.py, app.py, app.py +4
+  [2] extract_function   saved=14L  → utils/_parse_actions.py
+      FILES: verify_expectations.py, intract_manifest.py
+  [3] extract_function   saved=8L  → utils/parse_dsl.py
       FILES: dsl_parser.py, simulator.py
+  [4] extract_function   saved=6L  → utils/_slug.py
+      FILES: annotate_intract.py, intent_to_openapi.py, intract_manifest.py
 
-DEPENDENCY_RISK[2] (duplicates spanning multiple packages):
+DEPENDENCY_RISK[5] (duplicates spanning multiple packages):
+  ping  packages=2  files=7
+      examples/01-user-api/generated/app.py
+      examples/02-ping-smoke/generated/app.py
+      examples/05-ir-show/generated/app.py
+      examples/06-iterate-workflow/generated/app.py
+      +3 more
+  _parse_actions  packages=2  files=2
+      examples/_scripts/verify_expectations.py
+      generator/intract_manifest.py
   parse_dsl  packages=2  files=2
       parser/dsl_parser.py
       planner/simulator.py
+  _slug  packages=2  files=3
+      examples/_scripts/annotate_intract.py
+      examples/_scripts/intent_to_openapi.py
+      generator/intract_manifest.py
   add_log  packages=2  files=2
       executor/runner.py
       planner/simulator.py
 
-EFFORT_ESTIMATE (total ≈ 0.7h):
+EFFORT_ESTIMATE (total ≈ 6.3h):
+  hard   ping                                saved=63L  ~252min
+  medium _parse_actions                      saved=14L  ~56min
   medium parse_dsl                           saved=8L  ~32min
+  easy   _slug                               saved=6L  ~24min
   easy   add_log                             saved=3L  ~12min
 
 METRICS-TARGET:
-  dup_groups:  2 → 0
-  saved_lines: 11 lines recoverable
+  dup_groups:  5 → 0
+  saved_lines: 94 lines recoverable

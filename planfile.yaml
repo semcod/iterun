@@ -641,3 +641,406 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-0e16010e
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in cli/__main__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - cli/__main__.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0c07b2b0
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in generator/contract_verify.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/contract_verify.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cfee50f1
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in generator/contract_verify.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/contract_verify.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6278136c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in generator/contract_verify.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/contract_verify.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-149a1fc0
+    name: Fix magic-numbers issues
+    description: Resolve 9 magic-numbers issues in generator/contract_verify.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - generator/contract_verify.py
+    rule_id: magic-numbers
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5efcabc3
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in generator/expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/expectations.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1ca7844d
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in generator/expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/expectations.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-144fd557
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in generator/expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/expectations.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-57734f46
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in dsl/schema.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - dsl/schema.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b21aa0ba
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in dsl/schema.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - dsl/schema.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-87e12bd5
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in generator/intent_generator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/intent_generator.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7662f1ea
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in generator/intent_generator.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - generator/intent_generator.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-92002fbe
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in generator/intent_generator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/intent_generator.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cf5f965a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in generator/intract_manifest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/intract_manifest.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-59fa2f75
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in generator/pipeline.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/pipeline.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6e572529
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in generator/pipeline.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - generator/pipeline.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fa8065fc
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in generator/pipeline.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/pipeline.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d9daae22
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in generator/testql_scenario.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/testql_scenario.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d4251da0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in generator/session.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - generator/session.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-768de0b2
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in mcp/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - mcp/server.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9d48e886
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in mcp/server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - mcp/server.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-55b88512
+    name: Fix ai-boilerplate issues
+    description: Resolve 3 ai-boilerplate issues in mcp/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - mcp/server.py
+    rule_id: ai-boilerplate
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6e5cc9f1
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in sdk/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - sdk/client.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-562cd9a2
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in sdk/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - sdk/client.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3fa837c6
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in sdk/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - sdk/client.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3649a11e
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/e2e/test_expectations.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/e2e/test_expectations.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0dad7005
+    name: Fix smart-return-type issues
+    description: Resolve 9 smart-return-type issues in tests/e2e/test_intent_generator.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/e2e/test_intent_generator.py
+    rule_id: smart-return-type
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-edb2e6df
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in tests/e2e/test_intent_generator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/e2e/test_intent_generator.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-35e0bec7
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in tests/e2e/test_intent_generator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/e2e/test_intent_generator.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3fe6ecd0
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/e2e/test_intract_manifest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/e2e/test_intract_manifest.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-29196399
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/e2e/test_testql_scenario.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/e2e/test_testql_scenario.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

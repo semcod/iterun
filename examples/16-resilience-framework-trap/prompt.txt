@@ -1,0 +1,1 @@
+Use Flask for a JSON backend (actually no — must be FastAPI not Flask). Endpoints: /live /ready /api/v1/items GET POST /api/v1/items/{sku} GET PUT DELETE. Node is wrong, use Python docker 3.12-slim port 8000 transactional.

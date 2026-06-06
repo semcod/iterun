@@ -1,0 +1,20 @@
+framework: fastapi
+endpoints:
+  - method: GET
+    path: /ping
+    status: 200
+  - method: GET
+    path: /health
+    status: 200
+  - method: GET
+    path: /orders
+    status: 200
+  - method: GET
+    path: /orders/{order_id}
+    status: 200
+  - method: PATCH
+    path: /orders/{order_id}/status
+    status: 200
+  - method: GET
+    path: /customers/{customer_id}/orders
+    status: 200

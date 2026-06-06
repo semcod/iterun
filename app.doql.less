@@ -2,7 +2,7 @@
 
 app {
   name: iterun;
-  version: 0.1.0;
+  version: 0.1.6;
 }
 
 dependencies {
@@ -18,7 +18,7 @@ interface[type="api"] {
 interface[type="cli"] {
   framework: argparse;
 }
-interface[type="cli"] page[name="intent-cli"] {
+interface[type="cli"] page[name="iterun"] {
 
 }
 
@@ -71,12 +71,17 @@ workflow[name="shell"] {
 
 workflow[name="plan"] {
   trigger: manual;
-  step-1: run cmd=$(PYTHON) -m cli.main plan examples/user-api.intent.yaml;
+  step-1: run cmd=$(PYTHON) -m cli.main plan examples/01-user-api/intent.yaml;
 }
 
 workflow[name="execute"] {
   trigger: manual;
-  step-1: run cmd=$(PYTHON) -m cli.main execute examples/user-api.intent.yaml;
+  step-1: run cmd=$(PYTHON) -m cli.main execute examples/01-user-api/intent.yaml;
+}
+
+workflow[name="examples"] {
+  trigger: manual;
+  step-1: run cmd=./examples/run-all.sh;
 }
 
 workflow[name="run-intent"] {
@@ -220,7 +225,7 @@ workflow[name="show-config"] {
 }
 
 deploy {
-  target: makefile;
+  target: docker;
 }
 
 environment[name="local"] {

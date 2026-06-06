@@ -1,0 +1,20 @@
+name: user-api
+framework: fastapi
+endpoints:
+  - method: GET
+    path: /ping
+    status: 200
+    json_fields: [status]
+  - method: GET
+    path: /health
+    status: 200
+    json_fields: [status]
+  - method: GET
+    path: /users
+    status: 200
+  - method: POST
+    path: /users
+    status: 200
+  - method: GET
+    path: /users/{id}
+    status: 200

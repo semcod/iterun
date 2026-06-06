@@ -1,0 +1,1 @@
+inventory thing — products categories suppliers api, lots of routes, fastapi docker python 3.12 port 8000 transactional

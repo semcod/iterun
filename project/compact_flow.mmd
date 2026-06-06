@@ -1,25 +1,61 @@
 flowchart TD
 %% generated in 0.00s
     ai_gateway__feedback_loop["ai_gateway.feedback_loop<br/>14 funcs"]
-    ai_gateway__gateway["ai_gateway.gateway<br/>18 funcs"]
-    cli__main["cli.main<br/>24 funcs"]
+    ai_gateway__gateway["ai_gateway.gateway<br/>20 funcs"]
+    cli__main["cli.main<br/>25 funcs"]
     config["config<br/>8 funcs"]
+    dsl__schema["dsl.schema<br/>5 funcs"]
+    examples___scripts["examples._scripts<br/>16 funcs"]
     executor__runner["executor.runner<br/>20 funcs"]
+    generator__contract_verify["generator.contract_verify<br/>8 funcs"]
+    generator__expectations["generator.expectations<br/>4 funcs"]
+    generator__intent_generator["generator.intent_generator<br/>7 funcs"]
+    generator__intract_manifest["generator.intract_manifest<br/>6 funcs"]
+    generator__pipeline["generator.pipeline<br/>5 funcs"]
+    generator__session["generator.session<br/>1 funcs"]
+    generator__testql_scenario["generator.testql_scenario<br/>3 funcs"]
     parser__dsl_parser["parser.dsl_parser<br/>13 funcs"]
-    planner__simulator["planner.simulator<br/>16 funcs"]
-    web__app["web.app<br/>21 funcs"]
+    planner__simulator["planner.simulator<br/>17 funcs"]
+    sdk__client["sdk.client<br/>8 funcs"]
+    web__app["web.app<br/>25 funcs"]
     web__app ==>|5| ai_gateway__gateway
     cli__main ==>|4| ai_gateway__gateway
     cli__main -->|3| parser__dsl_parser
-    web__app -->|2| ai_gateway__feedback_loop
+    generator__contract_verify -->|2| generator__intract_manifest
+    sdk__client -->|2| dsl__schema
+    generator__intent_generator -->|2| dsl__schema
     cli__main -->|2| config
     cli__main -->|2| ai_gateway__feedback_loop
+    cli__main -->|2| dsl__schema
+    web__app -->|2| dsl__schema
+    web__app -->|2| ai_gateway__feedback_loop
+    generator__testql_scenario -->|1| generator__intract_manifest
+    examples___scripts -->|1| generator__testql_scenario
+    generator__contract_verify -->|1| generator__testql_scenario
+    generator__contract_verify -->|1| generator__expectations
+    generator__expectations -->|1| generator__intract_manifest
+    executor__runner -->|1| config
+    sdk__client -->|1| generator__pipeline
+    sdk__client -->|1| parser__dsl_parser
+    examples___scripts -->|1| generator__intract_manifest
+    ai_gateway__feedback_loop -->|1| ai_gateway__gateway
+    generator__pipeline -->|1| generator__intract_manifest
+    generator__pipeline -->|1| generator__testql_scenario
+    generator__pipeline -->|1| generator__session
+    generator__pipeline -->|1| planner__simulator
+    generator__pipeline -->|1| executor__runner
+    generator__pipeline -->|1| generator__contract_verify
+    generator__intent_generator -->|1| ai_gateway__gateway
+    generator__intent_generator -->|1| parser__dsl_parser
+    cli__main -->|1| planner__simulator
+    cli__main -->|1| executor__runner
+    cli__main -->|1| generator__pipeline
+    cli__main -->|1| generator__intract_manifest
+    cli__main -->|1| generator__testql_scenario
+    dsl__schema -->|1| parser__dsl_parser
+    web__app -->|1| generator__pipeline
     web__app -->|1| parser__dsl_parser
     web__app -->|1| planner__simulator
     web__app -->|1| executor__runner
     web__app -->|1| config
     ai_gateway__gateway -->|1| config
-    ai_gateway__feedback_loop -->|1| ai_gateway__gateway
-    cli__main -->|1| planner__simulator
-    cli__main -->|1| executor__runner
-    executor__runner -->|1| config

@@ -194,6 +194,18 @@ def run_pipeline(
             execution_endpoints=exec_result.endpoints,
         )
         out.verification = vr.to_dict()
+        verify_rounds_log.append({
+            "round": verify_round,
+            "phase": "verify",
+            "success": vr.success,
+            "errors": vr.errors,
+            "service_url": vr.service_url,
+            "testql_passed": vr.testql_passed,
+        })
+        if workspace:
+            (workspace / "verify.rounds.json").write_text(
+                json.dumps(verify_rounds_log, indent=2), encoding="utf-8"
+            )
 
         if vr.success:
             out.success = True
