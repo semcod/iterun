@@ -191,7 +191,7 @@ iterun generate "$(cat prompt.txt)" -o generated/ --execute --verify --json
 
 **Ściągawka:** [OPERATIONS.md](OPERATIONS.md) (pełna lista flag CLI, `jq`, Docker, TestQL).
 
-Każdy katalog `examples/NN-*/README.md` ma sekcję **Operacje** z komendami pod dany przykład (intent, porty, curl).
+Każdy katalog `examples/NN-*/README.md` ma sekcje **Operacje** i **Nowe opcje** (`--runtime`, `--verify`, markpact, registry, API) z komendami pod dany przykład.
 
 ```bash
 # verbose (bez --quiet)

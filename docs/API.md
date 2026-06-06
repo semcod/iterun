@@ -11,6 +11,8 @@ ITERUN exposes the same operations through several integration surfaces. All pat
 | **SDK** | `from sdk import IterunClient` | Python apps (local or remote) |
 | **MCP** | `iterun-mcp` | LLM agents (Cursor, Claude Desktop) |
 | **Pipeline** | `run_pipeline()` | Full prompt → verify flow |
+| **Registry** | `iterun registry` | Service/artifact catalog |
+| **Runtime** | `--runtime pactown` | markpact + pactown ([RUNTIME.md](RUNTIME.md)) |
 
 Discover surfaces at runtime:
 

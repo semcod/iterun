@@ -13,7 +13,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from ir.models import IntentIR, Action, ActionType
-from ai_gateway.gateway import AIGateway, GatewayConfig, get_gateway
+from ai_gateway.gateway import AIGateway, get_gateway
+from ai_gateway.model_catalog import GatewayConfig
 
 
 @dataclass

@@ -19,7 +19,7 @@ class TestModelConfig:
     
     def test_ollama_models_exist(self):
         """Test that default Ollama models are defined."""
-        from ai_gateway.gateway import OLLAMA_MODELS
+        from ai_gateway.model_catalog import OLLAMA_MODELS
         
         assert len(OLLAMA_MODELS) > 0
         assert "llama3.2" in OLLAMA_MODELS
@@ -27,7 +27,7 @@ class TestModelConfig:
     
     def test_model_config_properties(self):
         """Test model config has required properties."""
-        from ai_gateway.gateway import OLLAMA_MODELS
+        from ai_gateway.model_catalog import OLLAMA_MODELS
         
         for name, model in OLLAMA_MODELS.items():
             assert model.name
@@ -38,7 +38,7 @@ class TestModelConfig:
     
     def test_models_under_12b(self):
         """Test filtering models under 12B params."""
-        from ai_gateway.gateway import GatewayConfig
+        from ai_gateway.model_catalog import GatewayConfig
         
         config = GatewayConfig()
         models = config.get_available_models(max_params=12.0)
@@ -52,7 +52,7 @@ class TestGatewayConfig:
     
     def test_default_config(self, monkeypatch):
         """Test default configuration values."""
-        from ai_gateway.gateway import GatewayConfig, ModelProvider
+        from ai_gateway.model_catalog import GatewayConfig, ModelProvider
 
         monkeypatch.delenv("LLM_MODEL", raising=False)
         monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
@@ -64,7 +64,7 @@ class TestGatewayConfig:
     
     def test_resolve_model_prefers_llm_model(self, monkeypatch):
         """LLM_MODEL from .env overrides DEFAULT_MODEL for LiteLLM."""
-        from ai_gateway.gateway import GatewayConfig
+        from ai_gateway.model_catalog import GatewayConfig
 
         monkeypatch.setenv("LLM_MODEL", "openrouter/test/model")
         monkeypatch.setenv("DEFAULT_MODEL", "llama3.2")
@@ -76,7 +76,7 @@ class TestGatewayConfig:
     def test_config_from_env(self):
         """Test configuration from environment."""
         import os
-        from ai_gateway.gateway import GatewayConfig
+        from ai_gateway.model_catalog import GatewayConfig
         
         # Clear any cached config
         import ai_gateway.gateway as gw_module
@@ -113,7 +113,7 @@ class TestGatewayConfig:
     
     def test_get_model(self):
         """Test getting model by name."""
-        from ai_gateway.gateway import GatewayConfig
+        from ai_gateway.model_catalog import GatewayConfig
         
         config = GatewayConfig()
         
@@ -130,7 +130,8 @@ class TestAIGateway:
     
     def test_gateway_creation(self):
         """Test gateway can be created."""
-        from ai_gateway.gateway import AIGateway, GatewayConfig
+        from ai_gateway.gateway import AIGateway
+        from ai_gateway.model_catalog import GatewayConfig
         
         gateway = AIGateway()
         assert gateway is not None

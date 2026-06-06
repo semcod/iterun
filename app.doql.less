@@ -2,12 +2,75 @@
 
 app {
   name: iterun;
-  version: 0.1.7;
+  version: 0.1.9;
 }
 
 dependencies {
   runtime: "pyyaml>=6.0, pydantic>=2.0, fastapi>=0.109.0, uvicorn>=0.27.0, jinja2>=3.1.0";
   dev: "pytest>=8.0.0, pytest-asyncio>=0.23.0, httpx>=0.26.0, anyio>=4.0.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+}
+
+entity[name="ArtifactRecord"] {
+  name: string!;
+  path: string!;
+  kind: string!;
+  role: ArtifactRole!;
+  mime_type: str | None;
+  standard: str | None;
+  size_bytes: int | None;
+  checksum_sha256: str | None;
+  labels: dict[str, str]!;
+}
+
+entity[name="ServiceRecord"] {
+  name: string!;
+  type: string!;
+  owner: string!;
+  lifecycle: string!;
+  urls: list[str]!;
+  health_paths: list[str]!;
+  framework: str | None;
+  language: str | None;
+  port: int | None;
+  host_port: int | None;
+  container_id: str | None;
+  image: str | None;
+  depends_on: list[str]!;
+  labels: dict[str, str]!;
+  otel: dict[str, Any]!;
+}
+
+entity[name="RegistryMetadata"] {
+  name: string!;
+  intent_id: str | None;
+  workspace: string!;
+  generated_at: string!;
+  prompt: str | None;
+  is_stack: bool!;
+}
+
+entity[name="RegistryStatus"] {
+  phase: LifecyclePhase!;
+  success: bool | None;
+  session_path: str | None;
+  verification: dict[str, Any] | None;
+  endpoints: list[str]!;
+}
+
+entity[name="RegistryManifest"] {
+  api_version: string!;
+  kind: string!;
+  metadata: RegistryMetadata!;
+  spec: dict[str, Any]!;
+  status: RegistryStatus!;
+}
+
+entity[name="InterfacesInfo"] {
+  rest_base: string!;
+  cli: string!;
+  mcp_server: string!;
+  sdk: string!;
+  surfaces: list[dict[str, Any]]!;
 }
 
 interface[type="api"] {

@@ -3,6 +3,31 @@
 ## [0.1.10] - 2026-06-06
 
 ### Fixed
+- Fix unused-imports issues (ticket-a1f212f1)
+- Fix unused-imports issues (ticket-535a7727)
+- Fix unused-imports issues (ticket-1b769156)
+- Fix magic-numbers issues (ticket-ca30ddd7)
+- Fix unused-imports issues (ticket-9f5356d0)
+- Fix unused-imports issues (ticket-1114a179)
+- Fix unused-imports issues (ticket-e291c26e)
+- Fix unused-imports issues (ticket-ea8c4817)
+- Fix unused-imports issues (ticket-e9e6354c)
+- Fix magic-numbers issues (ticket-a22d5bb9)
+- Fix unused-imports issues (ticket-e4bb5697)
+- Fix unused-imports issues (ticket-12fa8f86)
+- Fix magic-numbers issues (ticket-a6622dbd)
+- Fix unused-imports issues (ticket-1a493952)
+- Fix magic-numbers issues (ticket-69ed1465)
+- Fix smart-return-type issues (ticket-58ce5bd8)
+- Fix unused-imports issues (ticket-908d08bc)
+- Fix ai-boilerplate issues (ticket-4be949b7)
+- Fix unused-imports issues (ticket-163ba927)
+- Fix magic-numbers issues (ticket-0b17203d)
+- Fix string-concat issues (ticket-b8a53a20)
+
+## [0.1.10] - 2026-06-06
+
+### Fixed
 - Fix smart-return-type issues (ticket-aabd8ad8)
 
 ## [0.1.10] - 2026-06-06
@@ -47,6 +72,60 @@
 - Fix smart-return-type issues (ticket-29196399)
 
 ## [Unreleased]
+
+### Added
+- **Integration surfaces** — `interfaces/IterunService` (REST, SDK, MCP, CLI)
+- **REST API** — `/api/health`, `/api/interfaces`, `/api/pipeline/run`, `/api/registry`, `/api/intents/plan-yaml`
+- **MCP** — `iterun_mcp/` + `iterun-mcp` (fix konfliktu z PyPI `mcp`); tools: pipeline, registry, plan
+- **Registry** — `registry/`, `integrations/`; `iterun.registry.json`, Backstage + OTel export; `iterun registry` CLI
+- **Runtime** — `ITERUN_RUNTIME` / `--runtime pactown`; markpact `stack.markpact.md`; pactown orchestration
+- **STACK** — examples 17–19, `run-stacks.sh`, compose labels (`dev.iterun.*`)
+- **Docs** — `docs/API.md`, `docs/REGISTRY.md`, `docs/RUNTIME.md`; examples 01–19 „Nowe opcje”
+- **Tests** — `test_interfaces.py`, `test_registry.py`, `test_pactown_config.py`, `test_executor_validation.py`
+
+### Changed
+- Pipeline auto-packs markpact po planie; registry refresh po `session.json`
+- Executor: pomija walidację bare root URL gdy są jawne trasy; compose logs dla STACK
+- `examples/_common.sh` — przekazuje `ITERUN_RUNTIME` do `generate`
+- SDK: `run_pipeline()`, `registry_*()`; MCP renamed to `iterun_mcp`
+
+### Fixed
+- `iterun-mcp` ImportError (konflikt `mcp.server` z pakietem PyPI)
+- Registry crash gdy `session.verification` jest `null`
+- Pipeline `success` odzwierciedla fail walidacji endpointów (bez `--verify`)
+
+## [0.1.10] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/API.md
+- Update docs/INTENT_DSL_SPEC.md
+- Update docs/README.md
+- Update docs/REGISTRY.md
+- Update docs/RUNTIME.md
+- ... and 3 more files
+
+### Test
+- Update tests/e2e/test_ai_gateway.py
+- Update tests/e2e/test_executor_validation.py
+- Update tests/e2e/test_shell.py
+
+### Other
+- Update .code2llm_cache/__init___1780758515999720150_29.pkl
+- Update .code2llm_cache/__init___1780758706349665627_73.pkl
+- Update .code2llm_cache/__init___1780758720285809395_645.pkl
+- Update .code2llm_cache/_common_1780758285522318956_4816.pkl
+- Update .code2llm_cache/ai_1780758523125792288_4867.pkl
+- Update .code2llm_cache/app_1780758523966800805_1469.pkl
+- Update .code2llm_cache/discover_1780758491464472251_3066.pkl
+- Update .code2llm_cache/discover_artifacts_1780758487621789090_3598.pkl
+- Update .code2llm_cache/discover_io_1780758488689111738_1913.pkl
+- Update .code2llm_cache/discover_services_1780758490257460076_3265.pkl
+- ... and 64 more files
 
 ## [0.1.9] - 2026-06-06
 

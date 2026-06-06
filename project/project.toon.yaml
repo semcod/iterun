@@ -1,52 +1,52 @@
-# iterun | 337 func | 44f | 12035L | python | 2026-06-06
+# iterun | 354 func | 57f | 12402L | python | 2026-06-06
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.6  critical=37 (limit:10)  dup=3  cycles=1
+  CC̄=4.4  critical=43 (limit:10)  dup=3  cycles=1
 
 ALERTS[20]:
-  !!! cc_exceeded      main = 92 (limit:15)
-  !!! cc_exceeded      discover_workspace = 44 (limit:15)
-  !!! high_fan_out     main = 44 (limit:10)
-  !!! cc_exceeded      CLI.cmd_execute = 37 (limit:15)
-  !!! high_fan_out     discover_workspace = 35 (limit:10)
+  !!! cc_exceeded      CLI.cmd_execute = 39 (limit:15)
   !!! cc_exceeded      run_pipeline = 33 (limit:15)
   !!! high_fan_out     execute_pactown = 31 (limit:10)
   !!! cc_exceeded      CLI.interactive_mode = 30 (limit:15)
+  !!! high_fan_out     discover_workspace = 27 (limit:10)
   !!! high_fan_out     verify_contract = 26 (limit:10)
+  !!! cc_exceeded      discover_workspace = 25 (limit:15)
   !!! high_fan_out     run_pipeline = 25 (limit:10)
+  !!! high_fan_out     CLI.interactive_mode = 23 (limit:10)
+  !!  cc_exceeded      check_expectations = 23 (limit:15)
 
-MODULES[125] (top by size):
-  M[planfile.yaml] 1085L C:0 F:0 CC↑0 D:0 (yaml)
-  M[cli/main.py] 994L C:2 F:25 CC↑92 D:0 (python)
-  M[executor/runner.py] 776L C:4 F:24 CC↑18 D:6 (python)
-  M[ai_gateway/gateway.py] 644L C:4 F:20 CC↑15 D:4 (python)
-  M[web/app.py] 597L C:11 F:32 CC↑6 D:0 (python)
+MODULES[140] (top by size):
+  M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
+  M[cli/shell.py] 586L C:2 F:23 CC↑39 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[ai_gateway/feedback_loop.py] 384L C:3 F:14 CC↑17 D:2 (python)
+  M[ai_gateway/feedback_loop.py] 385L C:3 F:14 CC↑17 D:2 (python)
   M[planner/simulator.py] 384L C:2 F:17 CC↑9 D:4 (python)
+  M[ai_gateway/gateway.py] 352L C:1 F:13 CC↑10 D:4 (python)
   M[parser/dsl_parser.py] 330L C:3 F:14 CC↑21 D:6 (python)
+  M[executor/runner.py] 306L C:1 F:9 CC↑18 D:4 (python)
   M[ir/models.py] 298L C:10 F:18 CC↑5 D:0 (python)
-  M[generator/pipeline.py] 277L C:1 F:7 CC↑33 D:0 (python)
-  M[registry/discover.py] 273L C:0 F:7 CC↑44 D:2 (python)
+  M[ai_gateway/model_catalog.py] 283L C:3 F:7 CC↑15 D:0 (python)
+  M[executor/docker_ops.py] 283L C:0 F:6 CC↑13 D:2 (python)
+  M[web/routes/intents.py] 280L C:0 F:19 CC↑6 D:0 (python)
+  M[generator/pipeline.py] 278L C:1 F:7 CC↑33 D:0 (python)
+  M[cli/dispatch.py] 266L C:0 F:9 CC↑17 D:1 (python)
   M[interfaces/service.py] 252L C:1 F:14 CC↑7 D:1 (python)
-  M[dsl/schema.py] 250L C:7 F:6 CC↑10 D:4 (python)
-  M[generator/intent_generator.py] 238L C:3 F:7 CC↑11 D:0 (python)
-  LANGS: python:59/shell:27/txt:20/yaml:17/other:1/toml:1
+  LANGS: python:74/shell:27/txt:20/yaml:17/other:1/toml:1
 
 HOTSPOTS[10]:
-  ★ main fan=44  // Main entry point.
-  ★ discover_workspace fan=35  // Build registry manifest by scanning workspace artifacts.
   ★ execute_pactown fan=31  // Run via pactown Orchestrator (STACK) or ServiceRunner (single service).
+  ★ discover_workspace fan=27  // Build registry manifest by scanning workspace artifacts.
   ★ verify_contract fan=26  // Orchestrates 26 calls
   ★ run_pipeline fan=25  // Orchestrates 25 calls
+  ★ CLI.interactive_mode fan=23  // Orchestrates 23 calls
 
 REFACTOR[15]:
-  [1] H/L Split discover_workspace (CC=44)
-  [2] H/L Split CLI.cmd_execute (CC=37)
+  [1] H/L Split run_pipeline (CC=33)
+  [2] H/L Split CLI.cmd_execute (CC=39)
   [3] H/L Split CLI.interactive_mode (CC=30)
-  [4] H/L Split main (CC=92)
-  [5] H/L Split run_pipeline (CC=33)
+  [4] H/L Split discover_workspace (CC=25)
+  [5] H/H Split god module cli/shell.py (586L, 2 classes)
 
 EVOLUTION:
-  2026-06-06 CC̄=4.6 crit=37 12035L // Automated analysis
+  2026-06-06 CC̄=4.4 crit=43 12402L // Automated analysis

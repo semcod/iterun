@@ -10,7 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from config import PACKAGE_FILENAME
-from executor.runner import Executor, execute_intent
+from executor.docker_ops import get_container_logs
+from executor.runner import execute_intent
 from integrations.runtime_stop import stop_runtime_for_intent
 from generator.contract_verify import verify_contract
 from generator.intract_manifest import write_intract_manifest
@@ -121,7 +122,7 @@ def _container_logs(workspace: Path | None, container_id: str | None) -> str | N
     if not workspace or not container_id:
         return None
     try:
-        return Executor(str(workspace)).get_container_logs(container_id, tail=200)
+        return get_container_logs(workspace, container_id, tail=200)
     except Exception:
         return None
 

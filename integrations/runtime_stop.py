@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from config import get_config
-from executor.runner import stop_containers_for_intent
+from executor.docker_ops import stop_containers_for_intent
 
 
 def stop_runtime_for_intent(

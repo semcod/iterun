@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from ir.models import IntentIR, ExecutionMode
 from parser.dsl_parser import parse_dsl, ParseError, ValidationError
 from planner.simulator import plan_intent
-from cli.main import CLI
+from cli.shell import CLI
 
 
 class TestDSLParser:

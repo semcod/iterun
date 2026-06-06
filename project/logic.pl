@@ -1,17 +1,17 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('iterun', '0.1.7', 'python').
+project_metadata('iterun', '0.1.9', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('ai_gateway/__init__.py', 35, 'python').
 project_file('ai_gateway/feedback_loop.py', 385, 'python').
 project_file('ai_gateway/gateway.py', 645, 'python').
-project_file('app.doql.less', 236, 'less').
+project_file('app.doql.less', 299, 'less').
 project_file('cli/__init__.py', 21, 'python').
 project_file('cli/__main__.py', 5, 'python').
-project_file('cli/main.py', 929, 'python').
-project_file('config.py', 169, 'python').
+project_file('cli/main.py', 995, 'python').
+project_file('config.py', 172, 'python').
 project_file('dsl/__init__.py', 18, 'python').
-project_file('dsl/schema.py', 167, 'python').
+project_file('dsl/schema.py', 251, 'python').
 project_file('examples/01-user-api/run.sh', 15, 'shell').
 project_file('examples/02-ping-smoke/run.sh', 9, 'shell').
 project_file('examples/03-flask-api/run.sh', 9, 'shell').
@@ -28,52 +28,86 @@ project_file('examples/13-resilience-vague/run.sh', 23, 'shell').
 project_file('examples/14-resilience-inventory/run.sh', 17, 'shell').
 project_file('examples/15-resilience-nested-paths/run.sh', 17, 'shell').
 project_file('examples/16-resilience-framework-trap/run.sh', 17, 'shell').
-project_file('examples/_common.sh', 98, 'shell').
+project_file('examples/17-stack-shop-gateway/run-generate.sh', 13, 'shell').
+project_file('examples/17-stack-shop-gateway/run.sh', 24, 'shell').
+project_file('examples/18-stack-blog/run.sh', 20, 'shell').
+project_file('examples/19-stack-api-cache/run.sh', 19, 'shell').
+project_file('examples/_bootstrap_deps.sh', 64, 'shell').
+project_file('examples/_common.sh', 153, 'shell').
 project_file('examples/_scripts/annotate_intract.py', 98, 'python').
 project_file('examples/_scripts/intent_to_intract.py', 30, 'python').
 project_file('examples/_scripts/intent_to_openapi.py', 77, 'python').
 project_file('examples/_scripts/intent_to_testql.py', 27, 'python').
 project_file('examples/_scripts/verify_expectations.py', 128, 'python').
-project_file('examples/_verify.sh', 169, 'shell').
+project_file('examples/_verify.sh', 166, 'shell').
 project_file('examples/run-all.sh', 25, 'shell').
-project_file('examples/run-e2e.sh', 32, 'shell').
-project_file('examples/run-resilience.sh', 26, 'shell').
+project_file('examples/run-e2e.sh', 25, 'shell').
+project_file('examples/run-resilience.sh', 42, 'shell').
+project_file('examples/run-stacks.sh', 31, 'shell').
 project_file('executor/__init__.py', 4, 'python').
-project_file('executor/runner.py', 638, 'python').
+project_file('executor/runner.py', 777, 'python').
 project_file('generator/__init__.py', 24, 'python').
-project_file('generator/contract_verify.py', 228, 'python').
+project_file('generator/contract_verify.py', 229, 'python').
 project_file('generator/expectations.py', 97, 'python').
-project_file('generator/intent_generator.py', 233, 'python').
-project_file('generator/intract_manifest.py', 107, 'python').
-project_file('generator/pipeline.py', 255, 'python').
+project_file('generator/intent_generator.py', 239, 'python').
+project_file('generator/intract_manifest.py', 120, 'python').
+project_file('generator/pipeline.py', 278, 'python').
 project_file('generator/session.py', 53, 'python').
 project_file('generator/testql_scenario.py', 80, 'python').
+project_file('integrations/__init__.py', 19, 'python').
+project_file('integrations/adapters/__init__.py', 15, 'python').
+project_file('integrations/adapters/backstage.py', 75, 'python').
+project_file('integrations/adapters/base.py', 30, 'python').
+project_file('integrations/adapters/docker.py', 80, 'python').
+project_file('integrations/adapters/filesystem.py', 17, 'python').
+project_file('integrations/adapters/opentelemetry.py', 29, 'python').
+project_file('integrations/bridges/__init__.py', 4, 'python').
+project_file('integrations/bridges/pipeline.py', 50, 'python').
+project_file('integrations/markpact_pack.py', 105, 'python').
+project_file('integrations/pactown_config.py', 71, 'python').
+project_file('integrations/pactown_runtime.py', 196, 'python').
+project_file('integrations/runtime_stop.py', 23, 'python').
+project_file('interfaces/__init__.py', 6, 'python').
+project_file('interfaces/models.py', 53, 'python').
+project_file('interfaces/service.py', 253, 'python').
 project_file('ir/__init__.py', 10, 'python').
-project_file('ir/models.py', 224, 'python').
-project_file('mcp/__init__.py', 2, 'python').
-project_file('mcp/server.py', 83, 'python').
+project_file('ir/models.py', 299, 'python').
+project_file('iterun_mcp/__init__.py', 2, 'python').
+project_file('iterun_mcp/server.py', 146, 'python').
 project_file('parser/__init__.py', 4, 'python').
-project_file('parser/dsl_parser.py', 264, 'python').
+project_file('parser/dsl_parser.py', 331, 'python').
 project_file('planner/__init__.py', 4, 'python').
-project_file('planner/simulator.py', 375, 'python').
+project_file('planner/simulator.py', 385, 'python').
+project_file('planner/stack_artifacts.py', 67, 'python').
+project_file('planner/stack_planner.py', 227, 'python').
 project_file('project.sh', 59, 'shell').
+project_file('registry/__init__.py', 14, 'python').
+project_file('registry/catalog.py', 72, 'python').
+project_file('registry/discover.py', 274, 'python').
+project_file('registry/labels.py', 54, 'python').
+project_file('registry/models.py', 104, 'python').
 project_file('run.sh', 161, 'shell').
 project_file('sdk/__init__.py', 6, 'python').
-project_file('sdk/client.py', 120, 'python').
+project_file('sdk/client.py', 226, 'python').
 project_file('tests/__init__.py', 2, 'python').
 project_file('tests/conftest.py', 59, 'python').
 project_file('tests/e2e/test_ai_gateway.py', 388, 'python').
 project_file('tests/e2e/test_contract_verify.py', 43, 'python').
+project_file('tests/e2e/test_executor_validation.py', 21, 'python').
 project_file('tests/e2e/test_expectations.py', 68, 'python').
 project_file('tests/e2e/test_intent_generator.py', 109, 'python').
 project_file('tests/e2e/test_intract_manifest.py', 42, 'python').
 project_file('tests/e2e/test_pipeline_repair.py', 42, 'python').
 project_file('tests/e2e/test_shell.py', 403, 'python').
+project_file('tests/e2e/test_stack_planner.py', 90, 'python').
 project_file('tests/e2e/test_testql_scenario.py', 49, 'python').
 project_file('tests/e2e/test_web.py', 559, 'python').
+project_file('tests/test_interfaces.py', 107, 'python').
+project_file('tests/test_pactown_config.py', 51, 'python').
+project_file('tests/test_registry.py', 144, 'python').
 project_file('tree.sh', 2, 'shell').
 project_file('web/__init__.py', 4, 'python').
-project_file('web/app.py', 524, 'python').
+project_file('web/app.py', 598, 'python').
 
 % ── Python Functions ─────────────────────────────────────
 python_function('ai_gateway/feedback_loop.py', 'create_feedback_loop', 1, 1, 1).
@@ -82,8 +116,8 @@ python_function('ai_gateway/gateway.py', 'get_gateway', 1, 3, 1).
 python_function('ai_gateway/gateway.py', 'complete', 1, 9, 2).
 python_function('ai_gateway/gateway.py', 'suggest_improvements', 1, 8, 2).
 python_function('cli/__init__.py', '__getattr__', 1, 3, 1).
-python_function('cli/main.py', 'write_plan_artifacts', 3, 5, 6).
-python_function('cli/main.py', 'main', 0, 72, 36).
+python_function('cli/main.py', 'write_plan_artifacts', 3, 7, 7).
+python_function('cli/main.py', 'main', 0, 92, 41).
 python_function('config.py', 'load_dotenv', 1, 15, 11).
 python_function('config.py', 'get_env', 2, 1, 1).
 python_function('config.py', 'get_env_bool', 2, 1, 3).
@@ -94,7 +128,7 @@ python_function('config.py', 'reload_config', 0, 1, 2).
 python_function('config.py', 'configure', 0, 1, 1).
 python_function('dsl/schema.py', 'get_json_schema', 0, 1, 1).
 python_function('dsl/schema.py', 'document_to_yaml', 1, 1, 2).
-python_function('dsl/schema.py', 'validate_yaml_document', 1, 7, 6).
+python_function('dsl/schema.py', 'validate_yaml_document', 1, 10, 6).
 python_function('dsl/schema.py', 'get_system_prompt', 0, 1, 2).
 python_function('examples/_scripts/annotate_intract.py', '_slug', 1, 2, 3).
 python_function('examples/_scripts/annotate_intract.py', '_actions', 1, 7, 9).
@@ -112,6 +146,7 @@ python_function('examples/_scripts/verify_expectations.py', '_parse_actions', 1,
 python_function('examples/_scripts/verify_expectations.py', '_http_probe', 4, 2, 7).
 python_function('examples/_scripts/verify_expectations.py', 'verify', 3, 23, 9).
 python_function('examples/_scripts/verify_expectations.py', 'main', 0, 3, 6).
+python_function('executor/runner.py', '_filter_validation_endpoints', 1, 9, 4).
 python_function('executor/runner.py', 'stop_containers_for_intent', 2, 5, 5).
 python_function('executor/runner.py', 'execute_intent', 5, 1, 2).
 python_function('generator/contract_verify.py', '_probe_path', 1, 1, 1).
@@ -128,29 +163,60 @@ python_function('generator/expectations.py', '_http_probe', 3, 3, 7).
 python_function('generator/expectations.py', 'check_expectations', 3, 23, 9).
 python_function('generator/expectations.py', 'load_and_check_expectations', 3, 4, 5).
 python_function('generator/intent_generator.py', 'extract_yaml_from_llm', 1, 6, 7).
-python_function('generator/intent_generator.py', '_fallback_yaml', 1, 5, 2).
+python_function('generator/intent_generator.py', '_fallback_yaml', 1, 7, 3).
 python_function('generator/intent_generator.py', '_build_user_prompt', 1, 4, 1).
 python_function('generator/intract_manifest.py', '_slug', 1, 2, 3).
 python_function('generator/intract_manifest.py', '_safe_id', 1, 1, 3).
-python_function('generator/intract_manifest.py', 'parse_api_actions', 1, 6, 7).
+python_function('generator/intract_manifest.py', '_parse_action_strings', 1, 4, 6).
+python_function('generator/intract_manifest.py', 'parse_api_actions', 1, 9, 5).
 python_function('generator/intract_manifest.py', 'build_intract_manifest', 1, 6, 7).
 python_function('generator/intract_manifest.py', 'intent_to_intract_dict', 1, 2, 4).
 python_function('generator/intract_manifest.py', 'write_intract_manifest', 2, 1, 5).
-python_function('generator/pipeline.py', '_write_plan_artifacts', 3, 4, 5).
+python_function('generator/pipeline.py', '_write_plan_artifacts', 3, 8, 8).
 python_function('generator/pipeline.py', '_expectations_summary', 1, 8, 7).
 python_function('generator/pipeline.py', '_build_repair_prompt', 3, 4, 3).
 python_function('generator/pipeline.py', '_container_logs', 2, 4, 3).
-python_function('generator/pipeline.py', '_finalize', 2, 2, 3).
-python_function('generator/pipeline.py', 'run_pipeline', 1, 30, 21).
+python_function('generator/pipeline.py', '_finalize', 2, 3, 4).
+python_function('generator/pipeline.py', 'run_pipeline', 1, 33, 21).
 python_function('generator/session.py', 'write_session_artifacts', 2, 5, 9).
 python_function('generator/testql_scenario.py', '_probe_path', 1, 1, 1).
 python_function('generator/testql_scenario.py', '_startup_wait_ms', 1, 7, 1).
 python_function('generator/testql_scenario.py', 'build_testql_scenario', 1, 7, 8).
 python_function('generator/testql_scenario.py', 'write_testql_scenario', 2, 2, 6).
+python_function('integrations/adapters/docker.py', '_running_iterun_containers', 0, 11, 7).
+python_function('integrations/bridges/pipeline.py', 'refresh_registry', 1, 5, 11).
+python_function('integrations/bridges/pipeline.py', 'refresh_registry_from_pipeline', 2, 2, 2).
+python_function('integrations/markpact_pack.py', '_run_command_for_ir', 1, 8, 0).
+python_function('integrations/markpact_pack.py', 'pack_workspace', 2, 18, 7).
+python_function('integrations/pactown_config.py', '_health_path', 1, 8, 0).
+python_function('integrations/pactown_config.py', 'build_pactown_config', 2, 12, 5).
+python_function('integrations/pactown_config.py', 'write_pactown_config', 2, 1, 4).
+python_function('integrations/pactown_runtime.py', '_collect_endpoints', 3, 18, 2).
+python_function('integrations/pactown_runtime.py', '_validate_urls', 3, 6, 8).
+python_function('integrations/pactown_runtime.py', 'stop_pactown_for_intent', 2, 5, 6).
+python_function('integrations/pactown_runtime.py', 'execute_pactown', 2, 21, 31).
+python_function('integrations/runtime_stop.py', 'stop_runtime_for_intent', 2, 3, 4).
+python_function('interfaces/service.py', '_write_plan_output', 3, 7, 7).
 python_function('parser/dsl_parser.py', 'parse_dsl', 1, 1, 2).
 python_function('parser/dsl_parser.py', 'parse_dsl_file', 1, 1, 2).
 python_function('planner/simulator.py', '_endpoint_to_func_name', 3, 5, 6).
-python_function('planner/simulator.py', 'plan_intent', 1, 1, 2).
+python_function('planner/simulator.py', 'plan_intent', 1, 3, 3).
+python_function('planner/stack_artifacts.py', 'write_stack_artifacts', 3, 9, 8).
+python_function('planner/stack_planner.py', '_service_ir', 2, 5, 6).
+python_function('planner/stack_planner.py', '_gateway_proxy_code', 2, 10, 7).
+python_function('planner/stack_planner.py', '_resolve_upstream', 3, 12, 1).
+python_function('planner/stack_planner.py', '_build_compose', 2, 9, 3).
+python_function('planner/stack_planner.py', 'plan_stack', 1, 18, 12).
+python_function('registry/catalog.py', 'discover_glob', 1, 7, 8).
+python_function('registry/discover.py', '_sha256', 1, 2, 3).
+python_function('registry/discover.py', '_discover_artifacts', 1, 12, 13).
+python_function('registry/discover.py', '_load_session', 1, 3, 3).
+python_function('registry/discover.py', '_load_stack_urls', 1, 3, 3).
+python_function('registry/discover.py', '_intent_from_workspace', 1, 8, 5).
+python_function('registry/discover.py', '_phase_from_session', 1, 7, 1).
+python_function('registry/discover.py', 'discover_workspace', 1, 44, 25).
+python_function('registry/labels.py', 'build_service_labels', 2, 4, 0).
+python_function('registry/labels.py', 'build_otel_resource', 2, 3, 0).
 python_function('tests/conftest.py', 'project_root', 0, 1, 2).
 python_function('tests/conftest.py', 'sample_dsl', 0, 1, 0).
 python_function('tests/conftest.py', 'sample_ir', 0, 1, 4).
@@ -158,6 +224,8 @@ python_function('tests/e2e/test_ai_gateway.py', 'run_tests', 0, 1, 1).
 python_function('tests/e2e/test_contract_verify.py', 'test_readiness_paths_from_intent', 0, 5, 2).
 python_function('tests/e2e/test_contract_verify.py', 'test_wait_for_service_accepts_http_404_as_up', 0, 2, 3).
 python_function('tests/e2e/test_contract_verify.py', 'test_wait_for_service_default_includes_live_ready', 0, 3, 1).
+python_function('tests/e2e/test_executor_validation.py', 'test_filter_validation_endpoints_skips_bare_root_when_routes_exist', 0, 4, 1).
+python_function('tests/e2e/test_executor_validation.py', 'test_filter_validation_endpoints_keeps_root_when_only_base', 0, 2, 1).
 python_function('tests/e2e/test_expectations.py', 'test_check_expectations_missing_endpoints', 0, 4, 3).
 python_function('tests/e2e/test_expectations.py', 'test_check_expectations_framework_mismatch', 0, 2, 3).
 python_function('tests/e2e/test_expectations.py', 'test_check_expectations_body_contains', 0, 3, 4).
@@ -166,22 +234,50 @@ python_function('tests/e2e/test_intract_manifest.py', 'test_write_intract_manife
 python_function('tests/e2e/test_pipeline_repair.py', 'test_expectations_summary_lists_endpoints', 1, 4, 3).
 python_function('tests/e2e/test_pipeline_repair.py', 'test_build_repair_prompt_includes_expectations', 1, 4, 2).
 python_function('tests/e2e/test_shell.py', 'run_tests', 0, 1, 1).
+python_function('tests/e2e/test_stack_planner.py', 'test_parse_stack_ir', 0, 5, 2).
+python_function('tests/e2e/test_stack_planner.py', 'test_plan_stack_compose_and_services', 0, 9, 2).
+python_function('tests/e2e/test_stack_planner.py', 'test_write_stack_artifacts', 1, 6, 4).
+python_function('tests/e2e/test_stack_planner.py', 'test_intract_parse_stack_actions', 0, 5, 2).
 python_function('tests/e2e/test_testql_scenario.py', 'test_build_testql_contains_endpoints', 0, 6, 2).
 python_function('tests/e2e/test_testql_scenario.py', 'test_build_testql_express_longer_wait', 0, 2, 2).
 python_function('tests/e2e/test_testql_scenario.py', 'test_write_testql_scenario', 1, 3, 3).
 python_function('tests/e2e/test_web.py', 'anyio_backend', 0, 1, 0).
 python_function('tests/e2e/test_web.py', 'client', 0, 1, 2).
 python_function('tests/e2e/test_web.py', 'run_tests', 0, 1, 1).
+python_function('tests/test_interfaces.py', 'test_interfaces_info_lists_surfaces', 0, 4, 1).
+python_function('tests/test_interfaces.py', 'test_validate_yaml_detects_stack', 0, 3, 2).
+python_function('tests/test_interfaces.py', 'test_plan_yaml_stack_compose', 1, 5, 3).
+python_function('tests/test_interfaces.py', 'test_plan_yaml_single_service', 1, 4, 3).
+python_function('tests/test_interfaces.py', 'test_sdk_local_interfaces_and_plan', 0, 3, 3).
+python_function('tests/test_interfaces.py', 'test_rest_health_and_interfaces', 0, 7, 5).
+python_function('tests/test_pactown_config.py', 'test_build_pactown_config_stack', 0, 5, 2).
+python_function('tests/test_pactown_config.py', 'test_write_pactown_config', 1, 2, 4).
+python_function('tests/test_registry.py', '_seed_workspace', 2, 2, 2).
+python_function('tests/test_registry.py', 'test_discover_single_service', 1, 6, 4).
+python_function('tests/test_registry.py', 'test_discover_stack', 1, 6, 4).
+python_function('tests/test_registry.py', 'test_refresh_registry_exports', 1, 5, 4).
+python_function('tests/test_registry.py', 'test_backstage_exporter', 1, 3, 5).
+python_function('tests/test_registry.py', 'test_otel_exporter', 1, 2, 6).
+python_function('tests/test_registry.py', 'test_catalog_refresh', 1, 4, 4).
+python_function('tests/test_registry.py', 'test_rest_registry_endpoints', 1, 5, 7).
+python_function('web/app.py', '_get_service', 0, 2, 1).
+python_function('web/app.py', 'health', 0, 1, 1).
+python_function('web/app.py', 'list_interfaces', 0, 1, 3).
+python_function('web/app.py', 'get_registry', 1, 1, 3).
+python_function('web/app.py', 'refresh_registry_api', 1, 1, 3).
+python_function('web/app.py', 'list_registries', 1, 1, 3).
 python_function('web/app.py', 'home', 1, 1, 4).
 python_function('web/app.py', 'list_intents', 0, 2, 2).
-python_function('web/app.py', 'get_schema', 0, 1, 2).
-python_function('web/app.py', 'validate_yaml', 1, 2, 3).
+python_function('web/app.py', 'get_schema', 0, 1, 3).
+python_function('web/app.py', 'validate_yaml', 1, 1, 3).
 python_function('web/app.py', 'generate_intent_api', 1, 3, 4).
-python_function('web/app.py', 'generate_and_run_api', 1, 3, 3).
+python_function('web/app.py', 'run_pipeline_api', 1, 3, 4).
+python_function('web/app.py', 'generate_and_run_api', 1, 1, 2).
+python_function('web/app.py', 'plan_yaml_api', 1, 4, 7).
 python_function('web/app.py', 'parse_intent', 1, 2, 5).
 python_function('web/app.py', 'get_intent', 1, 2, 3).
 python_function('web/app.py', 'delete_intent', 1, 2, 2).
-python_function('web/app.py', 'plan', 1, 2, 3).
+python_function('web/app.py', 'plan', 1, 3, 4).
 python_function('web/app.py', 'iterate', 2, 6, 7).
 python_function('web/app.py', 'approve_iterun', 1, 2, 3).
 python_function('web/app.py', 'execute', 4, 5, 5).
@@ -249,7 +345,7 @@ python_method('CLI', 'cmd_load', 1, 3, 6).
 python_method('CLI', 'cmd_parse', 1, 2, 4).
 python_method('CLI', 'cmd_plan', 1, 11, 11).
 python_method('CLI', 'cmd_iterate', 2, 12, 12).
-python_method('CLI', 'cmd_iterun', 2, 7, 10).
+python_method('CLI', 'cmd_iterun', 2, 11, 11).
 python_method('CLI', 'cmd_execute', 4, 37, 15).
 python_method('CLI', 'cmd_show', 2, 8, 5).
 python_method('CLI', 'cmd_save', 2, 3, 5).
@@ -265,8 +361,11 @@ python_class('dsl/schema.py', 'IntentSection').
 python_method('IntentSection', 'name_kebab', 2, 2, 3).
 python_class('dsl/schema.py', 'EnvironmentSection').
 python_class('dsl/schema.py', 'ImplementationSection').
+python_class('dsl/schema.py', 'StackServiceSection').
+python_class('dsl/schema.py', 'StackSection').
 python_class('dsl/schema.py', 'ExecutionSection').
 python_class('dsl/schema.py', 'IntentDSLDocument').
+python_method('IntentDSLDocument', 'stack_services_named', 2, 4, 3).
 python_class('executor/runner.py', 'ExecutionError').
 python_class('executor/runner.py', 'ValidationResult').
 python_method('ValidationResult', '__init__', 0, 3, 0).
@@ -278,17 +377,19 @@ python_method('ExecutionResult', 'add_log', 1, 1, 3).
 python_method('ExecutionResult', 'to_dict', 0, 2, 1).
 python_class('executor/runner.py', 'Executor').
 python_method('Executor', '__init__', 1, 3, 4).
-python_method('Executor', 'execute', 4, 13, 10).
-python_method('Executor', '_validate_and_fix', 3, 8, 6).
+python_method('Executor', 'execute', 4, 18, 13).
+python_method('Executor', '_validate_and_fix', 3, 8, 7).
 python_method('Executor', '_validate_endpoints', 2, 13, 11).
 python_method('Executor', '_attempt_fix', 3, 10, 7).
 python_method('Executor', '_add_main_block', 1, 7, 0).
 python_method('Executor', '_restart_container', 2, 2, 3).
-python_method('Executor', '_write_artifacts', 2, 7, 4).
+python_method('Executor', '_write_artifacts', 2, 9, 5).
 python_method('Executor', '_find_available_port', 1, 3, 3).
-python_method('Executor', '_execute_docker', 2, 12, 10).
+python_method('Executor', '_patch_compose_host_ports', 3, 7, 7).
+python_method('Executor', '_execute_compose_stack', 2, 9, 6).
+python_method('Executor', '_execute_docker', 2, 13, 11).
 python_method('Executor', '_execute_local', 2, 4, 5).
-python_method('Executor', 'get_container_logs', 2, 2, 2).
+python_method('Executor', 'get_container_logs', 2, 7, 6).
 python_method('Executor', 'cleanup', 0, 2, 2).
 python_class('generator/contract_verify.py', 'VerifyResult').
 python_method('VerifyResult', 'to_dict', 0, 1, 0).
@@ -301,25 +402,66 @@ python_method('IntentGenerator', '__init__', 4, 2, 2).
 python_method('IntentGenerator', 'generate', 1, 11, 14).
 python_class('generator/pipeline.py', 'PipelineResult').
 python_method('PipelineResult', 'to_dict', 0, 2, 1).
+python_class('integrations/adapters/backstage.py', 'BackstageExporter').
+python_method('BackstageExporter', 'export', 2, 5, 7).
+python_class('integrations/adapters/base.py', 'RegistryAdapter').
+python_method('RegistryAdapter', 'collect', 1, 1, 0).
+python_method('RegistryAdapter', 'enrich', 2, 1, 0).
+python_class('integrations/adapters/base.py', 'RegistryExporter').
+python_method('RegistryExporter', 'export', 2, 1, 0).
+python_class('integrations/adapters/docker.py', 'DockerAdapter').
+python_method('DockerAdapter', 'collect', 1, 1, 3).
+python_method('DockerAdapter', 'enrich', 2, 16, 6).
+python_class('integrations/adapters/filesystem.py', 'FilesystemAdapter').
+python_method('FilesystemAdapter', 'collect', 1, 1, 1).
+python_class('integrations/adapters/opentelemetry.py', 'OpenTelemetryExporter').
+python_method('OpenTelemetryExporter', 'export', 2, 5, 6).
+python_class('interfaces/models.py', 'ValidateYAMLRequest').
+python_class('interfaces/models.py', 'GenerateRequest').
+python_class('interfaces/models.py', 'PipelineRequest').
+python_class('interfaces/models.py', 'PlanYAMLRequest').
+python_class('interfaces/models.py', 'ParseRequest').
+python_class('interfaces/models.py', 'ExecuteRequest').
+python_class('interfaces/models.py', 'InterfacesInfo').
+python_class('interfaces/service.py', 'IterunService').
+python_method('IterunService', '__init__', 0, 1, 0).
+python_method('IterunService', 'interfaces_info', 0, 1, 0).
+python_method('IterunService', 'schema', 0, 1, 1).
+python_method('IterunService', 'validate_yaml', 1, 4, 3).
+python_method('IterunService', 'parse', 1, 1, 1).
+python_method('IterunService', 'generate', 1, 3, 2).
+python_method('IterunService', 'run_pipeline', 1, 3, 1).
+python_method('IterunService', 'plan_ir', 1, 1, 1).
+python_method('IterunService', 'plan_yaml', 1, 3, 5).
+python_method('IterunService', 'execute_ir', 1, 3, 4).
+python_method('IterunService', 'registry_refresh', 1, 1, 1).
+python_method('IterunService', 'registry_get', 1, 2, 4).
+python_method('IterunService', 'registry_list', 1, 1, 1).
 python_class('ir/models.py', 'ExecutionMode').
 python_class('ir/models.py', 'RuntimeType').
 python_class('ir/models.py', 'ActionType').
 python_class('ir/models.py', 'Action').
-python_method('Action', 'to_dict', 0, 1, 0).
-python_method('Action', 'from_dict', 2, 1, 3).
+python_method('Action', 'to_dict', 0, 2, 0).
+python_method('Action', 'from_dict', 2, 2, 3).
 python_class('ir/models.py', 'Environment').
-python_method('Environment', 'to_dict', 0, 1, 0).
-python_method('Environment', 'from_dict', 2, 1, 3).
+python_method('Environment', 'to_dict', 0, 2, 0).
+python_method('Environment', 'from_dict', 2, 2, 3).
 python_class('ir/models.py', 'Implementation').
-python_method('Implementation', 'to_dict', 0, 1, 1).
-python_method('Implementation', 'from_dict', 2, 1, 3).
+python_method('Implementation', 'to_dict', 0, 2, 1).
+python_method('Implementation', 'from_dict', 2, 2, 3).
+python_class('ir/models.py', 'StackService').
+python_method('StackService', 'to_dict', 0, 2, 1).
+python_method('StackService', 'from_dict', 2, 2, 6).
+python_class('ir/models.py', 'Stack').
+python_method('Stack', 'to_dict', 0, 2, 1).
+python_method('Stack', 'from_dict', 2, 2, 5).
 python_class('ir/models.py', 'Intent').
-python_method('Intent', 'to_dict', 0, 1, 0).
-python_method('Intent', 'from_dict', 2, 1, 2).
+python_method('Intent', 'to_dict', 0, 2, 0).
+python_method('Intent', 'from_dict', 2, 2, 2).
 python_class('ir/models.py', 'IntentIR').
-python_method('IntentIR', 'to_dict', 0, 1, 1).
+python_method('IntentIR', 'to_dict', 0, 2, 1).
 python_method('IntentIR', 'to_json', 1, 1, 2).
-python_method('IntentIR', 'from_dict', 2, 1, 8).
+python_method('IntentIR', 'from_dict', 2, 2, 8).
 python_method('IntentIR', 'from_json', 2, 1, 2).
 python_method('IntentIR', 'add_iteration', 2, 1, 3).
 python_method('IntentIR', 'approve_iterun', 0, 1, 2).
@@ -330,17 +472,18 @@ python_method('ValidationError', '__init__', 1, 1, 3).
 python_class('parser/dsl_parser.py', 'DSLParser').
 python_method('DSLParser', '__init__', 0, 1, 0).
 python_method('DSLParser', 'parse_file', 1, 1, 3).
-python_method('DSLParser', 'parse', 1, 8, 10).
+python_method('DSLParser', 'parse', 1, 9, 11).
 python_method('DSLParser', '_parse_intent', 1, 4, 4).
 python_method('DSLParser', '_parse_environment', 1, 3, 5).
 python_method('DSLParser', '_parse_implementation', 1, 4, 5).
 python_method('DSLParser', '_parse_action', 1, 8, 10).
+python_method('DSLParser', '_parse_stack', 1, 14, 11).
 python_method('DSLParser', '_parse_execution', 1, 3, 4).
-python_method('DSLParser', '_validate', 1, 8, 3).
+python_method('DSLParser', '_validate', 1, 21, 3).
 python_class('planner/simulator.py', 'DryRunResult').
 python_method('DryRunResult', '__init__', 0, 1, 0).
 python_method('DryRunResult', 'add_log', 1, 1, 3).
-python_method('DryRunResult', 'to_dict', 0, 1, 0).
+python_method('DryRunResult', 'to_dict', 0, 4, 1).
 python_class('planner/simulator.py', 'Planner').
 python_method('Planner', '__init__', 0, 1, 0).
 python_method('Planner', 'dry_run', 1, 4, 8).
@@ -354,15 +497,40 @@ python_method('Planner', '_generate_basic_node_code', 1, 1, 0).
 python_method('Planner', '_generate_dockerfile', 1, 8, 4).
 python_method('Planner', '_simulate_action', 2, 9, 2).
 python_method('Planner', '_estimate_resources', 1, 2, 1).
+python_class('registry/catalog.py', 'RegistryCatalog').
+python_method('RegistryCatalog', '__init__', 1, 1, 2).
+python_method('RegistryCatalog', 'registry_path', 0, 1, 0).
+python_method('RegistryCatalog', 'discover', 0, 1, 1).
+python_method('RegistryCatalog', 'load', 0, 2, 4).
+python_method('RegistryCatalog', 'refresh', 0, 1, 2).
+python_method('RegistryCatalog', 'write', 1, 2, 5).
+python_method('RegistryCatalog', 'summary', 0, 4, 4).
+python_class('registry/models.py', 'DeploymentKind').
+python_class('registry/models.py', 'LifecyclePhase').
+python_class('registry/models.py', 'ArtifactRole').
+python_class('registry/models.py', 'ArtifactRecord').
+python_class('registry/models.py', 'ServiceRecord').
+python_class('registry/models.py', 'RegistryMetadata').
+python_class('registry/models.py', 'RegistryStatus').
+python_class('registry/models.py', 'RegistryManifest').
+python_method('RegistryManifest', 'to_dict', 0, 1, 1).
 python_class('sdk/client.py', 'IterunClient').
 python_method('IterunClient', '__init__', 4, 2, 2).
-python_method('IterunClient', 'schema', 0, 1, 1).
-python_method('IterunClient', 'validate', 1, 2, 2).
-python_method('IterunClient', 'generate', 1, 3, 3).
-python_method('IterunClient', 'generate_and_run', 1, 3, 2).
-python_method('IterunClient', 'parse', 1, 1, 1).
-python_method('IterunClient', '_remote_generate', 1, 2, 6).
-python_method('IterunClient', '_remote_pipeline', 4, 3, 7).
+python_method('IterunClient', 'health', 0, 2, 4).
+python_method('IterunClient', 'interfaces', 0, 2, 5).
+python_method('IterunClient', 'schema', 0, 2, 5).
+python_method('IterunClient', 'validate', 1, 5, 4).
+python_method('IterunClient', 'generate', 1, 2, 2).
+python_method('IterunClient', 'run_pipeline', 1, 2, 2).
+python_method('IterunClient', 'generate_and_run', 1, 1, 1).
+python_method('IterunClient', 'plan_yaml', 1, 3, 3).
+python_method('IterunClient', 'registry_get', 1, 2, 6).
+python_method('IterunClient', 'registry_refresh', 1, 2, 3).
+python_method('IterunClient', 'registry_list', 1, 2, 5).
+python_method('IterunClient', 'parse', 1, 3, 4).
+python_method('IterunClient', '_post_json', 2, 1, 4).
+python_method('IterunClient', '_remote_generate', 1, 2, 3).
+python_method('IterunClient', '_remote_pipeline', 6, 3, 4).
 python_class('tests/e2e/test_ai_gateway.py', 'TestModelConfig').
 python_method('TestModelConfig', 'test_ollama_models_exist', 0, 4, 1).
 python_method('TestModelConfig', 'test_model_config_properties', 0, 7, 1).
@@ -461,6 +629,8 @@ python_class('web/app.py', 'IterationInput').
 python_class('web/app.py', 'ExecutionRequest').
 python_class('web/app.py', 'GenerateRequest').
 python_class('web/app.py', 'GenerateAndRunRequest').
+python_class('web/app.py', 'PlanYAMLRequest').
+python_class('web/app.py', 'RegistryRefreshRequest').
 python_class('web/app.py', 'ValidateYAMLRequest').
 python_class('web/app.py', 'AICompletionRequest').
 python_class('web/app.py', 'AISuggestRequest').

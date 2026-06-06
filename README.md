@@ -8,11 +8,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.9-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.10-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.87-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $2.3314 (14 commits)
-- 👤 **Human dev:** ~$504 (5.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $2.8650 (15 commits)
+- 👤 **Human dev:** ~$553 (5.5h @ $100/h, 30min dedup)
 
 Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -25,9 +25,13 @@ ITERUN is a system that allows you to:
 1. **Generate intents from prompts** (LiteLLM / OpenRouter / Ollama) → **`iterun.yaml`**
 2. **Define intents** manually in YAML DSL (sekcja `INTENT:`)
 3. **Simulate execution** with dry-run planning
-4. **Deploy services** in Docker with optional **contract verify** (TestQL + retry loop)
-5. **Get AI suggestions** in the interactive shell (Ollama / LiteLLM)
-6. **Execute safely** with the ITERUN boundary (explicit approval when enabled)
+4. **Deploy services** via Docker (default) or **pactown** sandboxes (`--runtime pactown`)
+5. **Pack stacks** to a single **markpact** file (`stack.markpact.md`)
+6. **Orchestrate repair** with **contract verify** (TestQL + LLM retry via `--verify`)
+7. **Monitor artifacts** with service registry (`iterun.registry.json`)
+8. **Integrate** via REST, SDK, MCP (`iterun-mcp`)
+9. **Get AI suggestions** in the interactive shell (Ollama / LiteLLM)
+10. **Execute safely** with the ITERUN boundary (explicit approval when enabled)
 
 **One-liner (prompt → running service):**
 
@@ -39,33 +43,28 @@ iterun generate "Create a REST API for user management" \
 ## Architecture
 
 ```
-┌─────────────────────┐
-│  CLI / Web / SDK    │  ← User interface
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ Generator (LLM)     │  ← prompt → iterun.yaml + intract + testql
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ Parser / Validator  │  ← DSL → IR
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ Planner / Simulator │  ← Dry-run → app.py, Dockerfile
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ Executor (Docker)   │  ← Deploy service
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ Contract verify       │  ← TestQL + expectations; retry on fail
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│ session.json        │  ← Full session log in generated/
-└─────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│  CLI · REST · SDK · MCP (iterun-mcp)                     │
+│  interfaces/IterunService — wspólna warstwa API            │
+└─────────────────────────┬────────────────────────────────┘
+                          ↓
+┌──────────────────────────────────────────────────────────┐
+│  Generator (LLM) → iterun.yaml + intract + testql        │
+│  Parser → IR · Planner → app.py / compose / STACK        │
+│  markpact pack → stack.markpact.md                       │
+└─────────────────────────┬────────────────────────────────┘
+                          ↓
+┌────────────────────┐    ┌─────────────────────────────┐
+│ Runtime: docker    │ or │ Runtime: pactown            │
+│ (Executor)         │    │ (integrations/pactown_*)    │
+└─────────┬──────────┘    └──────────────┬──────────────┘
+          └──────────────┬───────────────┘
+                         ↓
+┌──────────────────────────────────────────────────────────┐
+│  Contract verify (--verify) → LLM repair loop            │
+│  Registry → iterun.registry.json (Backstage / OTel)      │
+│  session.json — pełny log sesji                          │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ## Quick Start
@@ -83,6 +82,8 @@ make setup
 # Editable install (recommended)
 python3 -m venv venv && source venv/bin/activate
 pip install -e ".[ai]"
+pip install -e ".[runtime]"   # opcjonalnie: markpact + pactown
+# lub lokalnie: pip install -e ../markpact -e ../pactown
 cp .env.example .env
 ```
 
@@ -104,6 +105,7 @@ HOST=0.0.0.0
 PORT=8080
 SKIP_ITERUN_CONFIRMATION=true
 CONTAINER_PORT=8000
+ITERUN_RUNTIME=docker          # lub pactown (bez docker w iterun)
 ```
 
 ### Generate from prompt
@@ -117,8 +119,14 @@ iterun generate "Create a ping API" -o generated/
 # Plan + artifacts
 iterun generate "..." -o generated/ --run
 
-# Docker + contract verify + repair loop
+# Docker + contract verify + LLM repair loop (--verify wymagane!)
 iterun generate "..." -o generated/ --execute --verify --max-verify-iterations 5
+
+# Pactown runtime (markpact sandboxes zamiast docker compose)
+iterun generate "..." -o generated/ --execute --runtime pactown --verify
+
+# Rejestr usług i artefaktów
+iterun registry -o generated/
 
 # Full JSON session log
 iterun generate "..." -o generated/ --execute --verify --json
@@ -183,6 +191,17 @@ intent> models              # List AI models
 intent> ai-health           # Check AI Gateway status
 intent> help                # Show help
 intent> exit                # Exit shell
+
+# Poza shell — registry i runtime
+iterun registry -o generated/
+iterun registry list examples/*/generated
+```
+
+### MCP (agents)
+
+```bash
+pip install -e ".[mcp]"
+iterun-mcp   # z katalogu root iterun; nie z examples/*
 ```
 
 ### Web Interface
@@ -280,7 +299,7 @@ Runtime markpact+pactown: **[docs/RUNTIME.md](docs/RUNTIME.md)** — odchudzone 
 | REST | `uvicorn web.app:app` → `/api/*`, OpenAPI `/docs` |
 | CLI | `iterun generate`, `iterun plan`, … |
 | SDK | `IterunClient()` — local lub `base_url="http://…"` |
-| MCP | `iterun-mcp` — narzędzia dla agentów LLM |
+| MCP | `iterun-mcp` / `python -m iterun_mcp.server` — narzędzia dla agentów LLM |
 
 ### REST Endpoints (skrót)
 
@@ -294,6 +313,8 @@ Runtime markpact+pactown: **[docs/RUNTIME.md](docs/RUNTIME.md)** — odchudzone 
 | `POST` | `/api/pipeline/run` | generate → plan → execute? → verify? |
 | `POST` | `/api/intents/generate` | LLM → YAML |
 | `POST` | `/api/intents/generate-and-run` | Alias `/api/pipeline/run` |
+| `GET` | `/api/registry` | Service/artifact registry |
+| `POST` | `/api/registry/refresh` | Refresh registry + exports |
 | `GET` | `/api/intents` | List all intents |
 | `POST` | `/api/intents/parse` | Parse DSL and create intent |
 | `GET` | `/api/intents/{id}` | Get intent by ID |
@@ -347,8 +368,9 @@ print(plan.generated_code)
 | `./examples/run-all.sh` | 01–08: prompt → `iterun.yaml` → plan |
 | `./examples/run-e2e.sh` | 09–12: execute + TestQL + Intract |
 | `./examples/run-resilience.sh` | 13–16: skrajne prompty, pętla naprawcza |
+| `./examples/run-stacks.sh` | 17–19: multi-service STACK (compose / pactown) |
 
-Szczegóły: [examples/README.md](examples/README.md).
+Szczegóły: [examples/README.md](examples/README.md) · operacje: [examples/OPERATIONS.md](examples/OPERATIONS.md).
 
 ## Session artifacts
 
@@ -366,6 +388,12 @@ Everything from one `iterun generate` run lands in `--output-dir` (default `gene
 | `verify.result.json` | Contract verify result |
 | `verify.rounds.json` | Repair loop history (`--verify`) |
 | `app.py` / `Dockerfile` | Generated service |
+| `stack.markpact.md` | Cały workspace w jednym pliku markpact |
+| `pactown.yaml` | Konfiguracja ekosystemu pactown |
+| `pactown.urls.json` | URL po `--runtime pactown` |
+| `stack.urls.json` | URL gatewayów (STACK, docker) |
+| `iterun.registry.json` | Rejestr usług i artefaktów |
+| `catalog/` | Eksport Backstage (po `iterun registry`) |
 
 ## Testing
 
@@ -395,9 +423,12 @@ iterun/
 ├── cli/                # `iterun` CLI
 ├── web/                # FastAPI web UI
 ├── sdk/                # Python SDK client
-├── iterun_mcp/         # MCP server (optional; not `mcp/` — conflicts with PyPI mcp)
-├── examples/           # prompt.txt + run.sh → generated/
-├── docs/               # DSL spec, docs index
+├── interfaces/         # IterunService — REST/SDK/MCP
+├── integrations/       # markpact pack, pactown runtime, registry bridges
+├── registry/           # iterun.registry.json catalog
+├── iterun_mcp/         # MCP server (`iterun-mcp`; nie `mcp/` — konflikt PyPI)
+├── examples/           # 01–19: prompt.txt + run.sh → generated/
+├── docs/               # API, REGISTRY, RUNTIME, DSL spec
 ├── tests/e2e/
 ├── config.py           # PACKAGE_FILENAME = "iterun.yaml"
 └── README.md
@@ -410,9 +441,11 @@ iterun/
 1. **Prompt** → `iterun generate "..." -o generated/`
 2. **Contracts** → auto `intract.yaml` + `service.testql.toon.yaml`
 3. **Plan** → `app.py`, `Dockerfile`, `plan.result.json`
-4. **Execute** → Docker container
-5. **Verify** → TestQL + HTTP (`--verify`); retry with error context on failure
-6. **Session** → `session.json` aggregates all steps
+4. **Pack** → `stack.markpact.md` (+ per-service README dla pactown)
+5. **Execute** → Docker (default) lub pactown (`--runtime pactown`)
+6. **Verify** → TestQL + HTTP (`--verify`); **LLM repair** przy błędzie (bez `--verify` brak regeneracji YAML)
+7. **Registry** → `iterun.registry.json`
+8. **Session** → `session.json` aggregates all steps
 
 ### Manual / interactive
 
@@ -422,7 +455,15 @@ iterun/
 4. **ITERUN** → approve (unless `SKIP_ITERUN_CONFIRMATION`)
 5. **Execute** → deploy + endpoint validation
 
-Documentation: [docs/README.md](docs/README.md) · [docs/INTENT_DSL_SPEC.md](docs/INTENT_DSL_SPEC.md)
+Documentation:
+
+| Dokument | Temat |
+|----------|-------|
+| [docs/README.md](docs/README.md) | Indeks dokumentacji |
+| [docs/INTENT_DSL_SPEC.md](docs/INTENT_DSL_SPEC.md) | DSL, pipeline, STACK |
+| [docs/API.md](docs/API.md) | REST, SDK, MCP |
+| [docs/REGISTRY.md](docs/REGISTRY.md) | Rejestr usług/artefaktów |
+| [docs/RUNTIME.md](docs/RUNTIME.md) | markpact + pactown |
 
 ## Validation & Auto-Fix
 

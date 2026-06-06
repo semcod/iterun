@@ -10,7 +10,8 @@ from urllib.parse import urlparse
 
 from ir.models import ActionType, IntentIR
 
-from executor.runner import ExecutionResult, ValidationResult, _filter_validation_endpoints
+from executor.models import ExecutionResult, ValidationResult
+from executor.validation import filter_validation_endpoints
 
 try:
     import httpx
@@ -52,7 +53,7 @@ def _validate_urls(endpoints: list[str], result: ExecutionResult, timeout: int =
     if not HTTPX_AVAILABLE:
         validation.success = True
         return validation
-    for endpoint in _filter_validation_endpoints(endpoints):
+    for endpoint in filter_validation_endpoints(endpoints):
         try:
             with httpx.Client(timeout=timeout) as client:
                 resp = client.get(endpoint)

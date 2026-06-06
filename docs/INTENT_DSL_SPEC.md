@@ -11,14 +11,27 @@ Dwa tryby wejścia:
 | **Prompt-first** (zalecany) | NL prompt | `generated/iterun.yaml` + artefakty |
 | **Ręczny DSL** | `iterun.yaml` | `plan` / `execute` |
 
-## Interfejsy generowania
+## Interfejsy
+
+Wszystkie powierzchnie korzystają z `interfaces/service.py` (`IterunService`). Pełna dokumentacja: [API.md](API.md).
 
 | Interface | Entry |
 |-----------|-------|
-| CLI | `iterun generate "prompt" -o generated/ [--run] [--execute] [--verify]` |
-| REST | `POST /api/intents/generate`, `POST /api/intents/generate-and-run` |
-| SDK | `IterunClient().generate_and_run(prompt, output_dir=...)` |
-| MCP | `iterun_generate_intent` tool |
+| CLI | `iterun generate`, `iterun registry`, `iterun schema` |
+| REST | `GET /api/interfaces`, `POST /api/pipeline/run`, `GET /api/registry` |
+| SDK | `IterunClient().run_pipeline()`, `.registry_refresh()` |
+| MCP | `iterun-mcp` — `iterun_run_pipeline`, `iterun_registry_refresh`, … |
+| Runtime | `ITERUN_RUNTIME=docker\|pactown` lub `--runtime` — [RUNTIME.md](RUNTIME.md) |
+| Registry | `iterun registry -o generated/` — [REGISTRY.md](REGISTRY.md) |
+
+### Generowanie
+
+| Interface | Entry |
+|-----------|-------|
+| CLI | `iterun generate "prompt" -o generated/ [--run] [--execute] [--verify] [--runtime pactown]` |
+| REST | `POST /api/pipeline/run` |
+| SDK | `IterunClient().run_pipeline(prompt, execute=True, verify=True)` |
+| MCP | `iterun_run_pipeline`, `iterun_generate_intent` |
 
 ## STACK (multi-service)
 
@@ -63,7 +76,12 @@ EXECUTION:
 | `depends_on` | Kolejność startu w compose |
 | `port` | Port wewnątrz kontenera (domyślnie 8000) |
 
-Execute: `docker compose up --build` (projekt `intent-<INTENT.name>`).
+Execute:
+
+- **docker** (domyślnie): `docker compose up --build` (projekt `intent-<INTENT.name>`)
+- **pactown**: `pactown.yaml` + Orchestrator — bez compose w iterun ([RUNTIME.md](RUNTIME.md))
+
+Po planie: `stack.markpact.md` (markpact), `services/<name>/README.md` (per-service).
 
 ## Document structure (`iterun.yaml`)
 
@@ -116,12 +134,16 @@ prompt (NL)
   → LLM + validate-retry (max 5)     → iterun.yaml
   → intract.yaml                     (kontrakt Intract)
   → service.testql.toon.yaml         (kontrakt TestQL)
-  → plan                             → app.py, Dockerfile, plan.result.json
-  → execute (Docker)
+  → plan                             → app.py, Dockerfile, compose (STACK)
+  → markpact pack                    → stack.markpact.md, pactown.yaml
+  → execute (docker | pactown)
   → verify (--verify)                → testql + HTTP + expectations.yaml
   → przy FAIL: ponowne generate z kontekstem błędów (max 3–5 rund)
+  → registry                         → iterun.registry.json
   → session.json, execution.json, container.log, verify.rounds.json
 ```
+
+**Bez `--verify`:** brak pętli naprawy LLM (tylko deploy + HTTP smoke w executorze).
 
 ### CLI
 
@@ -135,9 +157,15 @@ iterun generate "..." -o generated/ --run
 # YAML + plan + Docker
 iterun generate "..." -o generated/ --execute
 
-# pełny gate: deploy + testql + retry naprawczy
+# pełny gate: deploy + testql + retry naprawczy LLM
 iterun generate "..." -o generated/ --execute --verify
 iterun generate "..." -o generated/ --execute --verify --max-verify-iterations 5
+
+# pactown runtime (bez docker w iterun)
+iterun generate "..." -o generated/ --execute --runtime pactown --verify
+
+# rejestr po sesji
+iterun registry -o generated/
 ```
 
 ### Artefakty w `--output-dir`
@@ -156,6 +184,13 @@ iterun generate "..." -o generated/ --execute --verify --max-verify-iterations 5
 | `session.json` | **zbiorczy log całej sesji** |
 | `expectations.yaml` | opcjonalny kontrakt (np. examples resilience) |
 | `openapi.yaml` | OpenAPI + `x-intract` (E2E) |
+| `stack.markpact.md` | markpact pack całego workspace |
+| `pactown.yaml` | Konfiguracja ekosystemu pactown |
+| `pactown.urls.json` | URL po `--runtime pactown` |
+| `stack.urls.json` | URL gatewayów (STACK, docker) |
+| `iterun.registry.json` | Rejestr usług i artefaktów |
+| `docker-compose.yaml` | STACK multi-service |
+| `services/*/` | Per-service artifacts (STACK) |
 
 ## LLM generation loop (YAML)
 
@@ -193,6 +228,7 @@ Priorytet modelu: `--model` CLI > `LLM_MODEL` > `DEFAULT_MODEL`
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Lokalny Ollama |
 | `SKIP_ITERUN_CONFIRMATION` | `true` | Bez interaktywnego `iterun` w CLI |
 | `CONTAINER_PORT` | `8000` | Port w kontenerze |
+| `ITERUN_RUNTIME` | `docker` | `pactown` — uruchomienie przez pactown |
 
 ```bash
 pip install -e ".[ai]"
@@ -207,8 +243,9 @@ iterun generate "Create a REST API for user management" -o generated/ --execute 
 | Podstawowe (01–08) | `./examples/run-all.sh` |
 | E2E testql + intract (09–12) | `./examples/run-e2e.sh` |
 | Resilience / repair loop (13–16) | `./examples/run-resilience.sh` |
+| STACK multi-service (17–19) | `./examples/run-stacks.sh` |
 
-Szczegóły: [examples/README.md](../examples/README.md).
+Szczegóły: [examples/README.md](../examples/README.md) · [OPERATIONS.md](../examples/OPERATIONS.md).
 
 ## SDK
 
@@ -216,10 +253,12 @@ Szczegóły: [examples/README.md](../examples/README.md).
 from sdk import IterunClient
 
 client = IterunClient()
-result = client.generate_and_run(
+result = client.run_pipeline(
     "Create a REST API for user management",
     output_dir="generated",
     execute=True,
+    verify=True,
 )
-print(result.yaml_path)  # generated/iterun.yaml
+print(result.yaml_path)
+client.registry_refresh("generated")
 ```

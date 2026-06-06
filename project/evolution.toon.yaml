@@ -1,58 +1,58 @@
-# code2llm/evolution | 293 func | 36f | 2026-06-06
+# code2llm/evolution | 310 func | 49f | 2026-06-06
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
-  [1] !! SPLIT           cli/main.py
-      WHY: 994L, 2 classes, max CC=92
-      EFFORT: ~4h  IMPACT: 91448
+  [1] !! SPLIT           cli/shell.py
+      WHY: 586L, 2 classes, max CC=39
+      EFFORT: ~4h  IMPACT: 22854
 
-  [2] !! SPLIT           executor/runner.py
-      WHY: 776L, 4 classes, max CC=18
-      EFFORT: ~4h  IMPACT: 13968
-
-  [3] !! SPLIT-FUNC      main  CC=92  fan=44
-      WHY: CC=92 exceeds 15
-      EFFORT: ~1h  IMPACT: 4048
-
-  [4] !! SPLIT-FUNC      discover_workspace  CC=44  fan=35
-      WHY: CC=44 exceeds 15
-      EFFORT: ~1h  IMPACT: 1540
-
-  [5] !! SPLIT-FUNC      run_pipeline  CC=33  fan=25
+  [2] !! SPLIT-FUNC      run_pipeline  CC=33  fan=25
       WHY: CC=33 exceeds 15
       EFFORT: ~1h  IMPACT: 825
 
-  [6] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
+  [3] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
       WHY: CC=30 exceeds 15
       EFFORT: ~1h  IMPACT: 690
 
-  [7] !  SPLIT-FUNC      execute_pactown  CC=21  fan=31
+  [4] !! SPLIT-FUNC      discover_workspace  CC=25  fan=27
+      WHY: CC=25 exceeds 15
+      EFFORT: ~1h  IMPACT: 675
+
+  [5] !  SPLIT-FUNC      execute_pactown  CC=21  fan=31
       WHY: CC=21 exceeds 15
       EFFORT: ~1h  IMPACT: 651
 
-  [8] !! SPLIT-FUNC      CLI.cmd_execute  CC=37  fan=15
-      WHY: CC=37 exceeds 15
-      EFFORT: ~1h  IMPACT: 555
+  [6] !! SPLIT-FUNC      CLI.cmd_execute  CC=39  fan=15
+      WHY: CC=39 exceeds 15
+      EFFORT: ~1h  IMPACT: 585
 
-  [9] !  SPLIT-FUNC      verify_contract  CC=16  fan=26
+  [7] !  SPLIT-FUNC      verify_contract  CC=16  fan=26
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 416
 
-  [10] !  SPLIT-FUNC      check_expectations  CC=23  fan=12
+  [8] !  SPLIT-FUNC      check_expectations  CC=23  fan=12
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 276
+
+  [9] !  SPLIT-FUNC      Executor.execute  CC=18  fan=13
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 234
+
+  [10] !  SPLIT-FUNC      plan_stack  CC=18  fan=12
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 216
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
-  ⚠ Splitting cli/main.py may break 25 import paths
-  ⚠ Splitting executor/runner.py may break 24 import paths
+  ⚠ Splitting cli/shell.py may break 23 import paths
+  ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          5.0 → ≤3.5
-  max-CC:      92 → ≤20
-  god-modules: 6 → 0
-  high-CC(≥15): 17 → ≤8
+  CC̄:          4.8 → ≤3.4
+  max-CC:      39 → ≤19
+  god-modules: 3 → 0
+  high-CC(≥15): 18 → ≤9
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -80,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.6 → now CC̄=5.0
+  prev CC̄=5.0 → now CC̄=4.8

@@ -1,5 +1,7 @@
 # Runtime — markpact + pactown (odchudzony iterun)
 
+Powiązane: [API.md](API.md) · [REGISTRY.md](REGISTRY.md) · [INTENT_DSL_SPEC.md](INTENT_DSL_SPEC.md)
+
 ITERUN generuje kod i **orchestruje** cykl życia. Uruchomienie może być delegowane do **pactown** (uniwersalne sandboxy), a artefakt przenośny to **stack.markpact.md** (markpact).
 
 ## Podział odpowiedzialności

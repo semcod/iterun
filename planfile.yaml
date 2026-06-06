@@ -888,45 +888,6 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
-  - id: ticket-768de0b2
-    name: Fix smart-return-type issues
-    description: Resolve 2 smart-return-type issues in mcp/server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - mcp/server.py
-    rule_id: smart-return-type
-    count: 2
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-9d48e886
-    name: Fix unused-imports issues
-    description: Resolve 6 unused-imports issues in mcp/server.py
-    task_type: prefactor
-    priority: high
-    estimate: 2d
-    files:
-    - mcp/server.py
-    rule_id: unused-imports
-    count: 6
-    model_hints:
-      planning: balanced
-      implementation: balanced
-  - id: ticket-55b88512
-    name: Fix ai-boilerplate issues
-    description: Resolve 3 ai-boilerplate issues in mcp/server.py
-    task_type: prefactor
-    priority: medium
-    estimate: 1d
-    files:
-    - mcp/server.py
-    rule_id: ai-boilerplate
-    count: 3
-    model_hints:
-      planning: balanced
-      implementation: balanced
   - id: ticket-6e5cc9f1
     name: Fix smart-return-type issues
     description: Resolve 1 smart-return-type issues in sdk/client.py
@@ -1080,6 +1041,279 @@ sprints:
     - tests/e2e/test_contract_verify.py
     rule_id: smart-return-type
     count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a1f212f1
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/adapters/backstage.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/adapters/backstage.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-535a7727
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in integrations/adapters/base.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - integrations/adapters/base.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1b769156
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/adapters/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/adapters/docker.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ca30ddd7
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in integrations/adapters/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/adapters/docker.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9f5356d0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/adapters/filesystem.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/adapters/filesystem.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1114a179
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/adapters/opentelemetry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/adapters/opentelemetry.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e291c26e
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/markpact_pack.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/markpact_pack.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ea8c4817
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/bridges/pipeline.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/bridges/pipeline.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e9e6354c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/pactown_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/pactown_config.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a22d5bb9
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in integrations/pactown_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/pactown_config.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e4bb5697
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in integrations/runtime_stop.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/runtime_stop.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-12fa8f86
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in integrations/pactown_runtime.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - integrations/pactown_runtime.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a6622dbd
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in integrations/pactown_runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - integrations/pactown_runtime.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1a493952
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in interfaces/service.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - interfaces/service.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-69ed1465
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in ir/models.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - ir/models.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-58ce5bd8
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in iterun_mcp/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - iterun_mcp/server.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-908d08bc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in iterun_mcp/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - iterun_mcp/server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4be949b7
+    name: Fix ai-boilerplate issues
+    description: Resolve 3 ai-boilerplate issues in iterun_mcp/server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - iterun_mcp/server.py
+    rule_id: ai-boilerplate
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-163ba927
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in interfaces/models.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - interfaces/models.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0b17203d
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in parser/dsl_parser.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - parser/dsl_parser.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b8a53a20
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in planner/stack_planner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - planner/stack_planner.py
+    rule_id: string-concat
+    count: 1
     model_hints:
       planning: balanced
       implementation: balanced

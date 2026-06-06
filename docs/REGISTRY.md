@@ -65,6 +65,8 @@ generator/pipeline  ──► integrations/bridges/pipeline
 
 Fazy (`status.phase`): `planned` → `running` → `verified` / `failed`.
 
+Powiązane: [API.md](API.md) · [RUNTIME.md](RUNTIME.md) · [examples/OPERATIONS.md](../examples/OPERATIONS.md)
+
 ## Użycie
 
 ### CLI

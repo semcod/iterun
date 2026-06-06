@@ -17,7 +17,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `iterun`
-- **version**: `0.1.7`
+- **version**: `0.1.9`
 - **python_requires**: `>=3.11`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -37,12 +37,75 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: iterun;
-  version: 0.1.7;
+  version: 0.1.9;
 }
 
 dependencies {
   runtime: "pyyaml>=6.0, pydantic>=2.0, fastapi>=0.109.0, uvicorn>=0.27.0, jinja2>=3.1.0";
   dev: "pytest>=8.0.0, pytest-asyncio>=0.23.0, httpx>=0.26.0, anyio>=4.0.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+}
+
+entity[name="ArtifactRecord"] {
+  name: string!;
+  path: string!;
+  kind: string!;
+  role: ArtifactRole!;
+  mime_type: str | None;
+  standard: str | None;
+  size_bytes: int | None;
+  checksum_sha256: str | None;
+  labels: dict[str, str]!;
+}
+
+entity[name="ServiceRecord"] {
+  name: string!;
+  type: string!;
+  owner: string!;
+  lifecycle: string!;
+  urls: list[str]!;
+  health_paths: list[str]!;
+  framework: str | None;
+  language: str | None;
+  port: int | None;
+  host_port: int | None;
+  container_id: str | None;
+  image: str | None;
+  depends_on: list[str]!;
+  labels: dict[str, str]!;
+  otel: dict[str, Any]!;
+}
+
+entity[name="RegistryMetadata"] {
+  name: string!;
+  intent_id: str | None;
+  workspace: string!;
+  generated_at: string!;
+  prompt: str | None;
+  is_stack: bool!;
+}
+
+entity[name="RegistryStatus"] {
+  phase: LifecyclePhase!;
+  success: bool | None;
+  session_path: str | None;
+  verification: dict[str, Any] | None;
+  endpoints: list[str]!;
+}
+
+entity[name="RegistryManifest"] {
+  api_version: string!;
+  kind: string!;
+  metadata: RegistryMetadata!;
+  spec: dict[str, Any]!;
+  status: RegistryStatus!;
+}
+
+entity[name="InterfacesInfo"] {
+  rest_base: string!;
+  cli: string!;
+  mcp_server: string!;
+  sdk: string!;
+  surfaces: list[dict[str, Any]]!;
 }
 
 interface[type="api"] {
@@ -358,68 +421,68 @@ pfix>=0.1.60
 
 ## Call Graph
 
-*93 nodes · 84 edges · 22 modules · CC̄=4.2*
+*143 nodes · 131 edges · 36 modules · CC̄=4.6*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `run_pipeline` *(in generator.pipeline)* | 30 ⚠ | 3 | 36 | **39** |
+| `discover_workspace` *(in registry.discover)* | 44 ⚠ | 2 | 75 | **77** |
+| `execute_pactown` *(in integrations.pactown_runtime)* | 21 ⚠ | 1 | 50 | **51** |
 | `cmd_execute` *(in cli.main.CLI)* | 37 ⚠ | 0 | 37 | **37** |
+| `run_pipeline` *(in generator.pipeline)* | 33 ⚠ | 0 | 37 | **37** |
 | `verify_contract` *(in generator.contract_verify)* | 16 ⚠ | 1 | 32 | **33** |
+| `_discover_artifacts` *(in registry.discover)* | 12 ⚠ | 1 | 28 | **29** |
 | `verify` *(in examples._scripts.verify_expectations)* | 23 ⚠ | 1 | 27 | **28** |
 | `check_expectations` *(in generator.expectations)* | 23 ⚠ | 1 | 26 | **27** |
-| `cmd_plan` *(in cli.main.CLI)* | 11 ⚠ | 0 | 24 | **24** |
-| `generate` *(in generator.intent_generator.IntentGenerator)* | 11 ⚠ | 0 | 21 | **21** |
-| `cmd_ai_suggest` *(in cli.main.CLI)* | 11 ⚠ | 0 | 21 | **21** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/wronai/iterun
-# generated in 0.04s
-# nodes: 93 | edges: 84 | modules: 22
-# CC̄=4.2
+# generated in 0.06s
+# nodes: 143 | edges: 131 | modules: 36
+# CC̄=4.6
 
 HUBS[20]:
-  generator.pipeline.run_pipeline
-    CC=30  in:3  out:36  total:39
+  registry.discover.discover_workspace
+    CC=44  in:2  out:75  total:77
+  integrations.pactown_runtime.execute_pactown
+    CC=21  in:1  out:50  total:51
   cli.main.CLI.cmd_execute
     CC=37  in:0  out:37  total:37
+  generator.pipeline.run_pipeline
+    CC=33  in:0  out:37  total:37
   generator.contract_verify.verify_contract
     CC=16  in:1  out:32  total:33
+  registry.discover._discover_artifacts
+    CC=12  in:1  out:28  total:29
   examples._scripts.verify_expectations.verify
     CC=23  in:1  out:27  total:28
   generator.expectations.check_expectations
     CC=23  in:1  out:26  total:27
+  planner.stack_artifacts.write_stack_artifacts
+    CC=9  in:3  out:22  total:25
   cli.main.CLI.cmd_plan
     CC=11  in:0  out:24  total:24
+  executor.runner.Executor.execute
+    CC=18  in:0  out:22  total:22
+  planner.stack_planner.plan_stack
+    CC=18  in:1  out:21  total:22
   generator.intent_generator.IntentGenerator.generate
     CC=11  in:0  out:21  total:21
   cli.main.CLI.cmd_ai_suggest
     CC=11  in:0  out:21  total:21
-  examples._scripts.intent_to_openapi.intent_to_openapi
-    CC=8  in:1  out:17  total:18
   cli.main.CLI.cmd_ai_chat
     CC=12  in:0  out:18  total:18
+  examples._scripts.intent_to_openapi.intent_to_openapi
+    CC=8  in:1  out:17  total:18
+  executor.runner.Executor._validate_and_fix
+    CC=8  in:0  out:17  total:17
   generator.session.write_session_artifacts
     CC=5  in:1  out:16  total:17
-  config.load_dotenv
-    CC=15  in:1  out:15  total:16
-  generator.pipeline._expectations_summary
-    CC=8  in:1  out:13  total:14
-  ai_gateway.gateway.get_gateway
-    CC=3  in:13  out:1  total:14
-  generator.intract_manifest.parse_api_actions
-    CC=6  in:5  out:9  total:14
-  examples._scripts.annotate_intract.annotate_express
-    CC=6  in:1  out:13  total:14
-  examples._scripts.annotate_intract._actions
-    CC=7  in:2  out:11  total:13
-  cli.main.CLI.cmd_ai_health
-    CC=4  in:0  out:12  total:12
-  examples._scripts.annotate_intract.annotate_python
-    CC=5  in:1  out:11  total:12
-  planner.simulator._endpoint_to_func_name
-    CC=5  in:2  out:10  total:12
+  integrations.adapters.docker.DockerAdapter.enrich
+    CC=16  in:0  out:16  total:16
+  integrations.bridges.pipeline.refresh_registry
+    CC=5  in:3  out:13  total:16
 
 MODULES:
   ai_gateway.feedback_loop  [2 funcs]
@@ -430,7 +493,7 @@ MODULES:
     complete  CC=1  out:2
     get_gateway  CC=3  out:1
     suggest_improvements  CC=1  out:2
-  cli.main  [10 funcs]
+  cli.main  [11 funcs]
     cmd_ai_apply  CC=8  out:10
     cmd_ai_chat  CC=12  out:18
     cmd_ai_health  CC=4  out:12
@@ -448,7 +511,7 @@ MODULES:
   dsl.schema  [3 funcs]
     get_json_schema  CC=1  out:1
     get_system_prompt  CC=1  out:2
-    validate_yaml_document  CC=7  out:7
+    validate_yaml_document  CC=10  out:8
   examples._scripts.annotate_intract  [6 funcs]
     _actions  CC=7  out:11
     _comment  CC=1  out:1
@@ -469,8 +532,13 @@ MODULES:
     _parse_actions  CC=6  out:9
     main  CC=3  out:9
     verify  CC=23  out:27
-  executor.runner  [3 funcs]
+  examples._verify  [1 funcs]
+    write_intract_manifest  CC=0  out:0
+  executor.runner  [6 funcs]
     __init__  CC=3  out:5
+    _validate_and_fix  CC=8  out:17
+    execute  CC=18  out:22
+    _filter_validation_endpoints  CC=9  out:6
     execute_intent  CC=1  out:2
     stop_containers_for_intent  CC=5  out:6
   generator.contract_verify  [6 funcs]
@@ -488,20 +556,21 @@ MODULES:
     generate  CC=11  out:21
     _build_user_prompt  CC=4  out:1
     extract_yaml_from_llm  CC=6  out:11
-  generator.intract_manifest  [6 funcs]
+  generator.intract_manifest  [7 funcs]
+    _parse_action_strings  CC=4  out:7
     _safe_id  CC=1  out:3
     _slug  CC=2  out:4
     build_intract_manifest  CC=6  out:11
     intent_to_intract_dict  CC=2  out:4
-    parse_api_actions  CC=6  out:9
+    parse_api_actions  CC=9  out:11
     write_intract_manifest  CC=1  out:5
   generator.pipeline  [6 funcs]
     _build_repair_prompt  CC=4  out:3
     _container_logs  CC=4  out:3
     _expectations_summary  CC=8  out:13
-    _finalize  CC=2  out:3
-    _write_plan_artifacts  CC=4  out:8
-    run_pipeline  CC=30  out:36
+    _finalize  CC=3  out:4
+    _write_plan_artifacts  CC=8  out:11
+    run_pipeline  CC=33  out:37
   generator.session  [1 funcs]
     write_session_artifacts  CC=5  out:16
   generator.testql_scenario  [4 funcs]
@@ -509,6 +578,37 @@ MODULES:
     _startup_wait_ms  CC=7  out:3
     build_testql_scenario  CC=7  out:10
     write_testql_scenario  CC=2  out:7
+  integrations.adapters.docker  [2 funcs]
+    enrich  CC=16  out:16
+    _running_iterun_containers  CC=11  out:8
+  integrations.adapters.filesystem  [1 funcs]
+    collect  CC=1  out:1
+  integrations.bridges.pipeline  [2 funcs]
+    refresh_registry  CC=5  out:13
+    refresh_registry_from_pipeline  CC=2  out:2
+  integrations.markpact_pack  [2 funcs]
+    _run_command_for_ir  CC=8  out:0
+    pack_workspace  CC=18  out:12
+  integrations.pactown_config  [3 funcs]
+    _health_path  CC=8  out:0
+    build_pactown_config  CC=12  out:6
+    write_pactown_config  CC=1  out:4
+  integrations.pactown_runtime  [3 funcs]
+    _validate_urls  CC=6  out:10
+    execute_pactown  CC=21  out:50
+    stop_pactown_for_intent  CC=5  out:6
+  integrations.runtime_stop  [1 funcs]
+    stop_runtime_for_intent  CC=3  out:4
+  interfaces.service  [9 funcs]
+    execute_ir  CC=3  out:4
+    parse  CC=1  out:1
+    plan_ir  CC=1  out:1
+    plan_yaml  CC=3  out:6
+    registry_list  CC=1  out:1
+    registry_refresh  CC=1  out:1
+    schema  CC=1  out:1
+    validate_yaml  CC=4  out:3
+    _write_plan_output  CC=7  out:14
   parser.dsl_parser  [2 funcs]
     parse_dsl  CC=1  out:2
     parse_dsl_file  CC=1  out:2
@@ -516,49 +616,49 @@ MODULES:
     _generate_fastapi_code  CC=5  out:7
     _generate_flask_code  CC=5  out:5
     _endpoint_to_func_name  CC=5  out:10
-    plan_intent  CC=1  out:2
-  sdk.client  [4 funcs]
-    generate_and_run  CC=3  out:2
-    parse  CC=1  out:1
-    schema  CC=1  out:1
-    validate  CC=2  out:2
-  web.app  [14 funcs]
+    plan_intent  CC=3  out:3
+  planner.stack_artifacts  [1 funcs]
+    write_stack_artifacts  CC=9  out:22
+  planner.stack_planner  [4 funcs]
+    _build_compose  CC=9  out:4
+    _gateway_proxy_code  CC=10  out:12
+    _resolve_upstream  CC=12  out:2
+    plan_stack  CC=18  out:21
+  registry.catalog  [2 funcs]
+    discover  CC=1  out:1
+    discover_glob  CC=7  out:11
+  registry.discover  [6 funcs]
+    _discover_artifacts  CC=12  out:28
+    _intent_from_workspace  CC=8  out:7
+    _load_session  CC=3  out:3
+    _load_stack_urls  CC=3  out:3
+    _phase_from_session  CC=7  out:5
+    discover_workspace  CC=44  out:75
+  registry.labels  [1 funcs]
+    build_service_labels  CC=4  out:0
+  sdk.client  [3 funcs]
+    parse  CC=3  out:6
+    schema  CC=2  out:5
+    validate  CC=5  out:4
+  web.app  [22 funcs]
+    _get_service  CC=2  out:1
     ai_apply_suggestions  CC=4  out:7
     ai_chat  CC=4  out:7
     ai_complete  CC=3  out:6
     ai_status  CC=2  out:5
     ai_suggest  CC=6  out:8
     execute  CC=5  out:5
-    generate_and_run_api  CC=3  out:3
+    generate_and_run_api  CC=1  out:2
     generate_code  CC=3  out:6
-    get_schema  CC=1  out:2
-    list_models  CC=2  out:4
+    generate_intent_api  CC=3  out:4
 
 EDGES:
-  config.reload_config → config.load_dotenv
   generator.expectations.check_expectations → generator.intract_manifest.parse_api_actions
   generator.expectations.load_and_check_expectations → generator.expectations.check_expectations
-  generator.intent_generator.IntentGenerator.__init__ → dsl.schema.get_system_prompt
-  generator.intent_generator.IntentGenerator.__init__ → ai_gateway.gateway.get_gateway
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator._build_user_prompt
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator.extract_yaml_from_llm
-  generator.intent_generator.IntentGenerator.generate → dsl.schema.validate_yaml_document
   generator.testql_scenario.build_testql_scenario → generator.intract_manifest.parse_api_actions
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._startup_wait_ms
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._probe_path
   generator.testql_scenario.write_testql_scenario → generator.testql_scenario.build_testql_scenario
-  generator.pipeline._write_plan_artifacts → generator.intract_manifest.write_intract_manifest
-  generator.pipeline._write_plan_artifacts → generator.testql_scenario.write_testql_scenario
-  generator.pipeline._build_repair_prompt → generator.pipeline._expectations_summary
-  generator.pipeline._finalize → generator.pipeline._container_logs
-  generator.pipeline._finalize → generator.session.write_session_artifacts
-  generator.pipeline.run_pipeline → generator.pipeline._finalize
-  generator.pipeline.run_pipeline → planner.simulator.plan_intent
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
-  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
-  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._load_yaml
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._parse_actions
   examples._scripts.verify_expectations.main → examples._scripts.verify_expectations.verify
@@ -568,23 +668,41 @@ EDGES:
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_python
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_express
   examples._scripts.intent_to_testql.main → generator.testql_scenario.write_testql_scenario
-  examples._scripts.intent_to_intract.main → generator.intract_manifest.write_intract_manifest
+  examples._scripts.intent_to_intract.main → examples._verify.write_intract_manifest
   examples._scripts.intent_to_openapi.intent_to_openapi → examples._scripts.intent_to_openapi._slug
   examples._scripts.intent_to_openapi.main → examples._scripts.intent_to_openapi.intent_to_openapi
+  ai_gateway.gateway.GatewayConfig.__post_init__ → config.get_config
+  ai_gateway.gateway.complete → ai_gateway.gateway.get_gateway
+  ai_gateway.gateway.suggest_improvements → ai_gateway.gateway.get_gateway
+  ai_gateway.feedback_loop.FeedbackLoop.__init__ → ai_gateway.gateway.get_gateway
+  generator.intract_manifest.parse_api_actions → generator.intract_manifest._parse_action_strings
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
+  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
+  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   planner.simulator.Planner._generate_fastapi_code → planner.simulator._endpoint_to_func_name
   planner.simulator.Planner._generate_flask_code → planner.simulator._endpoint_to_func_name
-  web.app.get_schema → dsl.schema.get_json_schema
-  web.app.validate_yaml → dsl.schema.validate_yaml_document
-  web.app.generate_and_run_api → generator.pipeline.run_pipeline
-  web.app.parse_intent → parser.dsl_parser.parse_dsl
-  web.app.plan → planner.simulator.plan_intent
-  web.app.execute → executor.runner.execute_intent
-  web.app.validate_intent → config.get_config
-  web.app.ai_status → ai_gateway.gateway.get_gateway
-  web.app.list_models → ai_gateway.gateway.get_gateway
-  web.app.ai_complete → ai_gateway.gateway.get_gateway
-  web.app.ai_chat → ai_gateway.gateway.get_gateway
-  web.app.ai_suggest → ai_gateway.feedback_loop.create_feedback_loop
+  planner.simulator.plan_intent → planner.stack_planner.plan_stack
+  registry.catalog.RegistryCatalog.discover → registry.discover.discover_workspace
+  planner.stack_planner._gateway_proxy_code → planner.stack_planner._resolve_upstream
+  planner.stack_planner._build_compose → registry.labels.build_service_labels
+  planner.stack_planner.plan_stack → planner.stack_planner._build_compose
+  interfaces.service._write_plan_output → planner.stack_artifacts.write_stack_artifacts
+  interfaces.service.IterunService.schema → dsl.schema.get_json_schema
+  interfaces.service.IterunService.validate_yaml → dsl.schema.validate_yaml_document
+  interfaces.service.IterunService.parse → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_ir → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_yaml → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → interfaces.service._write_plan_output
+  interfaces.service.IterunService.execute_ir → executor.runner.execute_intent
+  interfaces.service.IterunService.registry_refresh → integrations.bridges.pipeline.refresh_registry
+  interfaces.service.IterunService.registry_list → registry.catalog.discover_glob
+  executor.runner.Executor.__init__ → config.get_config
+  executor.runner.Executor.execute → integrations.pactown_runtime.execute_pactown
+  executor.runner.Executor._validate_and_fix → executor.runner._filter_validation_endpoints
+  executor.runner.stop_containers_for_intent → config.get_config
 ```
 
 ## Test Contracts
@@ -617,51 +735,51 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/wronai/iterun
-# generated in 0.04s
-# nodes: 93 | edges: 84 | modules: 22
-# CC̄=4.2
+# generated in 0.06s
+# nodes: 143 | edges: 131 | modules: 36
+# CC̄=4.6
 
 HUBS[20]:
-  generator.pipeline.run_pipeline
-    CC=30  in:3  out:36  total:39
+  registry.discover.discover_workspace
+    CC=44  in:2  out:75  total:77
+  integrations.pactown_runtime.execute_pactown
+    CC=21  in:1  out:50  total:51
   cli.main.CLI.cmd_execute
     CC=37  in:0  out:37  total:37
+  generator.pipeline.run_pipeline
+    CC=33  in:0  out:37  total:37
   generator.contract_verify.verify_contract
     CC=16  in:1  out:32  total:33
+  registry.discover._discover_artifacts
+    CC=12  in:1  out:28  total:29
   examples._scripts.verify_expectations.verify
     CC=23  in:1  out:27  total:28
   generator.expectations.check_expectations
     CC=23  in:1  out:26  total:27
+  planner.stack_artifacts.write_stack_artifacts
+    CC=9  in:3  out:22  total:25
   cli.main.CLI.cmd_plan
     CC=11  in:0  out:24  total:24
+  executor.runner.Executor.execute
+    CC=18  in:0  out:22  total:22
+  planner.stack_planner.plan_stack
+    CC=18  in:1  out:21  total:22
   generator.intent_generator.IntentGenerator.generate
     CC=11  in:0  out:21  total:21
   cli.main.CLI.cmd_ai_suggest
     CC=11  in:0  out:21  total:21
-  examples._scripts.intent_to_openapi.intent_to_openapi
-    CC=8  in:1  out:17  total:18
   cli.main.CLI.cmd_ai_chat
     CC=12  in:0  out:18  total:18
+  examples._scripts.intent_to_openapi.intent_to_openapi
+    CC=8  in:1  out:17  total:18
+  executor.runner.Executor._validate_and_fix
+    CC=8  in:0  out:17  total:17
   generator.session.write_session_artifacts
     CC=5  in:1  out:16  total:17
-  config.load_dotenv
-    CC=15  in:1  out:15  total:16
-  generator.pipeline._expectations_summary
-    CC=8  in:1  out:13  total:14
-  ai_gateway.gateway.get_gateway
-    CC=3  in:13  out:1  total:14
-  generator.intract_manifest.parse_api_actions
-    CC=6  in:5  out:9  total:14
-  examples._scripts.annotate_intract.annotate_express
-    CC=6  in:1  out:13  total:14
-  examples._scripts.annotate_intract._actions
-    CC=7  in:2  out:11  total:13
-  cli.main.CLI.cmd_ai_health
-    CC=4  in:0  out:12  total:12
-  examples._scripts.annotate_intract.annotate_python
-    CC=5  in:1  out:11  total:12
-  planner.simulator._endpoint_to_func_name
-    CC=5  in:2  out:10  total:12
+  integrations.adapters.docker.DockerAdapter.enrich
+    CC=16  in:0  out:16  total:16
+  integrations.bridges.pipeline.refresh_registry
+    CC=5  in:3  out:13  total:16
 
 MODULES:
   ai_gateway.feedback_loop  [2 funcs]
@@ -672,7 +790,7 @@ MODULES:
     complete  CC=1  out:2
     get_gateway  CC=3  out:1
     suggest_improvements  CC=1  out:2
-  cli.main  [10 funcs]
+  cli.main  [11 funcs]
     cmd_ai_apply  CC=8  out:10
     cmd_ai_chat  CC=12  out:18
     cmd_ai_health  CC=4  out:12
@@ -690,7 +808,7 @@ MODULES:
   dsl.schema  [3 funcs]
     get_json_schema  CC=1  out:1
     get_system_prompt  CC=1  out:2
-    validate_yaml_document  CC=7  out:7
+    validate_yaml_document  CC=10  out:8
   examples._scripts.annotate_intract  [6 funcs]
     _actions  CC=7  out:11
     _comment  CC=1  out:1
@@ -711,8 +829,13 @@ MODULES:
     _parse_actions  CC=6  out:9
     main  CC=3  out:9
     verify  CC=23  out:27
-  executor.runner  [3 funcs]
+  examples._verify  [1 funcs]
+    write_intract_manifest  CC=0  out:0
+  executor.runner  [6 funcs]
     __init__  CC=3  out:5
+    _validate_and_fix  CC=8  out:17
+    execute  CC=18  out:22
+    _filter_validation_endpoints  CC=9  out:6
     execute_intent  CC=1  out:2
     stop_containers_for_intent  CC=5  out:6
   generator.contract_verify  [6 funcs]
@@ -730,20 +853,21 @@ MODULES:
     generate  CC=11  out:21
     _build_user_prompt  CC=4  out:1
     extract_yaml_from_llm  CC=6  out:11
-  generator.intract_manifest  [6 funcs]
+  generator.intract_manifest  [7 funcs]
+    _parse_action_strings  CC=4  out:7
     _safe_id  CC=1  out:3
     _slug  CC=2  out:4
     build_intract_manifest  CC=6  out:11
     intent_to_intract_dict  CC=2  out:4
-    parse_api_actions  CC=6  out:9
+    parse_api_actions  CC=9  out:11
     write_intract_manifest  CC=1  out:5
   generator.pipeline  [6 funcs]
     _build_repair_prompt  CC=4  out:3
     _container_logs  CC=4  out:3
     _expectations_summary  CC=8  out:13
-    _finalize  CC=2  out:3
-    _write_plan_artifacts  CC=4  out:8
-    run_pipeline  CC=30  out:36
+    _finalize  CC=3  out:4
+    _write_plan_artifacts  CC=8  out:11
+    run_pipeline  CC=33  out:37
   generator.session  [1 funcs]
     write_session_artifacts  CC=5  out:16
   generator.testql_scenario  [4 funcs]
@@ -751,6 +875,37 @@ MODULES:
     _startup_wait_ms  CC=7  out:3
     build_testql_scenario  CC=7  out:10
     write_testql_scenario  CC=2  out:7
+  integrations.adapters.docker  [2 funcs]
+    enrich  CC=16  out:16
+    _running_iterun_containers  CC=11  out:8
+  integrations.adapters.filesystem  [1 funcs]
+    collect  CC=1  out:1
+  integrations.bridges.pipeline  [2 funcs]
+    refresh_registry  CC=5  out:13
+    refresh_registry_from_pipeline  CC=2  out:2
+  integrations.markpact_pack  [2 funcs]
+    _run_command_for_ir  CC=8  out:0
+    pack_workspace  CC=18  out:12
+  integrations.pactown_config  [3 funcs]
+    _health_path  CC=8  out:0
+    build_pactown_config  CC=12  out:6
+    write_pactown_config  CC=1  out:4
+  integrations.pactown_runtime  [3 funcs]
+    _validate_urls  CC=6  out:10
+    execute_pactown  CC=21  out:50
+    stop_pactown_for_intent  CC=5  out:6
+  integrations.runtime_stop  [1 funcs]
+    stop_runtime_for_intent  CC=3  out:4
+  interfaces.service  [9 funcs]
+    execute_ir  CC=3  out:4
+    parse  CC=1  out:1
+    plan_ir  CC=1  out:1
+    plan_yaml  CC=3  out:6
+    registry_list  CC=1  out:1
+    registry_refresh  CC=1  out:1
+    schema  CC=1  out:1
+    validate_yaml  CC=4  out:3
+    _write_plan_output  CC=7  out:14
   parser.dsl_parser  [2 funcs]
     parse_dsl  CC=1  out:2
     parse_dsl_file  CC=1  out:2
@@ -758,49 +913,49 @@ MODULES:
     _generate_fastapi_code  CC=5  out:7
     _generate_flask_code  CC=5  out:5
     _endpoint_to_func_name  CC=5  out:10
-    plan_intent  CC=1  out:2
-  sdk.client  [4 funcs]
-    generate_and_run  CC=3  out:2
-    parse  CC=1  out:1
-    schema  CC=1  out:1
-    validate  CC=2  out:2
-  web.app  [14 funcs]
+    plan_intent  CC=3  out:3
+  planner.stack_artifacts  [1 funcs]
+    write_stack_artifacts  CC=9  out:22
+  planner.stack_planner  [4 funcs]
+    _build_compose  CC=9  out:4
+    _gateway_proxy_code  CC=10  out:12
+    _resolve_upstream  CC=12  out:2
+    plan_stack  CC=18  out:21
+  registry.catalog  [2 funcs]
+    discover  CC=1  out:1
+    discover_glob  CC=7  out:11
+  registry.discover  [6 funcs]
+    _discover_artifacts  CC=12  out:28
+    _intent_from_workspace  CC=8  out:7
+    _load_session  CC=3  out:3
+    _load_stack_urls  CC=3  out:3
+    _phase_from_session  CC=7  out:5
+    discover_workspace  CC=44  out:75
+  registry.labels  [1 funcs]
+    build_service_labels  CC=4  out:0
+  sdk.client  [3 funcs]
+    parse  CC=3  out:6
+    schema  CC=2  out:5
+    validate  CC=5  out:4
+  web.app  [22 funcs]
+    _get_service  CC=2  out:1
     ai_apply_suggestions  CC=4  out:7
     ai_chat  CC=4  out:7
     ai_complete  CC=3  out:6
     ai_status  CC=2  out:5
     ai_suggest  CC=6  out:8
     execute  CC=5  out:5
-    generate_and_run_api  CC=3  out:3
+    generate_and_run_api  CC=1  out:2
     generate_code  CC=3  out:6
-    get_schema  CC=1  out:2
-    list_models  CC=2  out:4
+    generate_intent_api  CC=3  out:4
 
 EDGES:
-  config.reload_config → config.load_dotenv
   generator.expectations.check_expectations → generator.intract_manifest.parse_api_actions
   generator.expectations.load_and_check_expectations → generator.expectations.check_expectations
-  generator.intent_generator.IntentGenerator.__init__ → dsl.schema.get_system_prompt
-  generator.intent_generator.IntentGenerator.__init__ → ai_gateway.gateway.get_gateway
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator._build_user_prompt
-  generator.intent_generator.IntentGenerator.generate → generator.intent_generator.extract_yaml_from_llm
-  generator.intent_generator.IntentGenerator.generate → dsl.schema.validate_yaml_document
   generator.testql_scenario.build_testql_scenario → generator.intract_manifest.parse_api_actions
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._startup_wait_ms
   generator.testql_scenario.build_testql_scenario → generator.testql_scenario._probe_path
   generator.testql_scenario.write_testql_scenario → generator.testql_scenario.build_testql_scenario
-  generator.pipeline._write_plan_artifacts → generator.intract_manifest.write_intract_manifest
-  generator.pipeline._write_plan_artifacts → generator.testql_scenario.write_testql_scenario
-  generator.pipeline._build_repair_prompt → generator.pipeline._expectations_summary
-  generator.pipeline._finalize → generator.pipeline._container_logs
-  generator.pipeline._finalize → generator.session.write_session_artifacts
-  generator.pipeline.run_pipeline → generator.pipeline._finalize
-  generator.pipeline.run_pipeline → planner.simulator.plan_intent
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
-  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
-  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
-  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._load_yaml
   examples._scripts.verify_expectations.verify → examples._scripts.verify_expectations._parse_actions
   examples._scripts.verify_expectations.main → examples._scripts.verify_expectations.verify
@@ -810,173 +965,231 @@ EDGES:
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_python
   examples._scripts.annotate_intract.main → examples._scripts.annotate_intract.annotate_express
   examples._scripts.intent_to_testql.main → generator.testql_scenario.write_testql_scenario
-  examples._scripts.intent_to_intract.main → generator.intract_manifest.write_intract_manifest
+  examples._scripts.intent_to_intract.main → examples._verify.write_intract_manifest
   examples._scripts.intent_to_openapi.intent_to_openapi → examples._scripts.intent_to_openapi._slug
   examples._scripts.intent_to_openapi.main → examples._scripts.intent_to_openapi.intent_to_openapi
+  ai_gateway.gateway.GatewayConfig.__post_init__ → config.get_config
+  ai_gateway.gateway.complete → ai_gateway.gateway.get_gateway
+  ai_gateway.gateway.suggest_improvements → ai_gateway.gateway.get_gateway
+  ai_gateway.feedback_loop.FeedbackLoop.__init__ → ai_gateway.gateway.get_gateway
+  generator.intract_manifest.parse_api_actions → generator.intract_manifest._parse_action_strings
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._safe_id
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest.parse_api_actions
+  generator.intract_manifest.build_intract_manifest → generator.intract_manifest._slug
+  generator.intract_manifest.intent_to_intract_dict → generator.intract_manifest.build_intract_manifest
+  generator.intract_manifest.write_intract_manifest → generator.intract_manifest.intent_to_intract_dict
   planner.simulator.Planner._generate_fastapi_code → planner.simulator._endpoint_to_func_name
   planner.simulator.Planner._generate_flask_code → planner.simulator._endpoint_to_func_name
-  web.app.get_schema → dsl.schema.get_json_schema
-  web.app.validate_yaml → dsl.schema.validate_yaml_document
-  web.app.generate_and_run_api → generator.pipeline.run_pipeline
-  web.app.parse_intent → parser.dsl_parser.parse_dsl
-  web.app.plan → planner.simulator.plan_intent
-  web.app.execute → executor.runner.execute_intent
-  web.app.validate_intent → config.get_config
-  web.app.ai_status → ai_gateway.gateway.get_gateway
-  web.app.list_models → ai_gateway.gateway.get_gateway
-  web.app.ai_complete → ai_gateway.gateway.get_gateway
-  web.app.ai_chat → ai_gateway.gateway.get_gateway
-  web.app.ai_suggest → ai_gateway.feedback_loop.create_feedback_loop
+  planner.simulator.plan_intent → planner.stack_planner.plan_stack
+  registry.catalog.RegistryCatalog.discover → registry.discover.discover_workspace
+  planner.stack_planner._gateway_proxy_code → planner.stack_planner._resolve_upstream
+  planner.stack_planner._build_compose → registry.labels.build_service_labels
+  planner.stack_planner.plan_stack → planner.stack_planner._build_compose
+  interfaces.service._write_plan_output → planner.stack_artifacts.write_stack_artifacts
+  interfaces.service.IterunService.schema → dsl.schema.get_json_schema
+  interfaces.service.IterunService.validate_yaml → dsl.schema.validate_yaml_document
+  interfaces.service.IterunService.parse → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_ir → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → parser.dsl_parser.parse_dsl
+  interfaces.service.IterunService.plan_yaml → planner.simulator.plan_intent
+  interfaces.service.IterunService.plan_yaml → interfaces.service._write_plan_output
+  interfaces.service.IterunService.execute_ir → executor.runner.execute_intent
+  interfaces.service.IterunService.registry_refresh → integrations.bridges.pipeline.refresh_registry
+  interfaces.service.IterunService.registry_list → registry.catalog.discover_glob
+  executor.runner.Executor.__init__ → config.get_config
+  executor.runner.Executor.execute → integrations.pactown_runtime.execute_pactown
+  executor.runner.Executor._validate_and_fix → executor.runner._filter_validation_endpoints
+  executor.runner.stop_containers_for_intent → config.get_config
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 91f 9168L | python:36,shell:21,txt:17,yaml:15,toml:1 | 2026-06-06
-# generated in 0.01s
-# CC̅=4.2 | critical:10/245 | dups:0 | cycles:0
+# code2llm | 125f 12031L | python:59,shell:27,txt:20,yaml:17,toml:1 | 2026-06-06
+# generated in 0.02s
+# CC̅=4.6 | critical:18/337 | dups:0 | cycles:1
 
-HEALTH[13]:
-  🔴 GOD   web/app.py = 523L, 9 classes, 25m, max CC=6
+HEALTH[20]:
   🔴 GOD   ai_gateway/gateway.py = 644L, 4 classes, 20m, max CC=15
-  🔴 GOD   executor/runner.py = 637L, 4 classes, 21m, max CC=13
-  🟡 CC    load_dotenv CC=15 (limit:15)
+  🔴 GOD   executor/runner.py = 776L, 4 classes, 24m, max CC=18
+  🔴 GOD   web/app.py = 597L, 11 classes, 32m, max CC=6
   🟡 CC    check_expectations CC=23 (limit:15)
-  🟡 CC    run_pipeline CC=30 (limit:15)
   🟡 CC    verify CC=23 (limit:15)
   🟡 CC    __post_init__ CC=15 (limit:15)
   🟡 CC    suggest_next_steps CC=17 (limit:15)
+  🟡 CC    plan_stack CC=18 (limit:15)
+  🟡 CC    execute CC=18 (limit:15)
+  🟡 CC    pack_workspace CC=18 (limit:15)
+  🟡 CC    _collect_endpoints CC=18 (limit:15)
+  🟡 CC    execute_pactown CC=21 (limit:15)
+  🟡 CC    enrich CC=16 (limit:15)
+  🟡 CC    discover_workspace CC=44 (limit:15)
+  🟡 CC    verify_contract CC=16 (limit:15)
+  🟡 CC    load_dotenv CC=15 (limit:15)
+  🟡 CC    _validate CC=21 (limit:15)
   🟡 CC    cmd_execute CC=37 (limit:15)
   🟡 CC    interactive_mode CC=30 (limit:15)
-  🟡 CC    main CC=72 (limit:15)
-  🟡 CC    verify_contract CC=16 (limit:15)
+  🟡 CC    main CC=92 (limit:15)
 
-REFACTOR[4]:
-  1. split web/app.py  (god module)
-  2. split ai_gateway/gateway.py  (god module)
-  3. split executor/runner.py  (god module)
-  4. split 10 high-CC methods  (CC>15)
+REFACTOR[5]:
+  1. split ai_gateway/gateway.py  (god module)
+  2. split executor/runner.py  (god module)
+  3. split web/app.py  (god module)
+  4. split 17 high-CC methods  (CC>15)
+  5. break 1 circular dependencies
 
-PIPELINES[145]:
-  [1] Src [get_env]: get_env
+PIPELINES[190]:
+  [1] Src [main]: main → verify → _load_yaml
       PURITY: 100% pure
-  [2] Src [get_env_bool]: get_env_bool
+  [2] Src [main]: main → annotate_python → _actions
       PURITY: 100% pure
-  [3] Src [get_env_int]: get_env_int
+  [3] Src [main]: main → write_testql_scenario → build_testql_scenario → parse_api_actions → ...(1 more)
       PURITY: 100% pure
-  [4] Src [get_env_float]: get_env_float
+  [4] Src [main]: main → write_intract_manifest
       PURITY: 100% pure
-  [5] Src [reload_config]: reload_config → load_dotenv
+  [5] Src [main]: main → intent_to_openapi → _slug
       PURITY: 100% pure
-  [6] Src [configure]: configure
+  [6] Src [__post_init__]: __post_init__ → get_config
       PURITY: 100% pure
-  [7] Src [to_dict]: to_dict
+  [7] Src [litellm_model_id]: litellm_model_id
       PURITY: 100% pure
-  [8] Src [__init__]: __init__ → get_system_prompt → get_json_schema
+  [8] Src [get_available_models]: get_available_models
       PURITY: 100% pure
-  [9] Src [generate]: generate → _build_user_prompt
+  [9] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [10] Src [to_dict]: to_dict
+  [10] Src [__init__]: __init__
       PURITY: 100% pure
-  [11] Src [main]: main → verify → _load_yaml
+  [11] Src [complete]: complete
       PURITY: 100% pure
-  [12] Src [main]: main → annotate_python → _actions
+  [12] Src [acomplete]: acomplete
       PURITY: 100% pure
-  [13] Src [main]: main → write_testql_scenario → build_testql_scenario → parse_api_actions
+  [13] Src [suggest_improvements]: suggest_improvements
       PURITY: 100% pure
-  [14] Src [main]: main → write_intract_manifest → intent_to_intract_dict → build_intract_manifest → ...(1 more)
+  [14] Src [generate_code_snippet]: generate_code_snippet
       PURITY: 100% pure
-  [15] Src [main]: main → intent_to_openapi → _slug
+  [15] Src [explain_error]: explain_error
       PURITY: 100% pure
-  [16] Src [add_log]: add_log
+  [16] Src [list_models]: list_models
       PURITY: 100% pure
-  [17] Src [dry_run]: dry_run
+  [17] Src [health_check]: health_check
       PURITY: 100% pure
-  [18] Src [_generate_python_code]: _generate_python_code
+  [18] Src [complete]: complete → get_gateway
       PURITY: 100% pure
-  [19] Src [_generate_fastapi_code]: _generate_fastapi_code → _endpoint_to_func_name
+  [19] Src [suggest_improvements]: suggest_improvements → get_gateway
       PURITY: 100% pure
-  [20] Src [_generate_flask_code]: _generate_flask_code → _endpoint_to_func_name
+  [20] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [21] Src [_generate_node_code]: _generate_node_code
+  [21] Src [__init__]: __init__ → get_gateway
       PURITY: 100% pure
-  [22] Src [_generate_express_code]: _generate_express_code
+  [22] Src [analyze]: analyze
       PURITY: 100% pure
-  [23] Src [_generate_dockerfile]: _generate_dockerfile
+  [23] Src [apply_suggestions]: apply_suggestions
       PURITY: 100% pure
-  [24] Src [_simulate_action]: _simulate_action
+  [24] Src [iterate]: iterate
       PURITY: 100% pure
-  [25] Src [_estimate_resources]: _estimate_resources
+  [25] Src [suggest_next_steps]: suggest_next_steps
       PURITY: 100% pure
-  [26] Src [home]: home
+  [26] Src [_build_analysis_prompt]: _build_analysis_prompt
       PURITY: 100% pure
-  [27] Src [list_intents]: list_intents
+  [27] Src [_parse_suggestions]: _parse_suggestions
       PURITY: 100% pure
-  [28] Src [get_schema]: get_schema → get_json_schema
+  [28] Src [_extract_action]: _extract_action
       PURITY: 100% pure
-  [29] Src [validate_yaml]: validate_yaml → validate_yaml_document → parse_dsl
+  [29] Src [_parse_action]: _parse_action
       PURITY: 100% pure
-  [30] Src [generate_intent_api]: generate_intent_api
+  [30] Src [_process_user_feedback]: _process_user_feedback
       PURITY: 100% pure
-  [31] Src [generate_and_run_api]: generate_and_run_api → run_pipeline → _finalize → _container_logs
+  [31] Src [analyze_intent]: analyze_intent
       PURITY: 100% pure
-  [32] Src [parse_intent]: parse_intent → parse_dsl
+  [32] Src [__getattr__]: __getattr__
       PURITY: 100% pure
-  [33] Src [get_intent]: get_intent
+  [33] Src [write_intract_manifest]: write_intract_manifest → intent_to_intract_dict → build_intract_manifest → _safe_id
       PURITY: 100% pure
-  [34] Src [delete_intent]: delete_intent
+  [34] Src [add_log]: add_log
       PURITY: 100% pure
-  [35] Src [plan]: plan → plan_intent
+  [35] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [36] Src [iterate]: iterate
+  [36] Src [dry_run]: dry_run
       PURITY: 100% pure
-  [37] Src [approve_iterun]: approve_iterun
+  [37] Src [_generate_python_code]: _generate_python_code
       PURITY: 100% pure
-  [38] Src [execute]: execute → execute_intent
+  [38] Src [_generate_fastapi_code]: _generate_fastapi_code → _endpoint_to_func_name
       PURITY: 100% pure
-  [39] Src [validate_intent]: validate_intent → get_config
+  [39] Src [_generate_flask_code]: _generate_flask_code → _endpoint_to_func_name
       PURITY: 100% pure
-  [40] Src [get_container_logs]: get_container_logs
+  [40] Src [_generate_node_code]: _generate_node_code
       PURITY: 100% pure
-  [41] Src [get_generated_code]: get_generated_code
+  [41] Src [_generate_express_code]: _generate_express_code
       PURITY: 100% pure
-  [42] Src [health]: health
+  [42] Src [_generate_dockerfile]: _generate_dockerfile
       PURITY: 100% pure
-  [43] Src [ai_status]: ai_status → get_gateway
+  [43] Src [_simulate_action]: _simulate_action
       PURITY: 100% pure
-  [44] Src [list_models]: list_models → get_gateway
+  [44] Src [_estimate_resources]: _estimate_resources
       PURITY: 100% pure
-  [45] Src [ai_complete]: ai_complete → get_gateway
+  [45] Src [__init__]: __init__
       PURITY: 100% pure
-  [46] Src [ai_chat]: ai_chat → get_gateway
+  [46] Src [discover]: discover → discover_workspace → _load_session
       PURITY: 100% pure
-  [47] Src [ai_suggest]: ai_suggest → create_feedback_loop
+  [47] Src [load]: load
       PURITY: 100% pure
-  [48] Src [ai_apply_suggestions]: ai_apply_suggestions → create_feedback_loop
+  [48] Src [refresh]: refresh
       PURITY: 100% pure
-  [49] Src [generate_code]: generate_code → get_gateway
+  [49] Src [write]: write
       PURITY: 100% pure
-  [50] Src [from_dict]: from_dict
+  [50] Src [summary]: summary
       PURITY: 100% pure
 
 LAYERS:
-  cli/                            CC̄=9.6    ←in:0  →out:18  !! split
-  │ !! main                       928L  2C   25m  CC=72     ←0
+  cli/                            CC̄=10.6   ←in:0  →out:22  !! split
+  │ !! main                       994L  2C   25m  CC=92     ←0
   │ __init__                    20L  0C    1m  CC=3      ←0
   │ __main__                     4L  0C    0m  CC=0.0    ←0
   │
-  generator/                      CC̄=5.4    ←in:7  →out:7
-  │ !! pipeline                   254L  1C    7m  CC=30     ←3
-  │ intent_generator           232L  3C    7m  CC=11     ←0
-  │ !! contract_verify            227L  1C   10m  CC=16     ←1
-  │ intract_manifest           106L  0C    6m  CC=6      ←6
+  integrations/                   CC̄=7.1    ←in:3  →out:3
+  │ !! pactown_runtime            195L  0C    4m  CC=21     ←2
+  │ !! markpact_pack              104L  0C    2m  CC=18     ←2
+  │ !! docker                      79L  1C    3m  CC=16     ←0
+  │ backstage                   74L  1C    1m  CC=5      ←0
+  │ pactown_config              70L  0C    3m  CC=12     ←1
+  │ pipeline                    49L  0C    2m  CC=5      ←3
+  │ base                        29L  2C    3m  CC=1      ←0
+  │ opentelemetry               28L  1C    1m  CC=5      ←0
+  │ runtime_stop                22L  0C    1m  CC=3      ←1
+  │ __init__                    18L  0C    0m  CC=0.0    ←0
+  │ filesystem                  16L  1C    1m  CC=1      ←0
+  │ __init__                    14L  0C    0m  CC=0.0    ←0
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  registry/                       CC̄=6.2    ←in:5  →out:0
+  │ !! discover                   273L  0C    7m  CC=44     ←2
+  │ models                     103L  8C    1m  CC=1      ←0
+  │ catalog                     71L  1C    7m  CC=7      ←2
+  │ labels                      53L  0C    2m  CC=4      ←3
+  │ __init__                    13L  0C    0m  CC=0.0    ←0
+  │
+  executor/                       CC̄=5.8    ←in:6  →out:4
+  │ !! runner                     776L  4C   24m  CC=18     ←6
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  generator/                      CC̄=5.7    ←in:2  →out:12  !! split
+  │ !! pipeline                   277L  1C    7m  CC=33     ←0
+  │ intent_generator           238L  3C    7m  CC=11     ←0
+  │ !! contract_verify            228L  1C   10m  CC=16     ←1
+  │ intract_manifest           119L  0C    7m  CC=9      ←3
   │ !! expectations                96L  0C    4m  CC=23     ←1
   │ testql_scenario             79L  0C    4m  CC=7      ←4
   │ session                     52L  0C    1m  CC=5      ←1
   │ __init__                    23L  0C    0m  CC=0.0    ←0
   │
-  executor/                       CC̄=4.8    ←in:4  →out:2
-  │ !! runner                     637L  4C   21m  CC=13     ←3
+  planner/                        CC̄=5.3    ←in:8  →out:1
+  │ simulator                  384L  2C   17m  CC=9      ←4
+  │ !! stack_planner              226L  0C    5m  CC=18     ←1
+  │ stack_artifacts             66L  0C    1m  CC=9      ←3
+  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  │
+  parser/                         CC̄=5.2    ←in:11  →out:0
+  │ !! dsl_parser                 330L  3C   14m  CC=21     ←6
   │ __init__                     3L  0C    0m  CC=0.0    ←0
   │
   ai_gateway/                     CC̄=4.6    ←in:14  →out:1
@@ -984,55 +1197,63 @@ LAYERS:
   │ !! feedback_loop              384L  3C   14m  CC=17     ←2
   │ __init__                    34L  0C    0m  CC=0.0    ←0
   │
-  parser/                         CC̄=3.5    ←in:7  →out:0
-  │ dsl_parser                 263L  3C   13m  CC=8      ←5
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
-  │
-  planner/                        CC̄=3.2    ←in:3  →out:0
-  │ simulator                  374L  2C   17m  CC=9      ←3
-  │ __init__                     3L  0C    0m  CC=0.0    ←0
+  dsl/                            CC̄=3.2    ←in:8  →out:1
+  │ schema                     250L  7C    6m  CC=10     ←4
+  │ __init__                    17L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=3.1    ←in:0  →out:0
-  │ !! planfile.yaml             1072L  0C    0m  CC=0.0    ←0
+  │ !! planfile.yaml             1085L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
   │ Makefile                   222L  0C    0m  CC=0.0    ←0
-  │ !! config                     168L  1C    8m  CC=15     ←4
+  │ !! config                     171L  1C    8m  CC=15     ←5
   │ run.sh                     160L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml             105L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml             109L  0C    0m  CC=0.0    ←0
   │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
   │ project.sh                  59L  0C    0m  CC=0.0    ←0
   │ pyqual.yaml                 55L  0C    0m  CC=0.0    ←0
   │ requirements.txt            20L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
   │
-  web/                            CC̄=2.7    ←in:0  →out:14  !! split
-  │ !! app                        523L  9C   25m  CC=6      ←0
+  web/                            CC̄=2.5    ←in:0  →out:12  !! split
+  │ !! app                        597L  11C   32m  CC=6      ←0
   │ __init__                     3L  0C    0m  CC=0.0    ←0
   │
-  dsl/                            CC̄=2.4    ←in:8  →out:1
-  │ schema                     166L  5C    5m  CC=7      ←4
-  │ __init__                    17L  0C    0m  CC=0.0    ←0
+  interfaces/                     CC̄=2.3    ←in:1  →out:10  !! split
+  │ service                    252L  1C   14m  CC=7      ←1
+  │ models                      52L  7C    0m  CC=0.0    ←0
+  │ __init__                     5L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=2.1    ←in:0  →out:0
-  │ _verify.sh                 168L  0C   13m  CC=0.0    ←0
+  sdk/                            CC̄=2.2    ←in:0  →out:4
+  │ client                     225L  1C   16m  CC=5      ←0
+  │ __init__                     5L  0C    0m  CC=0.0    ←0
+  │
+  examples/                       CC̄=1.7    ←in:4  →out:0
+  │ _verify.sh                 165L  0C   13m  CC=0.0    ←4
+  │ _common.sh                 148L  0C   11m  CC=0.0    ←0
   │ !! verify_expectations        127L  0C    5m  CC=23     ←0
-  │ _common.sh                  97L  0C    6m  CC=0.0    ←0
   │ annotate_intract            97L  0C    6m  CC=7      ←0
   │ intent_to_openapi           76L  0C    3m  CC=8      ←0
+  │ _bootstrap_deps.sh          63L  0C    4m  CC=0.0    ←0
   │ run.sh                      41L  0C    0m  CC=0.0    ←0
-  │ run-e2e.sh                  31L  0C    0m  CC=0.0    ←0
+  │ run-resilience.sh           41L  0C    0m  CC=0.0    ←0
+  │ iterun.yaml                 39L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           31L  0C    0m  CC=0.0    ←0
+  │ run-stacks.sh               30L  0C    0m  CC=0.0    ←0
   │ intent_to_intract           29L  0C    1m  CC=3      ←0
   │ expectations.yaml           27L  0C    0m  CC=0.0    ←0
   │ intent_to_testql            26L  0C    1m  CC=1      ←0
   │ expectations.yaml           26L  0C    0m  CC=0.0    ←0
-  │ run-resilience.sh           25L  0C    0m  CC=0.0    ←0
+  │ iterun.yaml                 26L  0C    0m  CC=0.0    ←0
   │ run-all.sh                  24L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           24L  0C    0m  CC=0.0    ←0
+  │ run-e2e.sh                  24L  0C    0m  CC=0.0    ←0
+  │ run.sh                      23L  0C    0m  CC=0.0    ←0
   │ run.sh                      22L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           20L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           20L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           19L  0C    0m  CC=0.0    ←0
+  │ run.sh                      19L  0C    0m  CC=0.0    ←0
+  │ run.sh                      18L  0C    0m  CC=0.0    ←0
   │ run.sh                      17L  0C    0m  CC=0.0    ←0
   │ run.sh                      16L  0C    0m  CC=0.0    ←0
   │ run.sh                      16L  0C    0m  CC=0.0    ←0
@@ -1040,11 +1261,15 @@ LAYERS:
   │ run.sh                      14L  0C    0m  CC=0.0    ←0
   │ expectations.yaml           13L  0C    0m  CC=0.0    ←0
   │ run.sh                      13L  0C    0m  CC=0.0    ←0
+  │ run-generate.sh             12L  0C    0m  CC=0.0    ←0
   │ run.sh                      11L  0C    0m  CC=0.0    ←0
   │ run.sh                      10L  0C    0m  CC=0.0    ←0
   │ run.sh                       9L  0C    0m  CC=0.0    ←0
   │ run.sh                       9L  0C    0m  CC=0.0    ←0
   │ run.sh                       8L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                   5L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                   5L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                   4L  0C    0m  CC=0.0    ←0
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
@@ -1062,12 +1287,8 @@ LAYERS:
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │ prompt.txt                   1L  0C    0m  CC=0.0    ←0
   │
-  sdk/                            CC̄=2.1    ←in:0  →out:4
-  │ client                     119L  1C    8m  CC=3      ←0
-  │ __init__                     5L  0C    0m  CC=0.0    ←0
-  │
-  ir/                             CC̄=1.1    ←in:0  →out:0
-  │ models                     223L  8C   14m  CC=2      ←0
+  ir/                             CC̄=1.7    ←in:0  →out:0
+  │ models                     298L  10C   18m  CC=5      ←0
   │ __init__                     9L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
@@ -1075,32 +1296,40 @@ LAYERS:
   │ generated-api-smoke.testql.toon.yaml    40L  0C    0m  CC=0.0    ←0
   │ generated-api-integration.testql.toon.yaml    18L  0C    0m  CC=0.0    ←0
   │
-  mcp/                            CC̄=0.0    ←in:0  →out:0
-  │ server                      82L  0C    0m  CC=0.0    ←0
+  iterun_mcp/                     CC̄=0.0    ←in:0  →out:0
+  │ server                     145L  0C    0m  CC=0.0    ←0
   │ __init__                     1L  0C    0m  CC=0.0    ←0
   │
 
 COUPLING:
-                                   cli         ai_gateway          generator                web                dsl             parser             config           executor                sdk            planner  examples._scripts
-                cli                 ──                  6                  3                                     2                  3                  2                  1                                     1                     !! fan-out
-         ai_gateway                 ←6                 ──                 ←1                 ←7                                                        1                                                                              hub
-          generator                 ←3                  1                 ──                 ←1                  2                  1                                     2                 ←1                  1                 ←2  hub
-                web                                     7                  1                 ──                  2                  1                  1                  1                                     1                     !! fan-out
-                dsl                 ←2                                    ←2                 ←2                 ──                  1                                                       ←2                                        hub
-             parser                 ←3                                    ←1                 ←1                 ←1                 ──                                                       ←1                                        hub
-             config                 ←2                 ←1                                    ←1                                                       ──                 ←2                                                           hub
-           executor                 ←1                                    ←2                 ←1                                                        2                 ──                                                         
-                sdk                                                        1                                     2                  1                                                       ──                                      
-            planner                 ←1                                    ←1                 ←1                                                                                                                ──                   
-  examples._scripts                                                        2                                                                                                                                                      ──
-  CYCLES: none
-  HUB: config/ (fan-in=6)
-  HUB: parser/ (fan-in=7)
-  HUB: dsl/ (fan-in=8)
-  HUB: generator/ (fan-in=7)
+                                         cli            ai_gateway             generator                   web            interfaces                parser              executor                   dsl               planner                config          integrations              registry              examples                   sdk  integrations.bridges
+                   cli                    ──                     6                     1                                           1                     3                     1                     2                     2                     3                                           1                     1                                           1  !! fan-out
+            ai_gateway                    ←6                    ──                    ←1                    ←7                                                                                                                                   1                                                                                                                hub
+             generator                    ←1                     1                    ──                                                                 1                     1                     2                     2                                           2                                           2                                           1  !! fan-out
+                   web                                           7                                          ──                                           2                     1                                           1                     1                                                                                                                !! fan-out
+            interfaces                    ←1                                                                                      ──                     2                     1                     2                     3                                                                 1                                                                 1  !! fan-out
+                parser                    ←3                                          ←1                    ←2                    ←2                    ──                                          ←1                                                                                                                                  ←2                        hub
+              executor                    ←1                                          ←1                    ←1                    ←1                                          ──                                                                 2                     1                     1                                                                    hub
+                   dsl                    ←2                                          ←2                                          ←2                     1                                          ──                                                                                                                                  ←2                        hub
+               planner                    ←2                                          ←2                    ←1                    ←3                                                                                      ──                                                                 1                                                                    hub
+                config                    ←3                    ←1                                          ←1                                                                ←2                                                                ──                    ←1                                                                                          hub
+          integrations                                                                ←2                                                                                       2                                                                 1                    ──                                                                                        
+              registry                    ←1                                                                                      ←1                                          ←1                                          ←1                                                                ──                                                                    hub
+              examples                    ←1                                          ←2                                                                                                                                                                                                                          ──                                            
+                   sdk                                                                                                                                   2                                           2                                                                                                                                  ──                      
+  integrations.bridges                    ←1                                          ←1                                          ←1                                                                                                                                                                                                                          ──
+  CYCLES: 1
+  HUB: parser/ (fan-in=11)
   HUB: ai_gateway/ (fan-in=14)
-  SMELL: web/ fan-out=14 → split needed
-  SMELL: cli/ fan-out=18 → split needed
+  HUB: registry/ (fan-in=5)
+  HUB: dsl/ (fan-in=8)
+  HUB: planner/ (fan-in=8)
+  HUB: executor/ (fan-in=6)
+  HUB: config/ (fan-in=8)
+  SMELL: interfaces/ fan-out=10 → split needed
+  SMELL: cli/ fan-out=22 → split needed
+  SMELL: web/ fan-out=12 → split needed
+  SMELL: generator/ fan-out=12 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1110,27 +1339,27 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 5 groups | 47f 6387L | 2026-06-06
+# redup/duplication | 6 groups | 77f 9271L | 2026-06-06
 
 SUMMARY:
-  files_scanned: 47
-  total_lines:   6387
-  dup_groups:    5
-  dup_fragments: 66
-  saved_lines:   196
-  scan_ms:       2335
+  files_scanned: 77
+  total_lines:   9271
+  dup_groups:    6
+  dup_fragments: 104
+  saved_lines:   310
+  scan_ms:       2632
 
 HOTSPOTS[7] (files with most duplication):
-  examples/01-user-api/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  examples/08-llm-generate/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  examples/10-e2e-user-crud-verify/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  examples/13-resilience-vague/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  examples/16-resilience-framework-trap/generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  generated/app.py  dup=21L  groups=1  frags=7  (0.3%)
-  examples/12-e2e-full-gate/generated/app.py  dup=18L  groups=1  frags=6  (0.3%)
+  examples/14-resilience-inventory/generated/app.py  dup=51L  groups=1  frags=17  (0.6%)
+  examples/15-resilience-nested-paths/generated/app.py  dup=39L  groups=1  frags=13  (0.4%)
+  examples/01-user-api/generated/app.py  dup=21L  groups=1  frags=7  (0.2%)
+  examples/08-llm-generate/generated/app.py  dup=21L  groups=1  frags=7  (0.2%)
+  examples/10-e2e-user-crud-verify/generated/app.py  dup=21L  groups=1  frags=7  (0.2%)
+  examples/13-resilience-vague/generated/app.py  dup=21L  groups=1  frags=7  (0.2%)
+  examples/16-resilience-framework-trap/generated/app.py  dup=21L  groups=1  frags=7  (0.2%)
 
-DUPLICATES[5] (ranked by impact):
-  [032a6ddde45774c9] !! STRU  ping  L=3 N=56 saved=165 sim=1.00
+DUPLICATES[6] (ranked by impact):
+  [032a6ddde45774c9] !! STRU  ping  L=3 N=91 saved=270 sim=1.00
       examples/01-user-api/generated/app.py:9-11  (ping)
       examples/01-user-api/generated/app.py:14-16  (health)
       examples/01-user-api/generated/app.py:19-21  (users)
@@ -1141,6 +1370,7 @@ DUPLICATES[5] (ranked by impact):
       examples/02-ping-smoke/generated/app.py:9-11  (ping)
       examples/02-ping-smoke/generated/app.py:14-16  (health)
       examples/05-ir-show/generated/app.py:9-11  (ping)
+      examples/05-ir-show/generated/app.py:14-16  (health)
       examples/06-iterate-workflow/generated/app.py:9-11  (ping)
       examples/07-execution-smoke/generated/app.py:9-11  (ping)
       examples/07-execution-smoke/generated/app.py:14-16  (health)
@@ -1173,6 +1403,36 @@ DUPLICATES[5] (ranked by impact):
       examples/13-resilience-vague/generated/app.py:34-36  (users_by_id)
       examples/13-resilience-vague/generated/app.py:40-42  (users_by_id_put)
       examples/13-resilience-vague/generated/app.py:46-48  (users_by_id_delete)
+      examples/14-resilience-inventory/generated/app.py:10-12  (ping)
+      examples/14-resilience-inventory/generated/app.py:16-18  (health)
+      examples/14-resilience-inventory/generated/app.py:22-24  (products)
+      examples/14-resilience-inventory/generated/app.py:28-30  (products_post)
+      examples/14-resilience-inventory/generated/app.py:34-36  (products_by_id)
+      examples/14-resilience-inventory/generated/app.py:40-42  (products_by_id_put)
+      examples/14-resilience-inventory/generated/app.py:46-48  (products_by_id_delete)
+      examples/14-resilience-inventory/generated/app.py:52-54  (categories)
+      examples/14-resilience-inventory/generated/app.py:58-60  (categories_post)
+      examples/14-resilience-inventory/generated/app.py:64-66  (categories_by_id)
+      examples/14-resilience-inventory/generated/app.py:70-72  (categories_by_id_put)
+      examples/14-resilience-inventory/generated/app.py:76-78  (categories_by_id_delete)
+      examples/14-resilience-inventory/generated/app.py:82-84  (suppliers)
+      examples/14-resilience-inventory/generated/app.py:88-90  (suppliers_post)
+      examples/14-resilience-inventory/generated/app.py:94-96  (suppliers_by_id)
+      examples/14-resilience-inventory/generated/app.py:100-102  (suppliers_by_id_put)
+      examples/14-resilience-inventory/generated/app.py:106-108  (suppliers_by_id_delete)
+      examples/15-resilience-nested-paths/generated/app.py:10-12  (ping)
+      examples/15-resilience-nested-paths/generated/app.py:16-18  (health)
+      examples/15-resilience-nested-paths/generated/app.py:22-24  (orders)
+      examples/15-resilience-nested-paths/generated/app.py:28-30  (orders_post)
+      examples/15-resilience-nested-paths/generated/app.py:34-36  (orders_by_order_id)
+      examples/15-resilience-nested-paths/generated/app.py:40-42  (orders_by_order_id_status)
+      examples/15-resilience-nested-paths/generated/app.py:46-48  (orders_by_order_id_delete)
+      examples/15-resilience-nested-paths/generated/app.py:52-54  (customers)
+      examples/15-resilience-nested-paths/generated/app.py:58-60  (customers_post)
+      examples/15-resilience-nested-paths/generated/app.py:64-66  (customers_by_customer_id)
+      examples/15-resilience-nested-paths/generated/app.py:70-72  (customers_by_customer_id_put)
+      examples/15-resilience-nested-paths/generated/app.py:76-78  (customers_by_customer_id_delete)
+      examples/15-resilience-nested-paths/generated/app.py:82-84  (customers_by_customer_id_orders)
       examples/16-resilience-framework-trap/generated/app.py:10-12  (live)
       examples/16-resilience-framework-trap/generated/app.py:16-18  (ready)
       examples/16-resilience-framework-trap/generated/app.py:22-24  (api_v1_items)
@@ -1180,6 +1440,10 @@ DUPLICATES[5] (ranked by impact):
       examples/16-resilience-framework-trap/generated/app.py:34-36  (api_v1_items_by_sku)
       examples/16-resilience-framework-trap/generated/app.py:40-42  (api_v1_items_by_sku_put)
       examples/16-resilience-framework-trap/generated/app.py:46-48  (api_v1_items_by_sku_delete)
+      examples/17-stack-shop-gateway/generated/services/users-service/app.py:9-11  (health)
+      examples/17-stack-shop-gateway/generated/services/users-service/app.py:14-16  (users)
+      examples/18-stack-blog/generated/services/blog-worker/app.py:9-11  (health)
+      examples/18-stack-blog/generated/services/blog-worker/app.py:14-16  (jobs)
       generated/app.py:9-11  (ping)
       generated/app.py:14-16  (health)
       generated/app.py:19-21  (users)
@@ -1187,61 +1451,60 @@ DUPLICATES[5] (ranked by impact):
       generated/app.py:29-31  (users_by_id)
       generated/app.py:34-36  (users_by_id_put)
       generated/app.py:39-41  (users_by_id_delete)
-  [ef2fcfb176592b6f]   STRU  _parse_actions  L=14 N=2 saved=14 sim=1.00
-      examples/_scripts/verify_expectations.py:22-35  (_parse_actions)
-      generator/intract_manifest.py:21-34  (parse_api_actions)
-  [d1ab1a804f1b435b]   STRU  parse_dsl  L=4 N=3 saved=8 sim=1.00
-      parser/dsl_parser.py:254-257  (parse_dsl)
-      parser/dsl_parser.py:260-263  (parse_dsl_file)
-      planner/simulator.py:371-374  (plan_intent)
+  [b0a8ffc5a9306a38]   STRU  users  L=8 N=4 saved=24 sim=1.00
+      examples/17-stack-shop-gateway/generated/services/api-gateway/app.py:18-25  (users)
+      examples/17-stack-shop-gateway/generated/services/api-gateway/app.py:28-35  (products)
+      examples/18-stack-blog/generated/services/blog-api/app.py:18-25  (posts)
+      examples/19-stack-api-cache/generated/services/api-service/app.py:18-25  (cache_status)
   [ad19acd787fb5e4b]   EXAC  _slug  L=3 N=3 saved=6 sim=1.00
       examples/_scripts/annotate_intract.py:13-15  (_slug)
       examples/_scripts/intent_to_openapi.py:13-15  (_slug)
       generator/intract_manifest.py:12-14  (_slug)
+  [d1ab1a804f1b435b]   STRU  parse_dsl  L=4 N=2 saved=4 sim=1.00
+      parser/dsl_parser.py:321-324  (parse_dsl)
+      parser/dsl_parser.py:327-330  (parse_dsl_file)
   [f041dec9367328ca]   EXAC  add_log  L=3 N=2 saved=3 sim=1.00
-      executor/runner.py:93-95  (add_log)
-      planner/simulator.py:51-53  (add_log)
+      executor/runner.py:116-118  (add_log)
+      planner/simulator.py:53-55  (add_log)
+  [02262db14f1137ad]   STRU  list_interfaces  L=3 N=2 saved=3 sim=1.00
+      web/app.py:111-113  (list_interfaces)
+      web/app.py:166-168  (get_schema)
 
-REFACTOR[5] (ranked by priority):
+REFACTOR[6] (ranked by priority):
   [1] ○ extract_function   → utils/ping.py
-      WHY: 56 occurrences of 3-line block across 12 files — saves 165 lines
-      FILES: examples/01-user-api/generated/app.py, examples/02-ping-smoke/generated/app.py, examples/05-ir-show/generated/app.py, examples/06-iterate-workflow/generated/app.py, examples/07-execution-smoke/generated/app.py +7 more
-  [2] ○ extract_function   → utils/_parse_actions.py
-      WHY: 2 occurrences of 14-line block across 2 files — saves 14 lines
-      FILES: examples/_scripts/verify_expectations.py, generator/intract_manifest.py
-  [3] ○ extract_function   → utils/parse_dsl.py
-      WHY: 3 occurrences of 4-line block across 2 files — saves 8 lines
-      FILES: parser/dsl_parser.py, planner/simulator.py
-  [4] ○ extract_function   → utils/_slug.py
+      WHY: 91 occurrences of 3-line block across 16 files — saves 270 lines
+      FILES: examples/01-user-api/generated/app.py, examples/02-ping-smoke/generated/app.py, examples/05-ir-show/generated/app.py, examples/06-iterate-workflow/generated/app.py, examples/07-execution-smoke/generated/app.py +11 more
+  [2] ○ extract_function   → examples/utils/users.py
+      WHY: 4 occurrences of 8-line block across 3 files — saves 24 lines
+      FILES: examples/17-stack-shop-gateway/generated/services/api-gateway/app.py, examples/18-stack-blog/generated/services/blog-api/app.py, examples/19-stack-api-cache/generated/services/api-service/app.py
+  [3] ○ extract_function   → utils/_slug.py
       WHY: 3 occurrences of 3-line block across 3 files — saves 6 lines
       FILES: examples/_scripts/annotate_intract.py, examples/_scripts/intent_to_openapi.py, generator/intract_manifest.py
+  [4] ○ extract_function   → parser/utils/parse_dsl.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: parser/dsl_parser.py
   [5] ○ extract_function   → utils/add_log.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: executor/runner.py, planner/simulator.py
+  [6] ○ extract_function   → web/utils/list_interfaces.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: web/app.py
 
-QUICK_WINS[4] (low risk, high savings — do first):
-  [1] extract_function   saved=165L  → utils/ping.py
-      FILES: app.py, app.py, app.py +9
-  [2] extract_function   saved=14L  → utils/_parse_actions.py
-      FILES: verify_expectations.py, intract_manifest.py
-  [3] extract_function   saved=8L  → utils/parse_dsl.py
-      FILES: dsl_parser.py, simulator.py
-  [4] extract_function   saved=6L  → utils/_slug.py
+QUICK_WINS[3] (low risk, high savings — do first):
+  [1] extract_function   saved=270L  → utils/ping.py
+      FILES: app.py, app.py, app.py +13
+  [2] extract_function   saved=24L  → examples/utils/users.py
+      FILES: app.py, app.py, app.py
+  [3] extract_function   saved=6L  → utils/_slug.py
       FILES: annotate_intract.py, intent_to_openapi.py, intract_manifest.py
 
-DEPENDENCY_RISK[5] (duplicates spanning multiple packages):
-  ping  packages=2  files=12
+DEPENDENCY_RISK[3] (duplicates spanning multiple packages):
+  ping  packages=2  files=16
       examples/01-user-api/generated/app.py
       examples/02-ping-smoke/generated/app.py
       examples/05-ir-show/generated/app.py
       examples/06-iterate-workflow/generated/app.py
-      +8 more
-  _parse_actions  packages=2  files=2
-      examples/_scripts/verify_expectations.py
-      generator/intract_manifest.py
-  parse_dsl  packages=2  files=2
-      parser/dsl_parser.py
-      planner/simulator.py
+      +12 more
   _slug  packages=2  files=3
       examples/_scripts/annotate_intract.py
       examples/_scripts/intent_to_openapi.py
@@ -1250,76 +1513,77 @@ DEPENDENCY_RISK[5] (duplicates spanning multiple packages):
       executor/runner.py
       planner/simulator.py
 
-EFFORT_ESTIMATE (total ≈ 13.1h):
-  hard   ping                                saved=165L  ~660min
-  medium _parse_actions                      saved=14L  ~56min
-  medium parse_dsl                           saved=8L  ~32min
+EFFORT_ESTIMATE (total ≈ 19.6h):
+  hard   ping                                saved=270L  ~1080min
+  medium users                               saved=24L  ~48min
   easy   _slug                               saved=6L  ~24min
+  easy   parse_dsl                           saved=4L  ~8min
   easy   add_log                             saved=3L  ~12min
+  easy   list_interfaces                     saved=3L  ~6min
 
 METRICS-TARGET:
-  dup_groups:  5 → 0
-  saved_lines: 196 lines recoverable
+  dup_groups:  6 → 0
+  saved_lines: 310 lines recoverable
 ```
 
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 210 func | 19f | 2026-06-06
+# code2llm/evolution | 293 func | 36f | 2026-06-06
 # generated in 0.00s
 
 NEXT[10] (ranked by impact):
   [1] !! SPLIT           cli/main.py
-      WHY: 928L, 2 classes, max CC=72
-      EFFORT: ~4h  IMPACT: 66816
+      WHY: 994L, 2 classes, max CC=92
+      EFFORT: ~4h  IMPACT: 91448
 
-  [2] !! SPLIT           ai_gateway/gateway.py
-      WHY: 644L, 4 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 9660
+  [2] !! SPLIT           executor/runner.py
+      WHY: 776L, 4 classes, max CC=18
+      EFFORT: ~4h  IMPACT: 13968
 
-  [3] !! SPLIT-FUNC      main  CC=72  fan=39
-      WHY: CC=72 exceeds 15
-      EFFORT: ~1h  IMPACT: 2808
+  [3] !! SPLIT-FUNC      main  CC=92  fan=44
+      WHY: CC=92 exceeds 15
+      EFFORT: ~1h  IMPACT: 4048
 
-  [4] !! SPLIT-FUNC      run_pipeline  CC=30  fan=25
-      WHY: CC=30 exceeds 15
-      EFFORT: ~1h  IMPACT: 750
+  [4] !! SPLIT-FUNC      discover_workspace  CC=44  fan=35
+      WHY: CC=44 exceeds 15
+      EFFORT: ~1h  IMPACT: 1540
 
-  [5] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
+  [5] !! SPLIT-FUNC      run_pipeline  CC=33  fan=25
+      WHY: CC=33 exceeds 15
+      EFFORT: ~1h  IMPACT: 825
+
+  [6] !! SPLIT-FUNC      CLI.interactive_mode  CC=30  fan=23
       WHY: CC=30 exceeds 15
       EFFORT: ~1h  IMPACT: 690
 
-  [6] !! SPLIT-FUNC      CLI.cmd_execute  CC=37  fan=15
+  [7] !  SPLIT-FUNC      execute_pactown  CC=21  fan=31
+      WHY: CC=21 exceeds 15
+      EFFORT: ~1h  IMPACT: 651
+
+  [8] !! SPLIT-FUNC      CLI.cmd_execute  CC=37  fan=15
       WHY: CC=37 exceeds 15
       EFFORT: ~1h  IMPACT: 555
 
-  [7] !  SPLIT-FUNC      verify_contract  CC=16  fan=26
+  [9] !  SPLIT-FUNC      verify_contract  CC=16  fan=26
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 416
 
-  [8] !  SPLIT-FUNC      check_expectations  CC=23  fan=12
+  [10] !  SPLIT-FUNC      check_expectations  CC=23  fan=12
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 276
-
-  [9] !  SPLIT-FUNC      load_dotenv  CC=15  fan=14
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 210
-
-  [10] !! SPLIT           planfile.yaml
-      WHY: 1072L, 0 classes, max CC=0
-      EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[3]:
   ⚠ Splitting planfile.yaml may break 0 import paths
   ⚠ Splitting cli/main.py may break 25 import paths
-  ⚠ Splitting ai_gateway/gateway.py may break 20 import paths
+  ⚠ Splitting executor/runner.py may break 24 import paths
 
 METRICS-TARGET:
-  CC̄:          4.6 → ≤3.2
-  max-CC:      72 → ≤20
+  CC̄:          5.0 → ≤3.5
+  max-CC:      92 → ≤20
   god-modules: 6 → 0
-  high-CC(≥15): 9 → ≤4
+  high-CC(≥15): 17 → ≤8
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -1347,7 +1611,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.6 → now CC̄=4.6
+  prev CC̄=4.6 → now CC̄=5.0
 ```
 
 ### Validation (`project/validation.toon.yaml`)
