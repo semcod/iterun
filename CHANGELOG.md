@@ -122,6 +122,14 @@
 - Registry crash gdy `session.verification` jest `null`
 - Pipeline `success` odzwierciedla fail walidacji endpointów (bez `--verify`)
 
+## [0.1.13] - 2026-06-29
+
+### Docs
+- Update README.md
+
+### Other
+- Update project/planfile-tickets.yaml
+
 ## [0.1.12] - 2026-06-06
 
 ### Docs

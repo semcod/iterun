@@ -1,5 +1,4 @@
 source: code2llm
-# generated in 0.06s
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/wronai/iterun
 tickets:
@@ -2163,5 +2162,71 @@ tickets:
   files:
   - web/schemas.py
   dedupe_key: 'code2llm:smell:god_function:web/schemas.py:1:God Module: web.schemas'
+- signal: slow_test_warning
+  title: 'Address slow test: tests.e2e.test_ai_gateway.TestConvenienceFunctions.test_complete_function'
+  description: 'Test `tests.e2e.test_ai_gateway.TestConvenienceFunctions.test_complete_function`
+    took 4.58s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/e2e/test_ai_gateway.py
+  dedupe_key: test-optimization:tests.e2e.test_ai_gateway.TestConvenienceFunctions:test_complete_function
+- signal: slow_test_warning
+  title: 'Address slow test: tests.e2e.test_web.TestiterunAndExecution.test_execute_without_iterun'
+  description: 'Test `tests.e2e.test_web.TestiterunAndExecution.test_execute_without_iterun`
+    took 2.59s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/e2e/test_web.py
+  dedupe_key: test-optimization:tests.e2e.test_web.TestiterunAndExecution:test_execute_without_iterun
+- signal: slow_test_warning
+  title: 'Address slow test: tests.e2e.test_ai_gateway.TestAIGateway.test_health_check'
+  description: 'Test `tests.e2e.test_ai_gateway.TestAIGateway.test_health_check` took
+    2.23s to run.
+
+
+    Optimize its setup, mock slow external dependencies, or refactor its logic to
+    reduce overall test suite execution time.'
+  priority: medium
+  labels:
+  - llm-ready
+  - test-optimization
+  - slow-test
+  files:
+  - tests/e2e/test_ai_gateway.py
+  dedupe_key: test-optimization:tests.e2e.test_ai_gateway.TestAIGateway:test_health_check
+- signal: slow_test_warning
+  title: Address high test suite startup overhead
+  description: 'The test suite startup and collection overhead is high: 4.03s.
+
+
+    This overhead is spent on imports, collection, and test environment initialization.
+
+    Analyze fixtures with broad scopes, reduce heavy imports on test collection, and
+    optimize pytest-xdist startup settings to decrease the delay before tests start
+    running.'
+  priority: high
+  labels:
+  - llm-ready
+  - test-optimization
+  - startup-overhead
+  files:
+  - pyproject.toml
+  dedupe_key: test-optimization:general:startup-overhead
 applied: []
 skipped: []
